@@ -1,0 +1,9 @@
+<div class="header">
+    <h4 mat-dialog-title [ngStyle]="style">{{data.header}}</h4>
+</div>
+<div mat-dialog-content>
+    <p class="dialog-message">{{data.message}}</p>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="close()">OK</button>
+</div>

@@ -1,0 +1,47 @@
+<mat-list class="sidebar">
+    <mat-list-item routerLink="/dashboard">
+      <mat-icon>home</mat-icon>
+      Dashboard
+    </mat-list-item>
+    <mat-list-item routerLink="/wallet">
+      <mat-icon>home</mat-icon> Wallet
+    </mat-list-item>
+    <mat-list-item routerLink="/account">
+      <mat-icon>home</mat-icon> Account
+    </mat-list-item>  
+  <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding >
+        <div class="mat-tree-second-item">
+          <div class="circle"></div>
+          <p>{{node.name}}</p>
+        </div>
+      </mat-tree-node>
+  
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" class="mat-node">
+        <div *ngIf="node.name === 'E-commerce'" class="mat-tree-item" matTreeNodeToggle>
+          <div>
+            <mat-icon>shopping_cart</mat-icon>
+            <p class="nodejs-sup" matBadge="NodeJS/.NET" matBadgeColor="success">{{node.name}}</p>
+          </div>
+          <mat-icon
+            [ngClass]="{rotateUp: treeControl.isExpanded(node), rotateDown: !treeControl.isExpanded(node)}"
+          >keyboard_arrow_down
+          </mat-icon>
+        </div>
+  
+        <div *ngIf="node.name === 'User'" class="mat-tree-item" matTreeNodeToggle>
+          <div>
+            <mat-icon>person</mat-icon>
+            <p matBadge="New" matBadgeColor="warn">{{node.name}}</p>
+          </div>
+          <mat-icon
+            [ngClass]="{rotateUp: treeControl.isExpanded(node), rotateDown: !treeControl.isExpanded(node)}"
+          >keyboard_arrow_down
+          </mat-icon>
+        </div>
+      </mat-tree-node>
+  
+    </mat-tree>  -->
+  </mat-list>
+  

@@ -1,0 +1,68 @@
+<h4>My Profile</h4>
+<div class="profile">
+    <span class="profile__image__container">
+        <img src="https://cdn.britannica.com/92/215392-050-96A4BC1D/Australian-actor-Chris-Hemsworth-2019.jpg" alt="Profile Image">
+    </span>
+
+    <p class="profile__name">{{currentUser.personalDetail.user_FName}} {{currentUser.personalDetail.user_LName}}</p>
+    <p class="profile__email">{{currentUser.user.user_EmailID}}</p>
+    <p class="profile__lastupdate">Last updated on: 2021-10-23 13:58:29</p>
+</div>
+
+<mat-tab-group class="tabs" dynamicHeight mat-align-tabs="center" (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Personal Information"> 
+        <div class="info">
+            <div class="info__header">
+                <p>DOB</p>
+                <p>Gender</p>
+                <p>Email</p>
+                <p>Mobile</p>
+                <p>State</p>
+            </div>
+            <div class="info__details">
+                <p>{{currentUser.personalDetail.user_Dob}}</p>
+                <p>{{currentUser.personalDetail.user_Gender}}</p>
+                <p>{{currentUser.user.user_EmailID}}</p>
+                <p>{{currentUser.user.mobile_Number}}</p>
+                <p>{{userState.state_Name}}</p>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Bank Details"> 
+        <div class="info">
+            <div class="info__header">
+                <p>Bank</p>
+                <p>Account Holder</p>
+                <p>Account Number</p>
+                <p>Account Type</p>
+                <p>IFS Code</p>
+            </div>
+            <div *ngIf="bankDetails.length === 0" class="info__details">
+                <p>-</p>
+                <p>-</p>
+                <p>-</p>
+                <p>-</p>
+                <p>-</p>
+            </div>
+
+            <div *ngIf="bankDetails.length > 0" class="info__details">
+                <p>bank name</p>
+                <p>ac holder name</p>
+                <p>ac number</p>
+                <p>ac type</p>
+                <p>ifsc</p>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="PAN & GSTIN"> 
+        <div class="info">
+            <div class="info__header">
+                <p>PAN</p>
+                <p>GSTIN</p>
+            </div>
+            <div *ngIf="!currentUser.kycDetail" class="info__details">
+                <p>-</p>
+                <p>-</p>
+            </div>
+        </div> </mat-tab>
+</mat-tab-group>

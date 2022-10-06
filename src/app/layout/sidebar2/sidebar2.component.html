@@ -1,0 +1,42 @@
+<ul class="menu">
+    <h2 class="menu_label">Main Navigation</h2>
+    <li><a class="main_menu_link" routerLink="/dashboard">
+            <mat-icon>widgets</mat-icon> Dashboard
+        </a></li>
+    <li><a class="main_menu_link" >
+            <mat-icon>design_services</mat-icon>Services
+        </a> </li>
+    <li><a class="main_menu_link" haveSubmenu>
+            <mat-icon>account_balance_wallet</mat-icon>
+            Wallet
+            <mat-icon class="carret">arrow_right</mat-icon>
+        </a>
+        <ul class="sub_menu">
+            <li><a class="sub_menu_link" routerLink="wallet">Summary</a></li>
+            <li><a class="sub_menu_link" >EMI and Bill Payments</a></li>
+            <li><a class="sub_menu_link" >Add Money</a></li>
+            <li><a class="sub_menu_link" >Balance Transfer</a></li>
+            <li><a class="sub_menu_link" >Revoke Balance</a></li>
+            <li><a class="sub_menu_link" >Recharge History</a></li>
+        </ul>
+    </li>
+    <li><a class="main_menu_link" haveSubmenu>
+
+            <mat-icon>list_alt</mat-icon>Orders
+            <mat-icon class="carret">arrow_right</mat-icon>
+        </a>
+        <ul class="sub_menu">
+            <li><a class="sub_menu_link" >Order History</a></li>
+            <li><a class="sub_menu_link" >Operator Order</a></li>
+        </ul>
+    </li>
+    <hr>
+    <h2 class="menu_label">Settings</h2>
+    <li><a class="main_menu_link" routerLink="/account">
+        <mat-icon>manage_accounts</mat-icon> Account
+    </a></li>
+
+    <li><a class="main_menu_link" routerLink="/support">
+        <mat-icon>chat_bubble</mat-icon> Support
+    </a></li>
+</ul>

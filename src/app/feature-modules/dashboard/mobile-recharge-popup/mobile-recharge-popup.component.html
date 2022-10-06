@@ -1,0 +1,36 @@
+<h4 mat-dialog-title>Mobile Recharge</h4>
+<mat-dialog-content>
+    <p class="mob__rech__info">Please enter the mobile number and select operator for recharge!</p>
+    <form [formGroup]="mobileRechargeFormGroup">
+        <div class="form__element">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Choose Operator</mat-label>
+                <mat-select formControlName="op">
+                  <mat-option *ngFor="let operator of mobileOperators" [value]="operator.op">{{operator.provider}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="getMobileRechargeFormError('op')">{{getMobileRechargeFormError('op')}}</mat-error>
+              </mat-form-field>
+        </div>
+        <div class="form__element">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter Mobile No.</mat-label>
+                <!-- <p class="country__code">+91</p> -->
+                <input matInput type="text" formControlName="mn" maxlength="10">
+                <mat-error *ngIf="getMobileRechargeFormError('mn')">{{getMobileRechargeFormError('mn')}}</mat-error>
+              </mat-form-field>
+        </div>
+
+        <div class="form__element">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter Recharge Amount</mat-label>
+                <input matInput type="text" formControlName="amt" maxlength="4">
+                <mat-error *ngIf="getMobileRechargeFormError('amt')">{{getMobileRechargeFormError('amt')}}</mat-error>
+              </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button color="accent" (click)="closeDialog()">Cancel</button>
+    <button mat-stroked-button [disabled]="mobileRechargeFormGroup.invalid" (click)="onRecharge()">Recharge</button>
+</mat-dialog-actions>

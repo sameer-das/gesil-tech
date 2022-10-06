@@ -1,0 +1,39 @@
+@import '../../styles/constants.scss';
+
+.notification-button {
+  margin-left: 16px;
+
+  &__icon {
+    color: $white-35;
+  }
+
+  @media (max-width: $small) {
+    margin-top: 0;
+  }
+}
+
+.notification-menu {
+  &__button {
+    &:hover {
+      background-color: $blue-white;
+    }
+  }
+
+  &__icon {
+    &_yellow {
+      color: $yellow;
+    }
+
+    &_green {
+      color: $green;
+    }
+
+    &_pink {
+      color: $pink;
+    }
+
+    &_blue {
+      color: $blue;
+    }
+  }
+}

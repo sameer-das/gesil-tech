@@ -1,0 +1,18 @@
+<h3>My Account</h3>
+<div class="container">
+    <div class="sidemenu">
+        <ul>
+            <li (click)="changeTab(1)"><mat-icon>account_circle</mat-icon><span>My Profile</span></li>
+            <li (click)="changeTab(2)"><mat-icon>update</mat-icon><span>Update Profile</span></li>
+            <li (click)="changeTab(3)"><mat-icon>vpn_key</mat-icon><span>Change Password</span></li>
+            <!-- <li (click)="changeTab(3)"><mat-icon>shield</mat-icon><span>Change Wallet PIN</span></li> -->
+
+        </ul>
+    </div>
+    <div class="content"> 
+        <app-my-profile *ngIf="currentTab === 1" [userState]="userState"></app-my-profile>
+        <app-update-profile *ngIf="currentTab === 2" [states]="states"></app-update-profile>
+        <app-change-password *ngIf="currentTab === 3"></app-change-password>
+        <!-- <app-change-pin *ngIf="currentTab === 3"></app-change-pin> -->
+    </div>
+</div>

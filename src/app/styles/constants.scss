@@ -1,0 +1,120 @@
+//== Viewports
+
+$extra-small: 576px;
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+$normal: 1024px;
+$extra-large: 1200px;
+$xxl: 1440px;
+
+// colors
+$gradient1: #03a9f5;
+$gradient2: #31837b;
+
+$primary-blue: $gradient1;
+$blue-white: #f3f5ff;
+
+$yellow: #ffc260;
+$blue: #647dee;
+$purple: #7f53ac;
+$light-blue: #798dfe;
+$white-blue: #b1bcff;
+$pink: #ff4081;
+$dark-pink: #ff0f60;
+$green: #31c2a0;
+$violet: #9013fe;
+$white: white;
+$dark-grey: #4a4a4a;
+$light-grey: #b9b9b9;
+$grey: #6e6e6e;
+$sky: #c0caff;
+$default: #e0e0e0;
+
+$white-35: rgba(255, 255, 255, 0.35);
+$white-50: rgba(255, 255, 255, 0.5);
+$white-70: rgba(255, 255, 255, 0.7);
+$white-80: #ffffff80;
+
+$white-gray: rgba(224, 224, 224, 0.5);
+
+$gray-08: rgba(110, 110, 110, 0.8);
+$gray-80: #d8d8d880;
+$gray-06: rgba(110, 110, 110, 0.6);
+$gray-70: rgba(155, 155, 155, 0.7);
+
+$black-08: rgba(0, 0, 0, 0.08);
+$black-04: rgba(0, 0, 0, 0.04);
+$black-12: rgba(0, 0, 0, 0.12);
+
+$pink-15: rgba(255, 92, 147, 0.15);
+$blue-15: rgba(83, 109, 254, 0.15);
+$green-15: rgba(60, 212, 160, 0.15);
+$yellow-15: rgba(255, 194, 96, 0.15);
+$violet-15: rgba(144, 19, 254, 0.15);
+
+$pink-20: rgba(255, 92, 147, 0.2);
+$blue-20: rgba(83, 109, 254, 0.2);
+$green-20: rgba(60, 212, 160, 0.2);
+$yellow-20: rgba(255, 194, 96, 0.25);
+$violet-20: rgba(144, 19, 254, 0.2);
+
+$shadow-white: #e8eafc;
+$shadow-grey: #b2b2b21a;
+$shadow-dark-grey: #9a9a9a1a;
+
+$background-color: #f6f7ff;
+$black: #000;
+
+// Fonts
+$fw-lighter: 400;
+$fw-normal: 500;
+$fw-bold: 600;
+$fw-extra-bold: 700;
+
+$fs-xs: 11.2px;
+$fs-small: 14px;
+$fs-normal: 16px;
+$fs-regular: 18px;
+$fs-medium: 21px;
+$fs-large: 24px;
+$fs-xl: 28px;
+$fs-xxl: 38px;
+$fs-xxxl: 42px;
+
+$text-black: rgba(0, 0, 0, 0.87);
+
+
+
+.btn {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 5px 5px 10px $dark-grey;
+  }
+  &.primary {
+    background: $gradient1;
+    // background: radial-gradient(circle, $gradient1 0%, $gradient2 100%);
+    color: $white;
+  }
+  &.secondary {
+    background-color: $pink;
+    color: $white;
+  }
+  &:disabled {
+    background-color: $light-grey;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.mat-toolbar.mat-primary {
+  background: $shadow-white; /* fallback for old browsers */
+}
+
+

@@ -1,0 +1,61 @@
+@import "../../../styles/constants.scss";
+h4 {
+  font-weight: 400;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__image__container {
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    //   object-fit: cover;
+    }
+  }
+
+  &__name, &__email, &__lastupdate {
+    padding: 0;
+    margin: 0;
+  }
+
+  &__name {
+    margin-top: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: $fs-regular;
+  }
+
+  &__email {
+    margin-top: 0.25rem;
+    opacity: 0.8;
+  }
+
+  &__lastupdate {
+    margin-top: 1rem;
+    color: $primary-blue;
+  }
+}
+
+.tabs {
+    margin-top: 2rem;
+}
+
+.info {
+    display: flex;
+    padding: 0.5rem;
+    padding-top: 1rem;
+    > *{
+        flex: 1;
+    }
+
+    &__header p {
+        font-weight: 500;
+    }
+    &__details p {
+        opacity: 0.9;
+    }
+
+}

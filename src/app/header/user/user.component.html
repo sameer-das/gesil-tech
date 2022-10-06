@@ -1,0 +1,24 @@
+<div class="user-wrapper">
+    <img src="./assets/avatar/avatar.png" class="user-icon" [matMenuTriggerFor]="userMenu">
+  
+    <mat-menu #userMenu="matMenu" xPosition="before">
+      <div class="user-menu-title">
+        <h4 class="user-menu-title__name">{{full_name}}</h4>
+        <a class="user-menu-title__link" href="#">{{email_id}}</a>
+      </div>
+      <button mat-menu-item class="user-menu__item-title" routerLink="/account">
+        <mat-icon class="user-menu-icon">account_circle</mat-icon>My Account
+      </button>
+      <button mat-menu-item class="user-menu__item-title">
+        <mat-icon class="user-menu-icon">description</mat-icon>Tasks
+      </button>
+      <button mat-menu-item class="user-menu__item-title">
+        <mat-icon class="user-menu-icon">email</mat-icon>Messages
+      </button>
+      <div class="sign-button-wrapper">
+        <button class="sign-button" mat-flat-button (click)="signOutEmit()">Sign out</button>
+      </div>
+    </mat-menu>
+  
+    <!-- <p class="greeting-text">Hi, <span class="user-name">Kumar Ojha</span></p> -->
+  </div>

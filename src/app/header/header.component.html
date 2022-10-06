@@ -1,0 +1,24 @@
+<mat-toolbar class="header" color="primary">
+
+    <div class="header__title">
+      <button class="header__title-button" mat-mini-fab (click)="openMenu()" color="primary">
+        <mat-icon *ngIf="!isMenuOpened" class="header__title-button-icon">menu</mat-icon>
+        <mat-icon *ngIf="isMenuOpened" class="header__title-button-icon">arrow_back</mat-icon>
+      </button>
+      <!-- <h6 class="header__title-text">Angular Material Admin Full</h6>
+       -->
+       <div class="logo__container">
+         <img src="./assets/logo/gsk_logo_80px.png" alt="logo">
+       </div>
+    </div>
+  
+    <div class="header-toolbar">
+      <!-- <app-notification></app-notification> -->
+      <app-user></app-user>
+      <div class="user_details">
+        <span>{{full_name}}</span>
+        <span>{{email_id}}</span>
+      </div>
+    </div>
+  </mat-toolbar>
+  

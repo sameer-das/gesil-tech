@@ -1,0 +1,36 @@
+@import "../../../styles/constants.scss";
+
+.carousel_item {
+    // border: 1px solid salmon;
+    height: 5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    &_img_container {
+        // border: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+
+        img{
+            width: 35%;
+            object-fit: cover;
+            @media (min-width: $medium) {
+                width: 30%;
+            }
+
+            @media (min-width: $small) {
+                width: 26%;
+            }
+        }
+    }
+
+    &_name{
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    &:hover {
+        background-color: #ccc;
+    }
+
+    
+}

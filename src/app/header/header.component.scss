@@ -1,0 +1,92 @@
+@import '../styles/constants.scss';
+
+$header-height: 64px;
+$black-08: rgba(0, 0, 0, 0.08);
+$header-button-background-color: $primary-blue;
+$header-button-background-color-hover: $black-08;
+$header-button-font-color: $white;
+$header-button-box-shadow: none;
+$header-title-font-color: $white;
+
+$header-background-dark-theme: #31313C;
+$header-title-color-dark-theme: #889AFF;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 2;
+    height: $header-height;
+  
+    &__title {
+      display: flex;
+      align-items: center;
+    }
+  
+    &__title-button {
+      background-color: $header-button-background-color;
+      box-shadow: $header-button-box-shadow;
+  
+      &:hover {
+        background-color: $header-button-background-color-hover;
+      }
+  
+      @media (max-width: $small) {
+        margin-top: 0;
+      }
+    }
+  
+    &__title-button-icon {
+      color: $header-button-font-color;
+    }
+  
+    &__title-text {
+      color: $header-title-font-color;
+      margin-left: 32px;
+      font-weight: $fw-lighter;
+  
+      @media (max-width: $small) {
+        display: none;
+      }
+    }
+  }
+
+ .header-toolbar {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .logo__container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    img {
+      width: 70%;
+    }
+  
+    @media (max-width: $small) {
+      // display: none;
+    }
+  }
+
+
+
+
+.user_details{
+  padding: 0.5rem;
+  
+  span {
+    display: block;
+    color: #31313C;  
+    line-height: 1;
+  }
+  span:first-child {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  span:nth-child(2){
+    font-size: 0.8rem;
+  }
+}

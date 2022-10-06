@@ -1,0 +1,88 @@
+@import "../../styles/constants.scss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.menu {
+  width: 100%;
+  height: 100%;
+  background: $gradient1;
+  .menu_label {
+    font-size: 1.4rem;
+    color: $blue-white;
+    margin: 0;
+    padding: 0.5rem;
+    text-shadow: 5px 5px 10px rgba(0,0,0,0.6);
+  }
+
+  li {
+    position: relative;
+    cursor: pointer;
+
+    a.main_menu_link {
+      text-decoration: none;
+      color: $blue-white;
+      display: block;
+      font-size: 1rem;
+      padding: 0.8rem 0.9rem;
+      line-height: 1.5rem;
+      &:hover, &.active {
+        background: $purple;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom right, $gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        transition: 0.3s ease;
+        font-weight: bold;  
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+      }
+
+
+      mat-icon {
+        position: relative;
+        margin-right: 0.6rem;
+        top: 4px;
+      }
+
+      mat-icon.carret {
+        position: absolute;
+        right: 4px;
+        top: 1rem;
+        transition: 0.3s ease;
+      }
+    }
+
+    ul.sub_menu {
+      background: linear-gradient(to bottom right, $gradient1, $gradient2);
+      // display: none;
+      overflow: hidden;
+      max-height: 0;
+      transition: all 0.3s ease-in;
+      &.active {
+        // display: block;
+        max-height: 300px;
+      }
+      li {
+        a.sub_menu_link {
+          display: block;
+          padding: 0.7rem 0 0.7rem 3.5rem;
+          text-decoration: none;
+          font-size: 0.8rem;
+          color: $blue-white;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border-left: 6px solid transparent;
+          &:hover {
+            background: $purple;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to bottom,$gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to bottom,$gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            font-weight: bold;
+            border-left: 6px solid $blue-white;
+          }
+        }
+      }
+    }
+  }
+}
+

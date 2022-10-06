@@ -1,0 +1,15 @@
+
+
+<mat-card>
+
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let item of carousel_items">
+            <div class="carousel_item">
+                <div class="carousel_item_img_container">
+                    <img [src]="item.img" [alt]="item.name">
+                </div>
+                <p class="carousel_item_name">{{item.name}}</p>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</mat-card>

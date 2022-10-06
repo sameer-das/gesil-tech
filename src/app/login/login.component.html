@@ -1,0 +1,99 @@
+<div class="auth-page">
+    <div class="content-block">
+      <div class="content-wrapper">
+        <div class="login__form">
+          <div class="login__logo">
+            <img src="./assets/logo/gsk_logo_80px.png" alt="logo">
+          </div>
+          <h2>Login to e-Sathi</h2>
+
+          <form [formGroup]="loginForm" (submit)="onLogin()">
+            <mat-form-field class="form__input">
+              <input matInput placeholder="User Id" type="text" formControlName="userid">
+              <mat-error *ngIf="getLoginFormErrorMessage('userid')">{{getLoginFormErrorMessage('userid')}}</mat-error>
+            </mat-form-field>
+          
+            <mat-form-field class="form__input">
+              <input matInput placeholder="Password" type="password" formControlName="password">
+              <mat-error *ngIf="getLoginFormErrorMessage('password')">{{getLoginFormErrorMessage('password')}}</mat-error>
+
+            </mat-form-field>
+              <!-- <div class="inputBox">
+                  <span>Username</span>
+                  <input type="text" placeholder="Username">
+              </div>
+              <div class="inputBox">
+                  <span>Password</span>
+                  <input type="password" placeholder="Password">
+              </div>
+              <div class="remember">
+                  <label><input type="checkbox">Rememeber me</label>
+              </div> -->
+              <div class="form__input">
+                <button type="submit" [disabled]="loginForm.invalid"><span><mat-icon>lock</mat-icon>Login Securely</span> </button>
+               
+                  <!-- <input type="submit" value="Login Securely"> -->
+              </div>
+              <div class="remember flex flex_jc_sb">
+                <label><input type="checkbox">Rememeber me</label>
+                <a class="forgot__password__link" (click)="openForgotPasswordDialog()">Forgot Password</a>
+            </div>
+              <div class="create__account">
+                  <p>Don't have an account?</p>
+                  <button (click)="openSignupModal()" type="button">Create an account</button>
+              </div>
+          </form>
+  
+          <p class="footer-title">Copyright © 2022 Gskindia App. All rights reserved.</p>
+  
+        </div>
+        <!-- <mat-tab-group class="group" mat-stretch-tabs dynamicHeight>
+          <mat-tab label="Login">
+            <h4 class="group-title">Good Morning, User</h4>
+            <div class="google-button-wrapper">
+              <button (click)="googleLogin()" mat-raised-button class="google-button">
+                <img class="google-button-icon" src="./assets/auth/google.svg" alt="google">Sign in with Google
+              </button>
+            </div>
+  
+            <div class="border-wrapper">
+              <div class="border-line"></div>
+              <p class="border-title">or</p>
+              <div class="border-line"></div>
+            </div>
+  
+            <app-login-form (sendLoginForm)="sendLoginForm($event)"></app-login-form>
+  
+          </mat-tab>
+          <mat-tab label="New User">
+            <h4 class="group-title">Welcome!</h4>
+            <p class="group-sub-title">Create your account</p>
+  
+            <app-sign-form (sendSignForm)="sendSignForm($event)"></app-sign-form>
+  
+            <div class="border-wrapper">
+              <div class="border-line"></div>
+              <p class="border-title">or</p>
+              <div class="border-line"></div>
+            </div>
+  
+            <div class="google-button-wrapper">
+              <button (click)="googleLogin()" mat-raised-button class="google-button">
+                <img class="google-button-icon" src="./assets/auth/google.svg" alt="google">Sign in with Google
+              </button>
+            </div>
+          </mat-tab>
+        </mat-tab-group> -->
+  
+        <!-- <p class="footer-title">Copyright © 2022 Gskindia App. All rights reserved.<a href="https://flatlogic.com">Flatlogic</a>, LLC. All rights reserved.</p> -->
+      </div>
+    </div>
+    <div class="logo">
+      <div class="logo-wrapper">
+        <img class="logo-img" src="./assets/logo/gsk_logo_80px.png" alt="logo">
+        <h6 class="logo-title">Welcome</h6>
+        <p class="reg__message">Register and start your journey with us.</p>
+      </div>
+    </div>
+  </div>
+  

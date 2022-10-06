@@ -1,0 +1,158 @@
+<h3 mat-dialog-title class="dialog__title">Register to start
+  <span class="mat__dialog__close__btn" (click)="closeRegDialog()">
+    <mat-icon>clear</mat-icon>
+  </span>
+</h3>
+
+<mat-dialog-content class="mat-typography">
+  <div class="form__container">
+    <form *ngIf="showRefForm" [formGroup]="refNoFormGroup" (submit)="checkAndVerifyRefNo()">
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Reference No.</mat-label>
+          <input matInput type="text" formControlName="refNo">
+          <!-- <mat-icon class="info__icon" matTooltipClas="mat__tooltip"
+                        matTooltip="If you are a e-Sathi provide your admin ref code. If you are a retailer provide your e-Sathi ref code.">
+                        info</mat-icon> -->
+          <mat-error *ngIf="getRefNoError()">{{getRefNoError()}}</mat-error>
+        </mat-form-field>
+
+      </div>
+      <p class="reference__info">
+        If you dont have a valid reference code, please use "admin" as reference code!
+      </p>
+
+      <div class="form__row cta__container">
+        <button type="submit" class="btn primary" [disabled]="disabled">{{buttonLable}}
+          <mat-icon *ngIf="disabled"><mat-spinner color="warn" diameter="20">
+          </mat-spinner></mat-icon>
+        </button>
+        <!-- <a (click)="closeRegDialog()">Cancel</a> -->
+      </div>
+    </form>
+
+
+
+    <form *ngIf="!showRefForm" [formGroup]="registrationFormGroup" (submit)="onRegistrationFormSubmit()">
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose User Type</mat-label>
+          <mat-select formControlName="userType">
+            <mat-option value="1">e-Sathi</mat-option>
+            <mat-option value="2">End User</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Location Type</mat-label>
+          <mat-select formControlName="locationType">
+            <mat-option value="1">Urban</mat-option>
+            <mat-option value="2">City</mat-option>
+            <mat-option value="3">Metro</mat-option>
+          </mat-select>
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('locationType')">
+            {{getUserRegistrationFormErrorMessage('locationType')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Mobile No.</mat-label>
+          <input matInput type="text" formControlName="mobile">
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('mobile')">
+            {{getUserRegistrationFormErrorMessage('mobile')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Email Id</mat-label>
+          <input matInput type="email" formControlName="email">
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('email')">
+            {{getUserRegistrationFormErrorMessage('email')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter First Name</mat-label>
+          <input matInput type="text" formControlName="firstName">
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('firstName')">
+            {{getUserRegistrationFormErrorMessage('firstName')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Last Name</mat-label>
+          <input matInput type="text" formControlName="lastName">
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('lastName')">
+            {{getUserRegistrationFormErrorMessage('lastName')}}</mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Date Of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('dob')">{{getUserRegistrationFormErrorMessage('dob')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Others">Others</mat-option>
+          </mat-select>
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('gender')">{{getUserRegistrationFormErrorMessage('gender')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose State</mat-label>
+          <mat-select formControlName="state" (selectionChange)="onStateChange($event)">
+            <mat-option *ngFor="let state of states" [value]="state.state_ID">{{state.state_Name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('state')">
+            {{getUserRegistrationFormErrorMessage('state')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose District</mat-label>
+          <mat-select formControlName="district" (selectionChange)="onDistrictChange($event)">
+            <mat-option *ngFor="let district of districts" [value]="district.district_ID">{{district.district_Name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('district')">
+            {{getUserRegistrationFormErrorMessage('district')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Block</mat-label>
+          <mat-select formControlName="block">
+            <mat-option *ngFor="let block of blocks" [value]="block.block_ID">{{block.block_Name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('block')">
+            {{getUserRegistrationFormErrorMessage('block')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter PIN</mat-label>
+          <input matInput type="text" formControlName="pin">
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('pin')">{{getUserRegistrationFormErrorMessage('pin')}}
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter GP/Ward</mat-label>
+          <input matInput type="text" formControlName="gp">
+          <mat-error *ngIf="getUserRegistrationFormErrorMessage('gp')">{{getUserRegistrationFormErrorMessage('gp')}}</mat-error>
+        </mat-form-field>
+        <div class="form__field">
+          <button type="submit" class="btn primary cta">Register</button>
+        </div>
+        <!-- <a (click)="closeRegDialog()">Cancel</a> -->
+      </div>
+    </form>
+
+  </div>
+</mat-dialog-content>
