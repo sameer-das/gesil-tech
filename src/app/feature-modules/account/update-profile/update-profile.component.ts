@@ -17,6 +17,8 @@ import {
 } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -28,10 +30,20 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _popupService: PopupService
   ) {}
   @Input('states') states: any[] = [];
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  relations: any[] = [
+    { id: 'father', name: 'Father' },
+    { id: 'mother', name: 'Mother' },
+    { id: 'spouse', name: 'Spouse' },
+    { id: 'son', name: 'Son' },
+    { id: 'daughter', name: 'Dauhgter' },
+    { id: 'sibling', name: 'Sibling' },
+  ];
+
   ngOnInit(): void {
     this._authService
       .getUserRegistrationDetails(this.currentUser.user.user_ID)
@@ -62,7 +74,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     }
   }
 
-
   onStepChange(e: StepperSelectionEvent) {
     if (e.selectedIndex === 1) {
       this.populateDistricts(this.currentUser.user.state_ID);
@@ -79,7 +90,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
                 resp.data &&
                 Object.keys(resp).length > 0
               ) {
-                this.userPersonalDetail = resp.data;              
+                this.userPersonalDetail = resp.data;
                 this.populateUserPersonalDetailForm(this.userPersonalDetail);
               }
             },
@@ -106,7 +117,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
                 resp.data &&
                 Object.keys(resp.data).length > 0
               ) {
-                this.userBankDetails = resp.data;                
+                this.userBankDetails = resp.data;
                 this.populateUserBankDetailForm(this.userBankDetails);
               }
             },
@@ -255,7 +266,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     });
   }
 
-
   getUserRegistrationFormErrorMessage(field: string): string | null {
     const control: AbstractControl | null =
       this.userRegistrationFormGroup.get(field);
@@ -277,8 +287,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
     return null;
   }
-
- 
 
   snackBarConfig: MatSnackBarConfig = {
     horizontalPosition: 'center',
@@ -302,14 +310,31 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       module_ID: this.currentUser.user.module_ID,
       personal_Details: this.currentUser.user.personal_Details,
       bank_Details: this.currentUser.user.bank_Details,
-      kyC_details: this.currentUser.user.kyC_details
+      kyC_details: this.currentUser.user.kyC_details,
     };
     console.log(userRegData);
     // mandar bhwomik
 
     this._authService.updateUserReglInfo(userRegData).subscribe({
-      next: (resp) => console.log(resp),
-      error: (err) => console.log(err),
+      next: (resp) => {
+        console.log(resp);
+        if (resp.status === 'Success' && resp.code === 200) {
+          this.userRegDetails = resp.data;
+          this._popupService.openAlert({
+            message: 'User registration details updated successfully!',
+            header: 'Success',
+          });
+          this.populateUserRegistrationForm(this.userRegDetails);
+        }
+      },
+      error: (err) => {
+        console.log(`Error while updating user reg details`);
+        console.log(err);
+        this._popupService.openAlert({
+          header: 'Fail',
+          message: 'Error while updating user registration details!',
+        });
+      },
     });
   }
 
@@ -317,12 +342,12 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     console.log(this.personalDetailsFormGroup.value);
 
     const userPersonalInfo = {
-      user_psnal_ID: 0,
+      user_psnal_ID: this.userPersonalDetail.user_psnal_ID,
       user_ID: this.currentUser.user_ID,
       user_FName: this.personalDetailsFormGroup.value.firstName,
       user_LName: this.personalDetailsFormGroup.value.lastName,
       user_Gender: this.personalDetailsFormGroup.value.gender,
-      user_Dob: new Date(this.personalDetailsFormGroup.value.dob).toISOString(),
+      user_Dob: this.getDate(this.personalDetailsFormGroup.value.dob),
       state_ID: this.personalDetailsFormGroup.value.state,
       district_ID: this.personalDetailsFormGroup.value.district,
       block_ID: this.personalDetailsFormGroup.value.block,
@@ -336,66 +361,119 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     console.log(userPersonalInfo);
     this._authService.updateUserPersonalInfo(userPersonalInfo).subscribe({
       next: (resp: any) => {
+        console.log(resp);
         if (resp.code === 200 && resp.status === 'Success') {
-          this._snackBar.open(
-            'User personal details saved successfully!',
-            'Ok',
-            this.snackBarConfig
+          this.userPersonalDetail = resp.data;
+
+          this.populateUserPersonalDetailForm(this.userPersonalDetail);
+          this.populateDistricts(this.userPersonalDetail.state_ID);
+          if (this.blocks.length == 0) this.populateBlocks();
+
+          const state = this.states.filter(
+            (x) => x.state_ID === this.userPersonalDetail.state_ID
           );
+          console.log(state)
+          if (state?.length > 0) {
+            localStorage.setItem('user_state', JSON.stringify({...state[0], user_ID: this.userPersonalDetail.user_ID}));
+          }
+
+          this._popupService.openAlert({
+            message: 'User personal details updated successfully!',
+            header: 'Success',
+          });
         }
       },
       error: (err) => {
-        console.log(`error while saving user personal details`);
-        console.error(err);
-        this._snackBar.open(
-          'Error while saving user personal details!',
-          'Fail',
-          this.snackBarConfig
-        );
+        console.log(`Error while updating user personal details`);
+        console.log(err);
+        this._popupService.openAlert({
+          header: 'Fail',
+          message: 'Error while updating user personal details!',
+        });
       },
     });
   }
 
+  getDate(date: Date | string) {
+    const d = new Date(date).getTime() + 19800000;
+    return new Date(d).toISOString();
+  }
+
   submitBankDetails() {
-    const bankDetails = {
-      bank_Detail_Id: 0,
-      user_ID: this.currentUser.user_ID,
-      bank_ID: this.bankDetailsFormGroup.value.bank_id,
-      userAccount_HolderName: this.bankDetailsFormGroup.value.accountHolderName,
-      user_Account_Number: this.bankDetailsFormGroup.value.accountNumber,
-      user_IFSCCode: this.bankDetailsFormGroup.value.ifsc,
-      user_BranchName: this.bankDetailsFormGroup.value.branchName,
-    };
+    let bankDetails;
+    let bankSaveObservable: Observable<any>;
+    if(Object.keys(this.userBankDetails).length > 0 ) {
+      //update
+      bankDetails = {
+        bank_Detail_Id: this.userBankDetails.bank_Detail_Id,
+        user_ID: this.userBankDetails.user_ID,
+  
+        bank_ID: this.bankDetailsFormGroup.value.bank_id,
+        userAccount_HolderName: this.bankDetailsFormGroup.value.accountHolderName,
+        user_Account_Number: this.bankDetailsFormGroup.value.accountNumber,
+        user_IFSCCode: this.bankDetailsFormGroup.value.ifsc,
+        user_BranchName: this.bankDetailsFormGroup.value.branchName,
+      };
+      bankSaveObservable = this._authService.updateUserBankDetails(bankDetails);
+    }  else {
+      //insert
+
+      bankDetails = {
+        bank_Detail_Id: 0,
+        user_ID: this.currentUser.user.user_ID,
+  
+        bank_ID: this.bankDetailsFormGroup.value.bank_id,
+        userAccount_HolderName: this.bankDetailsFormGroup.value.accountHolderName,
+        user_Account_Number: this.bankDetailsFormGroup.value.accountNumber,
+        user_IFSCCode: this.bankDetailsFormGroup.value.ifsc,
+        user_BranchName: this.bankDetailsFormGroup.value.branchName,
+      };
+
+      bankSaveObservable = this._authService.saveUserBankDetails(bankDetails);
+    }
+
+    
+
     console.log(bankDetails);
-    this._authService.updateUserBankDetails(bankDetails).subscribe({
+    
+    bankSaveObservable.subscribe({
       next: (resp: any) => {
         if (resp.code === 200 && resp.status === 'Success') {
-          this._snackBar.open(
-            'User bank details saved successfully!',
-            'Ok',
-            this.snackBarConfig
-          );
+          //For update only 
+          if(Object.keys(this.userBankDetails).length > 0){
+            this.userBankDetails = resp.data;
+            this.populateUserBankDetailForm(this.userBankDetails);
+          }
+
+          this._popupService.openAlert({
+            message: 'User bank details updated successfully!',
+            header: 'Success',
+          });
         }
       },
       error: (err) => {
         console.log(`error while saving user bank details`);
         console.error(err);
-        this._snackBar.open(
-          'Error while saving user bank details!',
-          'Fail',
-          this.snackBarConfig
-        );
+        this._popupService.openAlert({
+          header: 'Fail',
+          message: 'Error while updating user bank details!',
+        });
       },
     });
   }
 
-  submitKYCDetails() {
+
+  submitKYCDetails(){
     console.log(this.kycDetailsFormGroup.value);
     console.log(this.base64_file_data);
+    this.saveKYCDetails();
+  }
+
+  saveKYCDetails() {
 
     const kycDetails = {
       kyC_ID: 0,
-      user_ID: this.currentUser.user_ID,
+      user_ID: this.currentUser.user.user_ID,
       aadhar_Number: this.kycDetailsFormGroup.value.adhar_no,
       aadhar_FontPhoto: this.base64_file_data.adhar_front,
       aadhar_BackPhoto: this.base64_file_data.adhar_back,
@@ -408,31 +486,18 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       center_OutDoorPhoto: this.base64_file_data.center_outdoor,
     };
 
-    this._authService.updateUserKycDetails(kycDetails).subscribe({
+    this._authService.saveUserKycDetails(kycDetails).subscribe({
       next: (resp: any) => {
         console.log(resp);
         if (resp.code === 200 && resp.status === 'Success') {
-          this._snackBar.open(
-            'User KYC details updated successfully!',
-            'Ok',
-            this.snackBarConfig
-          );
+
         } else {
-          this._snackBar.open(
-            'Error while saving user KYC details!',
-            'Fail',
-            this.snackBarConfig
-          );
         }
       },
       error: (err) => {
         console.log(`error while saving user kyc details`);
         console.error(err);
-        this._snackBar.open(
-          'Error while saving user KYC details!',
-          'Fail',
-          this.snackBarConfig
-        );
+
       },
     });
   }

@@ -15,7 +15,11 @@ h3{
 }
 
 .sidemenu {
-  width: 20%;
+  width: 15%;
+
+  @media (max-width: $small) {
+    width: 30%;
+  }
 
   ul {
     width: 100%;
@@ -25,7 +29,7 @@ h3{
     li {
       display: flex;
       align-items: center;
-      padding: 0.8rem 1rem;
+      padding: 0.5rem;
       font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;

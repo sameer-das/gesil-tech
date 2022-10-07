@@ -84,6 +84,37 @@ export class AuthService {
   }
 
 
+
+
+  private URL_SAVE_USER_KYC_DETAILS: string = `/api/User/SaveUserKycInfo`;
+  saveUserKycDetails(kycDetials: any) {
+    return this._http.post(
+      `${environment.service_base_url}${this.URL_SAVE_USER_KYC_DETAILS}`,
+      kycDetials
+    );
+  }
+
+
+  private URL_SAVE_USER_BANK_DETAILS: string = `/api/User/SaveUserBankInfo`;
+  saveUserBankDetails(bankDetails: any) {
+    return this._http.post(
+      `${environment.service_base_url}${this.URL_SAVE_USER_BANK_DETAILS}`,
+      bankDetails
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   isLoggedIn(): boolean {
     const token = localStorage.getItem('auth_token');

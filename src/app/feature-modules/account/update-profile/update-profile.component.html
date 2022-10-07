@@ -61,7 +61,7 @@
           </div>
   
           <div class="form__row cta__container">
-            <button type="submit" class="btn primary">Update Registration Details</button>
+            <button type="submit" class="btn primary" [disabled]="userRegistrationFormGroup.invalid">Update Registration Details</button>
           </div>
         </form>
       </mat-step>
@@ -155,9 +155,7 @@
             <mat-form-field class="form__field" appearance="standard">
               <mat-label>Relation Wtih Nominee</mat-label>
               <mat-select formControlName="relationWithNominee">
-                <mat-option value="1">Relation 1</mat-option>
-                <mat-option value="2">Relation 2</mat-option>
-                <mat-option value="3">Relation 3</mat-option>
+                <mat-option *ngFor="let relation of relations" [value]="relation.id">{{relation.name}}</mat-option>
               </mat-select>
               <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('relationWithNominee')">{{getUserPersonalDetailsFormErrorMessage('relationWithNominee')}}</mat-error>
             </mat-form-field>
@@ -305,7 +303,7 @@
               <button type="button" (click)="remove_file('center_outdoor')">Remove</button>
             </div>
           </div>
-          <div class="form__row cta__container">
+          <div class="kyc_cta_container">
             <button type="button" class="btn primary" (click)="submitKYCDetails()" >Update KYC Details</button>
           </div>
     

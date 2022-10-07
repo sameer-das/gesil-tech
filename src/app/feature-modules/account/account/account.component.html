@@ -10,7 +10,7 @@
         </ul>
     </div>
     <div class="content"> 
-        <app-my-profile *ngIf="currentTab === 1" [userState]="userState"></app-my-profile>
+        <app-my-profile *ngIf="currentTab === 1"></app-my-profile>
         <app-update-profile *ngIf="currentTab === 2" [states]="states"></app-update-profile>
         <app-change-password *ngIf="currentTab === 3"></app-change-password>
         <!-- <app-change-pin *ngIf="currentTab === 3"></app-change-pin> -->

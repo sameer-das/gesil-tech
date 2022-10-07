@@ -175,7 +175,7 @@ export class RegisterDialogNewComponent implements OnInit {
       block_ID: +this.registrationFormGroup.value.block,
       user_Pin: this.registrationFormGroup.value.pin,
       user_GP: this.registrationFormGroup.value.gp,
-      user_Dob: this.getFormattedDob(this.registrationFormGroup.value.dob),
+      user_Dob: this.getDate(this.registrationFormGroup.value.dob),
     };
     console.dir(userRegData);
 
@@ -238,11 +238,10 @@ export class RegisterDialogNewComponent implements OnInit {
     });
   }
 
-  getFormattedDob(dob: any) {
-    return dob.toISOString();
-    // // add 1 day to solve the -5.30 problem 
-    // const date = moment(dob).add(1, 'd');
-    // // console.log(date)
-    // return date.toISOString()
+  getDate(date: Date | string) {
+    const d = new Date(date).getTime() + 19800000;
+    return new Date(d).toISOString();
   }
+
+
 }
