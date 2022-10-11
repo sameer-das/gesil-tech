@@ -471,8 +471,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   saveKYCDetails() {
 
+
     const kycDetails = {
-      kyC_ID: 0,
+      kyC_ID: this.currentUser.kycDetail.kyC_ID,
       user_ID: this.currentUser.user.user_ID,
       aadhar_Number: this.kycDetailsFormGroup.value.adhar_no,
       aadhar_FontPhoto: this.base64_file_data.adhar_front,

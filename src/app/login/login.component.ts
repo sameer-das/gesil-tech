@@ -43,9 +43,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
+  buttonText: string = 'Login Securely';
+  disabled: boolean = false;
   onLogin() {
     console.log(this.loginForm.value);
+    this.buttonText = 'Loging you in';
+    this.disabled = true;
     this._authService.login(this.loginForm.value).subscribe({
       next: (result: any) => {
         console.log(result);
@@ -64,6 +67,8 @@ export class LoginComponent implements OnInit {
                   header: 'Fail',
                   message: 'Unable to loade user details!',
                 });
+                this.buttonText = 'Login Securely';
+                this.disabled = false;
               }
             },
             error: (err) => {
@@ -73,6 +78,8 @@ export class LoginComponent implements OnInit {
                 header: 'Fail',
                 message: 'Unable to loade user details!',
               });
+              this.buttonText = 'Login Securely';
+              this.disabled = false;
             },
           });
         } else {
@@ -80,6 +87,8 @@ export class LoginComponent implements OnInit {
             header: 'Fail',
             message: 'Invalid userid and password!',
           });
+          this.buttonText = 'Login Securely';
+          this.disabled = false;
         }
       },
       error: (err) => {
@@ -88,22 +97,38 @@ export class LoginComponent implements OnInit {
           header: 'Fail',
           message: 'Error while logging you in!',
         });
+        this.buttonText = 'Login Securely';
+        this.disabled = false;
       },
     });
   }
 
-  getLoginFormErrorMessage(field: string): string | null{
+  getLoginFormErrorMessage(field: string): string | null {
     const control = this.loginForm.get(field);
-    if(control?.errors){
-      if(control.hasError('required')){
-        if(field === 'userid') return 'Please enter your user id to login!';
-        if(field === 'password') return 'Please enter your password to login!';
+    if (control?.errors) {
+      if (control.hasError('required')) {
+        if (field === 'userid') return 'Please enter your user id to login!';
+        if (field === 'password') return 'Please enter your password to login!';
       }
     }
     return null;
   }
 
-  openForgotPasswordDialog(){
-    this.dialog.open(ForgotPasswordComponent)
+  openForgotPasswordDialog() {
+    this.dialog.open(ForgotPasswordComponent);
+  }
+
+  eye_icon_text:string = 'visibility_off';
+  showPassword: boolean = false;
+  
+  togglePasswordShow() {
+    if(this.showPassword){
+      this.showPassword = false;
+      this.eye_icon_text = 'visibility';
+    } else {
+      this.showPassword = true;
+      this.eye_icon_text = 'visibility_off';
+    }
+    // console.log(this.showPassword, this.eye_icon_text);
   }
 }

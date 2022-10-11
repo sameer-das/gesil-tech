@@ -9,8 +9,11 @@ $extra-large: 1200px;
 $xxl: 1440px;
 
 // colors
-$gradient1: #03a9f5;
-$gradient2: #31837b;
+$gradient1: hsl(199, 98%, 50%);
+$gradient2: hsl(199, 98%, 40%);
+// $gradient2: #31837b;
+
+
 
 $primary-blue: $gradient1;
 $blue-white: #f3f5ff;
@@ -116,5 +119,7 @@ $text-black: rgba(0, 0, 0, 0.87);
 .mat-toolbar.mat-primary {
   background: $shadow-white; /* fallback for old browsers */
 }
+
+
 
 

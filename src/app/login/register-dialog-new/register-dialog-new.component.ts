@@ -77,6 +77,7 @@ export class RegisterDialogNewComponent implements OnInit {
     console.log(refId);
     this.disabled = true;
     this.buttonLable = 'Verifying...';
+
     this._authService.checkRefId(refId).subscribe({
       next: (resp: any) => {
         console.log(resp);

@@ -86,7 +86,7 @@ export class AuthService {
 
 
 
-  private URL_SAVE_USER_KYC_DETAILS: string = `/api/User/SaveUserKycInfo`;
+  private URL_SAVE_USER_KYC_DETAILS: string = `/api/User/UpdateUserKycDetail`;
   saveUserKycDetails(kycDetials: any) {
     return this._http.post(
       `${environment.service_base_url}${this.URL_SAVE_USER_KYC_DETAILS}`,
@@ -170,6 +170,13 @@ export class AuthService {
   getUserKycDetail(userId: string){
     return this._http.get(
       `${environment.service_base_url}${this.URL_GET_USER_KYC_DETAIL}?userId=${userId}`
+    );
+  }
+
+  private URL_GET_SEND_FORGOT_PSW_EMAIL = `/api/User/Forgotpwd`;
+  sendForgotPasswordMail(email: string) {
+    return this._http.get(
+      `${environment.service_base_url}${this.URL_GET_SEND_FORGOT_PSW_EMAIL}?emailid=${email}`
     );
   }
 

@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatExpansionModule} from '@angular/material/expansion';
 const MATERIAL = [
   MatDialogModule,
   MatTabsModule,
@@ -38,7 +39,8 @@ const MATERIAL = [
   MatListModule,
   MatTreeModule,
   MatSnackBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatExpansionModule
 ];
 
 @NgModule({

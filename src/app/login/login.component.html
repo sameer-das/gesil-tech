@@ -14,7 +14,8 @@
             </mat-form-field>
           
             <mat-form-field class="form__input">
-              <input matInput placeholder="Password" type="password" formControlName="password">
+              <input matInput placeholder="Password" [type]="showPassword ? 'text' : 'password'" formControlName="password">
+              <mat-icon role="button" title="Show or hide password" class="eye_icon" [ngStyle]="{color: showPassword ? '#000' : '#b9b9b9'}" (click)="togglePasswordShow()">{{eye_icon_text}}</mat-icon>
               <mat-error *ngIf="getLoginFormErrorMessage('password')">{{getLoginFormErrorMessage('password')}}</mat-error>
 
             </mat-form-field>
@@ -30,7 +31,10 @@
                   <label><input type="checkbox">Rememeber me</label>
               </div> -->
               <div class="form__input">
-                <button type="submit" [disabled]="loginForm.invalid"><span><mat-icon>lock</mat-icon>Login Securely</span> </button>
+                <button type="submit" [disabled]="loginForm.invalid || disabled">
+                  <span ><mat-icon *ngIf="!disabled">lock</mat-icon> {{buttonText}} </span> 
+                  <mat-icon *ngIf="disabled" class="spinner"><mat-spinner diameter="20"></mat-spinner></mat-icon>
+                </button>
                
                   <!-- <input type="submit" value="Login Securely"> -->
               </div>
