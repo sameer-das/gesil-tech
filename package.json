@@ -19,7 +19,7 @@
     "@angular/material": "^13.3.9",
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
-    "@angular/router": "~13.3.0",
+    "@angular/router": "^13.3.11",
     "moment": "^2.29.4",
     "ngx-owl-carousel-o": "^7.0.4",
     "rxjs": "~7.5.0",

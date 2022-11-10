@@ -1,0 +1,34 @@
+@import "../../../styles/constants.scss";
+
+h2.header__text {
+  font-size: 1.5rem;
+  color: $dark-grey;
+  font-weight: $fw-bold;
+  //   text-align: center;
+  margin-top: 1rem;
+}
+
+.plan__card {
+  margin: 0.7rem 0;
+  color: $dark-grey;
+
+  mat-card-title {
+    color: $primary-blue;
+  }
+  &__description__heading {
+    font-size: 1rem;
+  }
+
+  &__description__content {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  button.select_btn {
+    position: absolute;
+    right: 16px;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}

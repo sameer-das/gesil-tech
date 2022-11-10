@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MobileNumberSearchComponent } from './feature-modules/mobile-recharge/mobile-number-search/mobile-number-search.component';
+import {
+  MobilePlanGuard,
+  MobilePlanResolverService,
+} from './feature-modules/mobile-recharge/mobile-plan-resolver.service';
+import { MobileRechargePlanComponent } from './feature-modules/mobile-recharge/mobile-recharge-plan/mobile-recharge-plan.component';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -14,27 +20,44 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./feature-modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
-        canLoad: [AuthGuardService]
+          import('./feature-modules/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
+        canLoad: [AuthGuardService],
       },
       {
         path: 'wallet',
         loadChildren: () =>
-          import('./feature-modules/wallet/wallet.module').then((m) => m.WalletModule),
-          canLoad: [AuthGuardService]
+          import('./feature-modules/wallet/wallet.module').then(
+            (m) => m.WalletModule
+          ),
+        canLoad: [AuthGuardService],
       },
       {
         path: 'account',
         loadChildren: () =>
-          import('./feature-modules/account/account.module').then((m) => m.MyaccountModule),
-          canLoad: [AuthGuardService]
+          import('./feature-modules/account/account.module').then(
+            (m) => m.MyaccountModule
+          ),
+        canLoad: [AuthGuardService],
+      },
+      { path: 'mobile-recharge', component: MobileNumberSearchComponent },
+      {
+        path: 'mobile-recharge-plan',
+        component: MobileRechargePlanComponent,
+        resolve: {
+          data: MobilePlanResolverService          
+        },
+        canActivate: [MobilePlanGuard]
       },
     ],
   },
   {
     path: 'forgot',
     loadChildren: () =>
-      import('./feature-modules/forgot-password/forgot-password.module').then((m) => m.ForgotPasswordModule),
+      import('./feature-modules/forgot-password/forgot-password.module').then(
+        (m) => m.ForgotPasswordModule
+      ),
   },
   // {
   //   path: '**',

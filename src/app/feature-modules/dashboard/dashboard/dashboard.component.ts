@@ -27,6 +27,7 @@ export class DashboardComponent {
     {
       name: 'Mobile Recharge',
       img: 'https://digitalseva.gskindia.org/DigitalSevaGsk/images/userdashboard/mobile.png',
+      route: '/mobile-recharge'
     },
     {
       name: 'DTH',

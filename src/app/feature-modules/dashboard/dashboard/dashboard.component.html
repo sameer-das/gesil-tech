@@ -116,13 +116,16 @@
     <mat-card class="menu__card">
       <h3 class="card__title">Utility Services</h3>
       <ul class="menu">
-        <li *ngFor="let menu of quick_menus" (click)="openDialog(menu.name)">
-          <div class="menu__container">
-            <div class="menu__container__img__container">
-              <img class="menu__image" [src]="menu.img">
+        <li *ngFor="let menu of quick_menus">
+          <a [routerLink]="menu?.route">
+            <div class="menu__container">
+              <div class="menu__container__img__container">
+                <img class="menu__image" [src]="menu.img">
+              </div>
+              <p class="menu__title">{{menu.name}}</p>
             </div>
-            <p class="menu__title">{{menu.name}}</p>
-          </div>
+
+          </a>
         </li>
       </ul>
     </mat-card>

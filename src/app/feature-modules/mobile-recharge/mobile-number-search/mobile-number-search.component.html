@@ -1,0 +1,23 @@
+<h2 class="header__text">Prepaid mobile recharge</h2>
+<p class="header__subtext">Recharge your number for validity, talktime or data</p>
+<div class="form__container">
+    <form #mobileForm="ngForm" autocomplete="off" (submit)="onFormSubmit()">
+        <label for="mobile_no">Mobile number</label>
+        <div class="input__container">
+            <input (input)="onInput(mobileForm)" type="text" id="mobile_no" 
+            name="mobile_no" [(ngModel)]="mobileNo" maxlength="10"
+            pattern="^((\\+91-?)|0)?[0-9]{10}$"
+            placeholder="Please enter your mobile number">
+            <mat-spinner *ngIf="isFetching" color="warn" diameter="25"></mat-spinner>
+            <p class="info" [ngClass]="{'error': isInputInvalid}">{{inputInvalidMessage}}</p>
+            <div class="spinner">
+
+            </div>
+        </div>
+        <p *ngIf="showCta">{{currentOperator}} > {{currentLocation}}</p>
+        <div class="cta__container">
+            <button *ngIf="showCta" class="btn primary" type="submit">Select your pack</button>
+        </div>
+
+    </form>
+</div>

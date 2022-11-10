@@ -96,6 +96,10 @@
     }
 
     li {
+      a, a:active, a:visited {
+        text-decoration: none;
+        color: $dark-grey;
+      }
       list-style: none;
       min-width: 4rem;
       cursor: pointer;

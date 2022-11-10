@@ -13,3 +13,18 @@ export class WalletComponent implements OnInit {
   }
 
 }
+
+
+@Component({
+  selector: 'app-wallet2',
+  template: 'Wallet 2 works',
+  // styleUrls: ['./wallet.component.scss']
+})
+export class Wallet2Component implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
