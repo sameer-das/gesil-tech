@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MobileRechargePopupComponent } from '../mobile-recharge-popup/mobile-recharge-popup.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +12,10 @@ export class DashboardComponent {
   public ngOnInit(): void {}
 
   openDialog(name?: string) {
-    if(name?.toLowerCase() === 'mobile recharge'){
-      this.dialog.open(MobileRechargePopupComponent)
-    }
+    console.log('Open dialog called')
+    // if(name?.toLowerCase() === 'mobile recharge'){
+    //   // this.dialog.open(MobileRechargePopupComponent)
+    // }
     // const dialogRef = this.dialog.open(QuickMenuDialog);
 
     // dialogRef.afterClosed().subscribe((result) => {

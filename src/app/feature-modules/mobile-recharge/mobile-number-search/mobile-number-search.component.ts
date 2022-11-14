@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { MobileRechargeService } from '../../dashboard/mobile-recharge.service';
+import { MobileRechargeService } from '../mobile-recharge.service';
 
 @Component({
   selector: 'app-mobile-number-search',
@@ -40,7 +40,6 @@ export class MobileNumberSearchComponent implements OnInit {
       console.log('trigger call');
       this.isFetching = true;
       // implement SwitchMap here
-      this._mobileService.mobileNumber = f.value.mobile_no;
       this._mobileService.getMobileNumberDetails(f.value.mobile_no).subscribe({
         next: (res: any) => {
           if (
@@ -76,6 +75,6 @@ export class MobileNumberSearchComponent implements OnInit {
   }
 
   onFormSubmit() {
-    this._router.navigate(['mobile-recharge-plan']);
+    this._router.navigate(['mobile-recharge/plans']);
   }
 }

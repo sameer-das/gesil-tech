@@ -1,11 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MobileNumberSearchComponent } from './feature-modules/mobile-recharge/mobile-number-search/mobile-number-search.component';
-import {
-  MobilePlanGuard,
-  MobilePlanResolverService,
-} from './feature-modules/mobile-recharge/mobile-plan-resolver.service';
-import { MobileRechargePlanComponent } from './feature-modules/mobile-recharge/mobile-recharge-plan/mobile-recharge-plan.component';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -41,14 +35,13 @@ const routes: Routes = [
           ),
         canLoad: [AuthGuardService],
       },
-      { path: 'mobile-recharge', component: MobileNumberSearchComponent },
       {
-        path: 'mobile-recharge-plan',
-        component: MobileRechargePlanComponent,
-        resolve: {
-          data: MobilePlanResolverService          
-        },
-        canActivate: [MobilePlanGuard]
+        path: 'mobile-recharge',
+        loadChildren: () =>
+          import(
+            './feature-modules/mobile-recharge/mobile-recharge.module'
+          ).then((m) => m.MobileRechargeModule),
+        canLoad: [AuthGuardService],
       },
     ],
   },

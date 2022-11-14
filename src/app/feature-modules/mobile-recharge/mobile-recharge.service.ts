@@ -5,10 +5,6 @@ import { Injectable } from '@angular/core';
 export class MobileRechargeService {
   constructor(private _http: HttpClient) {}
 
-  mobileNumber: string = '';
-  currentBillerId: string = '';
-  currentCircle: string = '';
-
   getMobileNumberDetails(mobileNo: string) {
     return this._http.post(
       `https://api.gesiltech.com/api/GSKRecharge/eBBPSMNP`,

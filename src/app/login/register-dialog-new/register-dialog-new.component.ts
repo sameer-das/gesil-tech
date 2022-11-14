@@ -185,12 +185,21 @@ export class RegisterDialogNewComponent implements OnInit {
       .subscribe((resp: any) => {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200) {
-          // this._dialogRef.close();
-          this.closeRegDialog();
+
+          if(JSON.parse(resp.data)[0]?.Result?.includes('already registered')) {
+            this._popupService.openAlert({
+              header: 'Fail',
+              message: 'Provided Email ID or mobile number is already registered with us!',
+            });
+            return;
+          }
+
           this._popupService.openAlert({
             header: 'Success',
             message: 'Thank you for registering with us! Login credentials has been sent to your registered Email ID and Mobile Number!',
           });
+          this.closeRegDialog();
+          
         } else {
           console.log(resp);
           this._popupService.openAlert({
