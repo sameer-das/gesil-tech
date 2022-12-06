@@ -86,7 +86,7 @@ export class RegisterDialogNewComponent implements OnInit {
         } else if(resp.status === 'Success' && resp.code === 200 && resp.data === 'F'){
           this._popupService.openAlert({
             header: 'Alert',
-            message: 'The reference number you have entered is invalid. Please use Admin reference code i.e. \'admin\'!'
+            message: 'The reference number you have entered is invalid. Please use Admin reference code i.e. 555401005338 '
           });
           this.disabled = false;
           this.buttonLable = 'Verify and Proceed';
@@ -177,6 +177,7 @@ export class RegisterDialogNewComponent implements OnInit {
       user_Pin: this.registrationFormGroup.value.pin,
       user_GP: this.registrationFormGroup.value.gp,
       user_Dob: this.getDate(this.registrationFormGroup.value.dob),
+      ref_Code: this.refNoFormGroup.value.refNo
     };
     console.dir(userRegData);
 

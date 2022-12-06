@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
         if (result.status === 'Success' && result.data) {
           this._authService.userDetails = result.data;
 
-          this._authService.getUserInfos(result.data.user_ID).subscribe({
+          this._authService.getUserInfos(result.data.userDetais.user_ID).subscribe({
             next: (resp: any) => {
               console.log(resp);
               if (resp.status === 'Success' && resp.code === 200) {
-                localStorage.setItem('auth', JSON.stringify(resp.data));
+                localStorage.setItem('auth', JSON.stringify({...resp.data, menuCategories: this.getFormattedServices(result.data)}));
                 localStorage.setItem('auth_token', 'xxxxxxxxxxxxxxxx');
                 this._router.navigate(['dashboard']);
               } else {
@@ -130,5 +130,17 @@ export class LoginComponent implements OnInit {
       this.eye_icon_text = 'visibility_off';
     }
     // console.log(this.showPassword, this.eye_icon_text);
+  }
+
+  getFormattedServices(data: any){
+    const categories = data.services.map((serv: any) => {
+      return {...serv, 
+        services: data.categories.filter((cat: any) => cat.services_ID === serv.services_ID) 
+      }
+    });
+
+    console.log(categories);
+    return categories;
+
   }
 }

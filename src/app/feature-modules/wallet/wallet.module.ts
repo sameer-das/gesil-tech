@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Wallet2Component, WalletComponent } from './wallet/wallet.component';
+import { WalletComponent } from './wallet/wallet.component';
 import { MaterialModule } from '../../material.module';
 import { RouterModule } from '@angular/router';
+import { WalletService } from './wallet.service';
 
 
 
@@ -15,8 +16,8 @@ import { RouterModule } from '@angular/router';
     MaterialModule,
     RouterModule.forChild([
       {      path:'', component: WalletComponent    },
-      {      path:'two', component: Wallet2Component    }
   ])
-  ]
+  ],
+  providers: [WalletService]
 })
 export class WalletModule { }

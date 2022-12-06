@@ -1,208 +1,23 @@
-<!-- <mat-card class="dashboard__card">
-  <h3 class="card__title">My Wallet</h3>
-  <div class="dashboard__menu__container">
 
-    <div class="balance__container">
-      <div class="icon__container">
-        <img src="/assets/icons/wallet-icon.png" alt="wallet icon">
-      </div>
 
-      <div class="balance__texts">
-        <p class="icon__title">AEPS Balance</p>
-        <p class="icon__amt">125600.00</p>
-      </div>
-    </div>
-
-    <div class="balance__container">
-      <div class="icon__container">
-        <img src="/assets/icons/wallet-icon.png" alt="wallet icon">
-      </div>
-
-      <div class="balance__texts">
-        <p class="icon__title">Balance Avail.</p>
-        <p class="icon__amt">12555 .00</p>
-      </div>
-    </div>
-
-    <div class="balance__container menu__trigger" [matMenuTriggerFor]="menu">
-      <div class="icon__container">
-        <img src="/assets/icons/wallet-icon.png" alt="wallet icon">
-      </div>
-
-      <div class="balance__texts">
-        <p class="icon__title">Load Wallet</p>
-      </div>
-    </div>
-    <button class="btn__load__wallet" [matMenuTriggerFor]="menu">
-    load wallet
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>Payment Request</button>
-      <button mat-menu-item>Instant Recharge</button>
-    </mat-menu>
-
-  </div>
-</mat-card> -->
-
-<!-- <mat-card class="menu__card">
-  <ul class="menu" style="margin: 0">
-    <li *ngFor="let menu of all_services" (click)="openDialog()">
-      <div class="menu__container">
-        <div class="menu__container__img__container">
-
-          <img class="menu__image" [src]="menu.img">
-        </div>
-        <p class="menu__title">{{menu.name}}</p>
-      </div>
-    </li>
-  </ul>
-</mat-card> -->
-
-<app-carousel></app-carousel>
+<!-- <app-carousel></app-carousel> -->
 
 <div class="main__section">
 
-  <div class="menu__cards">  
-    <!-- <mat-card class="chips__card">
-      <div class="chips__container">
-        <div class="chip chip1">
-          <div class="svg__container">
-            <img src="/assets/icons/flight.svg" alt="Flight">
-          </div>
-          <div class="svg__texts">
-            <p>Flight Ticket</p>
-            <p>Booking</p>
-          </div>
-        </div>
-        <div class="chip chip2">
-          <div class="svg__container">
-            <img src="/assets/icons/bus.svg" alt="Flight">
-          </div>
-          <div class="svg__texts">
-            <p>Bus Ticket</p>
-            <p>Booking</p>
-          </div>
-        </div>
-        <div class="chip chip3">
-          <div class="svg__container">
-            <img src="/assets/icons/paytm.svg" alt="Flight">
-          </div>
-          <div class="svg__texts">
-            <p>Paytm</p>
-            <p>Wallet</p>
-          </div>
-        </div>
-        <div class="chip chip4">
-          <div class="svg__container">
-            <img src="/assets/icons/cms.svg" alt="Flight">
-          </div>
-          <div class="svg__texts">
-            <p>CMS</p>
-            <p>Collect Payment</p>
-          </div>
-        </div>
-        <div class="chip chip5">
-          <div class="svg__container">
-            <img src="/assets/icons/bag.svg" alt="Flight">
-          </div>
-          <div class="svg__texts">
-            <p>Wholesale</p>
-            <p>Market</p>
-          </div>
-          </div>
-      </div>
-    </mat-card> -->
-    
-    <mat-card class="menu__card">
-      <h3 class="card__title">Utility Services</h3>
+  <div class="menu__cards">      
+    <mat-card class="menu__card" *ngFor="let category of currentUser.menuCategories">
+      <h3 class="card__title">{{category.services_Name}}</h3>
       <ul class="menu">
-        <li *ngFor="let menu of quick_menus">
-          <a [routerLink]="menu?.route">
+        <li *ngFor="let service of category.services">
+          <a [routerLink]="service?.route.toLowerCase()">
             <div class="menu__container">
               <div class="menu__container__img__container">
-                <img class="menu__image" [src]="menu.img">
+                <img class="menu__image" [src]="getImagePath(service.services_Cat_ImagesName)">
               </div>
-              <p class="menu__title">{{menu.name}}</p>
+              <p class="menu__title">{{service.services_Cat_Name}}</p>
             </div>
 
           </a>
-        </li>
-      </ul>
-    </mat-card>
-    
-    
-    <mat-card class="menu__card">
-      <h3 class="card__title">Financial Services </h3>
-      <ul class="menu">
-        <li *ngFor="let menu of financial_services" (click)="openDialog()">
-          <div class="menu__container">
-            <div class="menu__container__img__container">
-
-              <img class="menu__image" [src]="menu.img">
-            </div>
-            <p class="menu__title">{{menu.name}}</p>
-          </div>
-        </li>
-      </ul>
-    </mat-card>
-    
-    
-    <mat-card class="menu__card">
-      <h3 class="card__title">Insurance</h3>
-      <ul class="menu">
-        <li *ngFor="let menu of insurance" (click)="openDialog()">
-          <div class="menu__container">
-            <div class="menu__container__img__container">
-
-              <img class="menu__image" [src]="menu.img">
-            </div>
-            <p class="menu__title">{{menu.name}}</p>
-          </div>
-        </li>
-      </ul>
-    </mat-card>
-    
-    <mat-card class="menu__card">
-      <h3 class="card__title">Banking Services</h3>
-      <ul class="menu">
-        <li *ngFor="let menu of banking" (click)="openDialog()">
-          <div class="menu__container">
-            <div class="menu__container__img__container">
-
-              <img class="menu__image" [src]="menu.img">
-            </div>
-            <p class="menu__title">{{menu.name}}</p>
-          </div>
-        </li>
-      </ul>
-    </mat-card>
-    
-    <mat-card class="menu__card">
-      <h3 class="card__title">Adhar Services</h3>
-      <ul class="menu">
-        <li *ngFor="let menu of adhar" (click)="openDialog()">
-          <div class="menu__container">
-            <div class="menu__container__img__container">
-
-              <img class="menu__image" [src]="menu.img">
-            </div>
-            <p class="menu__title">{{menu.name}}</p>
-          </div>
-        </li>
-      </ul>
-    </mat-card>
-    
-    <mat-card class="menu__card">
-      <h3 class="card__title">Education</h3>
-      <ul class="menu">
-        <li *ngFor="let menu of education" (click)="openDialog()">
-          <div class="menu__container">
-            <div class="menu__container__img__container">
-
-              <img class="menu__image" [src]="menu.img">
-            </div>
-            <p class="menu__title">{{menu.name}}</p>
-          </div>
         </li>
       </ul>
     </mat-card>
