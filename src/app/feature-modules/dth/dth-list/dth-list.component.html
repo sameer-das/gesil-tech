@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-title>Recharge DTH or TV</mat-card-title>
+  <mat-card-content>
+
+    <div class="form_container">
+      <mat-form-field class="form__field" appearance="standard">
+        <mat-label>Choose DTH Operator</mat-label>
+        <mat-select #operator>
+          <mat-option *ngFor="let operator of operators" [value]="operator.blr_id">{{operator.blr_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+      <app-dynamic-form></app-dynamic-form>
+  </mat-card-content>
+</mat-card>

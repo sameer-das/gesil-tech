@@ -1,0 +1,20 @@
+@import '../../../styles/constants.scss';
+
+.form_container {
+    width: 70%;
+    // border: 1px solid saddlebrown;
+
+    display: flex;
+    // justify-content: space-between;
+
+    .form__field {
+        width: 50%;
+    }
+
+    .cta_container {
+        // border: 1px solid;
+        display: flex;
+        align-items: center;
+        margin-left: 1rem;
+    }
+}

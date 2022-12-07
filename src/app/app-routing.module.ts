@@ -51,6 +51,14 @@ const routes: Routes = [
           ).then((m) => m.PaytmModule),
         canLoad: [AuthGuardService],
       },
+      {
+        path: 'dth',
+        loadChildren: () =>
+          import(
+            './feature-modules/dth/dth.module'
+          ).then((m) => m.DthModule),
+        canLoad: [AuthGuardService],
+      },
     ],
   },
   {

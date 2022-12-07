@@ -36,7 +36,8 @@ import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sideb
     RegisterDialogNewComponent,
     ForgotPasswordComponent,
     Sidebar2Component,
-    HaveSubmenuDirective
+    HaveSubmenuDirective,
+
     // DashboardComponent,
     // QuickMenuDialog
   ],
@@ -48,6 +49,7 @@ import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sideb
     MaterialModule,
     ReactiveFormsModule,
   ],
+  exports:  [],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: APIInterceptor,
