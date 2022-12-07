@@ -43,6 +43,14 @@ const routes: Routes = [
           ).then((m) => m.MobileRechargeModule),
         canLoad: [AuthGuardService],
       },
+      {
+        path: 'payment',
+        loadChildren: () =>
+          import(
+            './feature-modules/paytm/paytm.module'
+          ).then((m) => m.PaytmModule),
+        canLoad: [AuthGuardService],
+      },
     ],
   },
   {

@@ -1,0 +1,17 @@
+<h2 class="header__text">Recharge your wallet</h2>
+<!-- <p class="header__subtext">Recharge your number for validity, talktime or data</p> -->
+<div class="form__container">
+    <form #amountForm="ngForm" autocomplete="off" (submit)="onFormSubmit()">
+        <label for="amount">Recharge amount</label>
+        <div class="input__container">
+            <input type="text" id="amount" 
+            name="amount" [(ngModel)]="amount"
+            pattern="^[0-9]*(\.[0-9]{0,2})?$"
+            placeholder="Please enter the amount">
+        </div>
+        <div class="cta__container">
+            <button class="btn primary" [disabled]="amount === '' || amountForm.form.status === 'INVALID'" type="submit">Proceed for payment</button>
+        </div>
+
+    </form>
+</div>

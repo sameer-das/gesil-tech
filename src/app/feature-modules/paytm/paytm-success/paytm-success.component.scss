@@ -1,0 +1,17 @@
+@import "../../../styles/constants.scss";
+
+h2.header__text {
+    font-size: 1.5rem;
+    color: green;
+    font-weight: $fw-bold;
+    text-align: center;
+    margin: 0;
+}
+
+.container {
+    height: 150px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -8,4 +8,10 @@ export class WalletService {
     getWalletBalance(email: string) {
         return this._http.post(`${this.URL_POST_GET_WALLET_BAL}?emailid=${email}`,{})
     }
+    
+    
+    private readonly URL_POST_GET_PAYMENT_TRANSACTION_ID:string = 'https://api.gesiltech.com/api/GSKRecharge/eInitiatePaytmTransaction'
+    getPaymentTransactionId(body: any){
+        return this._http.post(this.URL_POST_GET_PAYMENT_TRANSACTION_ID, body);
+    }
 }

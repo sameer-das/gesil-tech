@@ -1,0 +1,73 @@
+@import "../../../styles/constants.scss";
+
+h2.header__text {
+  font-size: 1.5rem;
+  color: $dark-grey;
+  font-weight: $fw-bold;
+  text-align: center;
+  margin: 0;
+}
+p.header__subtext {
+  font-size: 0.8rem;
+  color: $dark-grey;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.form__container {
+  color: $dark-grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+
+  form {
+    width: 40%;
+    // border: 1px solid;
+
+    @media (max-width: $small) {
+      width: 90%;
+    }
+    .input__container {
+      position: relative;
+      mat-spinner {
+        position: absolute;
+        bottom: 24px;
+        right: 8px;
+      }
+    }
+    label {
+      font-weight: $fw-normal;
+    }
+    input[type="text"] {
+      width: 100%;
+      height: 2.5rem;
+      font-size: 1rem;
+      outline: none;
+      border: 2px solid $primary-blue;
+      border-radius: 4px;
+      padding-left: 0.25rem;
+    }
+
+    p.info {
+      font-size: 0.7rem;
+      color: #1589ff;
+      padding-top: 0.25rem;
+    }
+    p.info.error {
+      color: orangered;
+    }
+
+    div.cta__container {
+      margin-top: 2rem;
+
+      button[type="submit"] {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// .spinner::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+//     stroke: #000000;
+// }

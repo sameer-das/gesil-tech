@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { WalletService } from '../wallet.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { WalletService } from '../wallet.service';
 })
 export class WalletComponent implements OnInit {
 
-  constructor(private _walletService:WalletService) { }
+  constructor(private _walletService:WalletService, private _router: Router) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   currentBalance: string = 'XXXXXX'
   ngOnInit(): void {
@@ -29,19 +30,8 @@ export class WalletComponent implements OnInit {
     })
   }
 
-}
-
-
-@Component({
-  selector: 'app-wallet2',
-  template: 'Wallet 2 works',
-  // styleUrls: ['./wallet.component.scss']
-})
-export class Wallet2Component implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  addMoney(){
+    this._router.navigate(['wallet/initiate']);
   }
 
 }
