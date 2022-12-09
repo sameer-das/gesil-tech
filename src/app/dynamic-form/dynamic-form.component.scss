@@ -1,0 +1,18 @@
+@import '../styles/constants.scss';
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form__field {
+    width: 100%;
+}
+
+div.cta__container {
+    width: 100%;
+
+    button.cta {
+        width: 100%;
+    }
+}

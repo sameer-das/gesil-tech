@@ -59,6 +59,14 @@ const routes: Routes = [
           ).then((m) => m.DthModule),
         canLoad: [AuthGuardService],
       },
+      {
+        path: 'bbps',
+        loadChildren: () =>
+          import(
+            './feature-modules/bbps-services/bbps-services.module'
+          ).then((m) => m.BbpsServicesModule),
+        canLoad: [AuthGuardService],
+      },
     ],
   },
   {

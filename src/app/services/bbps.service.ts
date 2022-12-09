@@ -8,6 +8,8 @@ export class BbpsService {
 
     private readonly URL_POST_GET_BILLER_BY_CATEGORY: string = `https://api.gesiltech.com/api/GSKRecharge/eBBPSBillerInfoByCategory`;
     private readonly URL_POST_GET_BILLER_INFO: string = `https://api.gesiltech.com/api/GSKRecharge/eBBPSBillerInfo`;
+    private readonly URL_POST_FETCH_BILL: string = `https://api.gesiltech.com/api/GSKRecharge/eBBPSBillFetch`;
+    private readonly URL_POST_PAY_BILL: string = `https://api.gesiltech.com/api/GSKRecharge/eBBPSBillPay`;
 
     getBillerdByCategory(categorName: string) {
         return this._http.post(`${this.URL_POST_GET_BILLER_BY_CATEGORY}?category=${categorName.toLowerCase()}`, {})
@@ -17,5 +19,14 @@ export class BbpsService {
         return this._http.post(this.URL_POST_GET_BILLER_INFO, {
             "billerId": [billerId]
         })
+    }
+
+    fetchBill(fetchBillDetails: any) {
+        return this._http.post(this.URL_POST_FETCH_BILL, fetchBillDetails);
+    }
+
+
+    payBill(requestId:string, payBill: any) {
+        return this._http.post(`${this.URL_POST_PAY_BILL}?requestid=${requestId}`, payBill)
     }
 }

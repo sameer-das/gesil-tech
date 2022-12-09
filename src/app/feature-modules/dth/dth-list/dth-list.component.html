@@ -11,6 +11,6 @@
       </mat-form-field>
     </div>
 
-      <app-dynamic-form></app-dynamic-form>
+    <app-dynamic-form *ngIf="params && params.length > 0" [params]="params" (formSubmmited)="onFromSubmit($event)"></app-dynamic-form>
   </mat-card-content>
 </mat-card>

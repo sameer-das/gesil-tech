@@ -1,0 +1,82 @@
+<div class="header">
+    <div>
+        <h2>Your Transaction Details</h2>
+        <h4 [ngClass]="{'trans_fail': resp.resultDt.responseReason === 'Failure','trans_success': resp.resultDt.responseReason === 'Successful'}">
+            Transaction {{resp.resultDt.responseReason}}</h4>
+    </div>
+
+    <div class="img__container">
+        <img src="assets/logo/Be Assured.png">
+    </div>
+</div>
+
+<div class="table_container">
+    <table>
+        <tbody>
+            <tr>
+                <td class="key_name">Biller Name</td>
+                <td class="value">{{billerDetails.blr_name}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Biller Id</td>
+                <td class="value">{{billerDetails.blr_id}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Transaction Id</td>
+                <td class="value">{{resp.resultDt.txnRefId}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Customer Name</td>
+                <td class="value">{{paymentDetails.customerInfo.customerEmail}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Mobile Number</td>
+                <td class="value">{{paymentDetails.customerInfo.customerMobile}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Bill Date</td>
+                <td class="value">{{paymentDetails.billerResponse.billDate}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Due Date</td>
+                <td class="value">{{paymentDetails.billerResponse.dueDate}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Bill Amount</td>
+                <td class="value">{{paymentDetails.billerResponse.billAmount}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Conveyance Fee</td>
+                <td class="value">{{paymentDetails.amountInfo.custConvFee}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Total Amount</td>
+                <td class="value">{{paymentDetails.amountInfo.amount}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Transaction Date and Time</td>
+                <td class="value">{{now}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Init Channel</td>
+                <td class="value">{{paymentDetails.agentDeviceInfo.initChannel}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Payment Mode</td>
+                <td class="value">{{paymentDetails.paymentMethod.paymentMode}}</td>
+            </tr>
+            <tr>
+                <td class="key_name">Transaction Status</td>
+                <td class="value">{{resp.resultDt.responseReason}}</td>
+            </tr>
+            <!-- <tr>
+                <td class="key_name">Approval Number</td>
+                <td class="value">{{billerDetails.blr_id}}</td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+
+<div class="cta__container">
+    <button class="btn primary" (click)="goBack()">Go Back</button>
+</div>

@@ -1,1 +1,15 @@
-<p>dynamic-form works!</p>
+
+<div class="form_container">
+
+    <form class="form" [formGroup]="dynamicForm">
+            <mat-form-field *ngFor="let ctrl of getControls" class="form__field" appearance="standard">
+                <mat-label>{{ctrl}}</mat-label>
+                <input matInput type="text" [formControlName]="ctrl">
+            </mat-form-field>
+            
+            <div class="cta__container">
+                <button (click)="onFormSubmit()" class="btn primary cta" [disabled]="disableCta || dynamicForm.status === 'INVALID'" type="button">Fetch Bill</button>
+            </div>
+    
+    </form>
+</div>

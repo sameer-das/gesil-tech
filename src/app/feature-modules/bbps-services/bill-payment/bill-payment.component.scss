@@ -1,0 +1,58 @@
+@import '../../../styles/constants.scss';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+
+    }
+    h4.trans_success {
+        color: green;
+    }
+
+    h4.trans_fail {
+        color: orangered;
+    }
+
+    .img__container{
+        height: 100px;
+        width: 100px;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+
+.table_container {
+    table {
+        width: 40%;
+        border-collapse: collapse;
+    };
+
+    td {
+        border: 1px solid;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    td.key_name {
+        font-weight: bold;
+    }
+}
+
+.cta__container {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
