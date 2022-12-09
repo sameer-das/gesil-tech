@@ -1,0 +1,36 @@
+@import '../../../styles/constants.scss';
+
+.page__header {
+    font-weight: 500;
+    margin: 0;
+}
+
+.page__header__info {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.page__baner {
+    width: 100%;
+    background-color: hsla(199, 98%, 50%, 0.481);
+    padding: 0.5rem;
+    h2 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+}
+
+.form_container {
+    .row {
+        display: flex;
+        gap: 1rem;
+        .form__field {
+            flex: 1;
+        }
+    }
+
+    textarea {
+        margin-bottom: 1rem;
+    }
+}

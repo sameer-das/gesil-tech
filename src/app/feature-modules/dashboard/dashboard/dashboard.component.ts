@@ -26,6 +26,16 @@ export class DashboardComponent {
   getImagePath(imageName: string) {
     return `${this.assetPath}${imageName}`;
   }
+
+  getRoutePath(path:string) {
+    if(path === '/Mobile-Recharge')
+      return path.toLowerCase();
+    return `../bbps/service${path}`;
+  }
+
+  getState(service:any) {
+    return {services_ID: service.services_ID ,services_Cat_ID: service.services_Cat_ID}
+  }
 }
 
 @Component({

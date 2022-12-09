@@ -101,6 +101,12 @@
     display: flex;
     justify-content: space-between;
 
+    h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
     .form__field {
         width: 50%;
         padding-right: 1rem;
@@ -119,3 +125,5 @@
         }
     }
 }
+
+

@@ -26,7 +26,7 @@ export class BbpsService {
     }
 
 
-    payBill(requestId:string, payBill: any) {
-        return this._http.post(`${this.URL_POST_PAY_BILL}?requestid=${requestId}`, payBill)
+    payBill(requestId: string, payBill: any, serviceCatId: string, serviceId: string, user_EmailID: string) {
+        return this._http.post(`${this.URL_POST_PAY_BILL}?requestid=${requestId}&serviceId=${serviceId}&categoryId=${serviceCatId}&userId=${user_EmailID}`, payBill)
     }
 }

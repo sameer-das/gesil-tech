@@ -33,7 +33,9 @@ export class InitiatePaymentComponent implements OnInit {
       "exchangeRate": "",
       "transactionAmount": amount,
       "userId": userId,
-      "orderId": orderId
+      "orderId": orderId,
+      "serviceId": 0,
+      "categoryId": 0
     }).subscribe({
       next: (resp: any) => {
         console.log(resp);

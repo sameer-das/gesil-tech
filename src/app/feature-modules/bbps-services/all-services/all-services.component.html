@@ -1,101 +1,100 @@
 <div class="page_header">
-  <div class="form__field" >
+  <div class="form__field">
     <mat-form-field *ngIf="!this.serviceName" appearance="standard">
-        <mat-label>Choose Service</mat-label>
-        <mat-select [formControl]="servicesSelectBox">
-          <mat-option *ngFor="let service of allServices" [value]="service">{{service}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-label>Choose Service</mat-label>
+      <mat-select [formControl]="servicesSelectBox">
+        <mat-option *ngFor="let service of allServices"
+          [value]="service.searchValue">{{service.searchValue}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <h2 *ngIf="this.serviceName" class="page__header">Choose your biller to proceed for bill payment!</h2>
 
-      <!-- <h2>{{}}</h2> -->
-    </div>
+  </div>
 
-    <div class="image_container">
-      <img src="assets/logo/BharatBillPay.png">
-    </div>
+  <div class="image_container">
+    <img src="assets/logo/BharatBillPay.png">
+  </div>
 
 </div>
 
 <hr>
 <div class="container">
-  <div class="panel_left">    
+  <div class="panel_left">
 
-      <mat-form-field  class="form__field" appearance="standard">
-        <mat-label>Choose Biller</mat-label>
-        <mat-select #billerSelectBox>
-          <mat-option *ngFor="let biller of billers" [value]="biller">{{biller.blr_name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field class="form__field" appearance="standard">
+      <mat-label>Choose Biller</mat-label>
+      <mat-select #billerSelectBox>
+        <mat-option *ngFor="let biller of billers" [value]="biller">{{biller.blr_name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
 
-      <app-dynamic-form *ngIf="params && params.length > 0" 
-        [params]="params" 
-        (formSubmmited)="billFetch($event)"
-        [disableCta]="isBillFetching"
-        ></app-dynamic-form>
+    <app-dynamic-form *ngIf="params && params.length > 0" [params]="params" (formSubmmited)="billFetch($event)"
+      [disableCta]="isBillFetching"></app-dynamic-form>
   </div>
 
-<div class="panel_right">
-  <div *ngIf="billerResponse" class="bill_body">
-    <h2 class="bill__header">Bill Details</h2>
-    <div class="header">
-      <div class="header__left">
-        <h3>Customer Name</h3>
-        <p>{{billerResponse.customerName}}</p>
+  <div class="panel_right">
+    <div *ngIf="billerResponse" class="bill_body">
+      <h2 class="bill__header">Bill Details</h2>
+      <div class="header">
+        <div class="header__left">
+          <h3>Customer Name</h3>
+          <p>{{billerResponse.customerName}}</p>
+        </div>
+
+        <div class="header__right">
+          <h3>Bill No</h3>
+          <p>{{billerResponse.billNumber}}</p>
+        </div>
       </div>
-  
-      <div class="header__right">
-        <h3>Bill No</h3>
-        <p>{{billerResponse.billNumber}}</p>
+      <div class="header">
+        <div class="header__left">
+          <h3>Bill Date</h3>
+          <p>{{billerResponse.billDate}}</p>
+        </div>
+
+        <div class="header__right">
+          <h3>Bill Period</h3>
+          <p>{{billerResponse.billPeriod | uppercase}}</p>
+        </div>
       </div>
-    </div>
-    <div class="header">
-      <div class="header__left">
-        <h3>Bill Date</h3>
-        <p>{{billerResponse.billDate}}</p>
+      <div class="header">
+        <div class="header__left">
+          <h3>Due Date</h3>
+          <p>{{billerResponse.dueDate}}</p>
+        </div>
+
+        <div class="header__right">
+          <h3>Bill Amount</h3>
+          <h3>{{billerResponse.billAmount}}</h3>
+        </div>
       </div>
-  
-      <div class="header__right">
-        <h3>Bill Period</h3>
-        <p>{{billerResponse.billPeriod | uppercase}}</p>
+
+      <div class="amount__options">
+        <div *ngFor="let amountOption of billerResponse?.amountOptions?.option" class="amount__option">
+          <h3>{{amountOption.amountName}}</h3>
+          <h3>{{amountOption.amountValue}}</h3>
+        </div>
       </div>
-    </div>
-    <div class="header">
-      <div class="header__left">
-        <h3>Due Date</h3>
-        <p>{{billerResponse.dueDate}}</p>
-      </div>
-  
-      <div class="header__right">
-        <h3>Bill Amount</h3>
-        <h3>{{billerResponse.billAmount}}</h3>
-      </div>
-    </div>
-  
-    <div class="amount__options">
-      <div *ngFor="let amountOption of billerResponse?.amountOptions?.option" class="amount__option">
-        <h3>{{amountOption.amountName}}</h3>
-        <h3>{{amountOption.amountValue}}</h3>
-      </div>
-    </div>
-  
-    <div class="payment_action">
+
+      <div class="payment_action">
         <div class="payment_option">
           <mat-form-field class="form__field" appearance="standard">
             <mat-label>Choose Payment Mode</mat-label>
-            <mat-select (selectionChange)="onPaymentModeChange($event)" > 
-              <mat-option *ngFor="let paymentOption of billerPaymentModes" [value]="paymentOption">{{paymentOption}}</mat-option>
+            <mat-select (selectionChange)="onPaymentModeChange($event)">
+              <mat-option *ngFor="let paymentOption of billerPaymentModes"
+                [value]="paymentOption">{{paymentOption}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-  
+
         <div class="payment_cta_container">
           <button type="button" class="btn primary payment_cta" (click)="billPay()">Pay Now</button>
         </div>
+      </div>
     </div>
-  </div>
 
-</div>
+  </div>
 
 
 </div>

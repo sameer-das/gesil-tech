@@ -13,11 +13,29 @@ import { BbpsService } from 'src/app/services/bbps.service';
 export class AllServicesComponent implements OnInit, OnDestroy {
 
   serviceName!: string;
+  serviceCatId!: string;
+  serviceId!: string;
+  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   constructor(private _bbpsService: BbpsService, private _router: Router, private _route: ActivatedRoute) {
     this._route.params.subscribe((params: any) => {
       console.log(params);
       this.serviceName = params.servicename;
     });
+
+    console.log(this._router.getCurrentNavigation()?.extras.state)
+    if(this._router.getCurrentNavigation()?.extras.state) {
+      sessionStorage.setItem('current_service', JSON.stringify(this._router.getCurrentNavigation()?.extras.state));
+    }
+
+    const current_service_details = JSON.parse(sessionStorage.getItem('current_service') || '{}');
+    if(Object.keys(current_service_details).length === 0) {
+      // If services_Cat_ID and services_ID not found go back to dashboard
+      this._router.navigate(['dashboard']);
+    } else {
+      this.serviceCatId = current_service_details.services_Cat_ID;
+      this.serviceId = current_service_details.services_ID;
+    }
+
   }
   ngOnDestroy(): void {
     if(this.getBillerdByCategorySubscription)
@@ -68,14 +86,21 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           }
         })
     } else {
-      this.getBillerdByCategorySubscription = this._bbpsService.getBillerdByCategory(this.serviceName)
-      .subscribe((resp: any) => {
-        console.log(resp)
-        if (resp.status === 'Success' && resp.code === 200) {
-          this.billers = resp.resultDt;
-          this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
-        }
-      })
+      const searchValue = this.allServices.filter((s:any) =>  s.path === this.serviceName);
+      if(searchValue.length > 0) {
+
+        console.log(searchValue);
+        this.getBillerdByCategorySubscription = this._bbpsService.getBillerdByCategory(searchValue[0].searchValue)
+        .subscribe((resp: any) => {
+          console.log(resp)
+          if (resp.status === 'Success' && resp.code === 200) {
+            this.billers = resp.resultDt;
+            this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
+          }
+        })
+      } else {
+        this._router.navigate(['dashboard'])
+      }
     }
 
 
@@ -103,28 +128,28 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   }
 
 
-  allServices: string[] = [
-    'Landline Postpaid',
-    'Water',
-    'Insurance',
-    'Hospital',
-    'Electricity',
-    'Health Insurance',
-    'Mobile Postpaid',
-    'Fastag',
-    'Gas',
-    'Subscription',
-    'Housing Society',
-    'Cable TV',
-    'Broadband Postpaid',
-    'LPG Gas',
-    'Municipal Services',
-    'Loan Repayment',
-    'Life Insurance',
-    'Credit Card',
-    'Municipal Taxes',
-    'DTH',
-    'Education Fees',
+  allServices: any[] = [    
+    {path:'landline-postpaid',searchValue:'Landline Postpaid',},
+    {path:'water',searchValue:'Water',},
+    {path:'insurance',searchValue:'Insurance',},
+    {path:'hospital',searchValue:'Hospital',},
+    {path:'electricity',searchValue:'Electricity',},
+    {path:'health-insurance',searchValue:'Health Insurance',},
+    {path:'mobile-postpaid',searchValue:'Mobile Postpaid',},
+    {path:'fasttag',searchValue:'Fastag',},
+    {path:'gas',searchValue:'Gas',},
+    {path:'subscription',searchValue:'Subscription',},
+    {path:'housing-society',searchValue:'Housing Society',},
+    {path:'cable-tv',searchValue:'Cable TV',},
+    {path:'broadband-postpaid',searchValue:'Broadband Postpaid',},
+    {path:'lpg-gas',searchValue:'LPG Gas',},
+    {path:'municipal-services',searchValue:'Municipal Services',},
+    {path:'loan-repayment',searchValue:'Loan Repayment',},
+    {path:'life-insurance',searchValue:'Life Insurance',},
+    {path:'credit-card',searchValue:'Credit Card',},
+    {path:'municipal-taxes',searchValue:'Municipal Taxes',},
+    {path:'dth',searchValue:'DTH',},
+    {path:'education-fees',searchValue:'Education Fees',},
   ]
 
 
@@ -228,7 +253,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
 
     console.log(payBill);
-    this._bbpsService.payBill(this.requestID, payBill).subscribe((resp: any) => {
+    this._bbpsService.payBill(this.requestID, payBill, this.serviceCatId, this.serviceId,this.currentUser.user.user_EmailID).subscribe((resp: any) => {
       console.log(resp);
       sessionStorage.setItem(`TRANS_${resp.resultDt.txnRefId}`, JSON.stringify({ payBill: payBill, billerDetails: this.biller, resp }))
       this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {
