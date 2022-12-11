@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { MobileRechargeService } from '../mobile-recharge.service';
+import { v4 as uuidv4 } from 'uuid';
+import { PopupService } from 'src/app/popups/popup.service';
 @Component({
   selector: 'app-mobile-recharge-plan',
   templateUrl: './mobile-recharge-plan.component.html',
   styleUrls: ['./mobile-recharge-plan.component.scss'],
 })
 export class MobileRechargePlanComponent implements OnInit {
-  constructor(private _route: ActivatedRoute, private _router: Router) {}
+  constructor(private _route: ActivatedRoute, private _router: Router,
+    private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService) { }
   rechargePlans: any[] = [];
+  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   ngOnInit(): void {
     this._route.data.subscribe({
       next: (resp: any) => {
@@ -43,5 +47,86 @@ export class MobileRechargePlanComponent implements OnInit {
       }
     });
     return result;
+  }
+
+  operatorList = [
+    {
+      "op": 1,
+      "provider": "AirTel"
+    },
+    {
+      "op": 604,
+      "provider": "airtel up east"
+    },
+    {
+      "op": 2,
+      "provider": "BSNL"
+    },
+    {
+      "op": 32,
+      "provider": "BSNL Special"
+    },
+    {
+      "op": 505,
+      "provider": "DOCOMO RECHARGE"
+    },
+    {
+      "op": 506,
+      "provider": "DOCOMO SPECIAL"
+    },
+    {
+      "op": 4,
+      "provider": "Idea"
+    },
+    {
+      "op": 167,
+      "provider": "Jio"
+    },
+    {
+      "op": 5,
+      "provider": "Vodafone"
+    }
+  ]
+
+  onPlanSelect(amount: string) {
+    const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
+    console.log(amount);
+    console.log(mobile_search.currentOperator);
+    console.log(mobile_search.currentMobileNumber);
+    const operatorId = this.operatorList.find(x => x.provider.toLowerCase().trim() === mobile_search.currentOperator.toLowerCase().trim());
+    console.log(operatorId);
+
+    const rechargePayload = {
+      "apiToken": "",
+      "mn": mobile_search.currentMobileNumber+'',
+      "op": operatorId?.op + '',
+      "amt": amount+'',
+      "reqid": uuidv4(),
+      "field1": "",
+      "field2": "",
+      "serviceId": 1,
+      "categoryId": 1,
+      "userId": this.currentUser.user.user_EmailID
+    };
+    console.log(rechargePayload)
+    this._mobileRechargeService.prepaidRecharge(rechargePayload).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        let message;
+        if(resp.data.includes('status')) {
+          const data = JSON.parse(resp.data);
+          message = data.remark;
+        } else {
+          message = resp.data;
+        }
+        this._popupService.openAlert({
+          header:'Alert',
+          message: message
+        })
+      },
+      error: (err: any) => {
+        console.log(err)
+      }
+    })
   }
 }

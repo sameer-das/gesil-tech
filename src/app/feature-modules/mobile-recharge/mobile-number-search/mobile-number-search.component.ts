@@ -42,6 +42,7 @@ export class MobileNumberSearchComponent implements OnInit {
       // implement SwitchMap here
       this._mobileService.getMobileNumberDetails(f.value.mobile_no).subscribe({
         next: (res: any) => {
+          console.log(res)
           if (
             res.code === 200 &&
             res.status === 'Success' &&
@@ -56,6 +57,8 @@ export class MobileNumberSearchComponent implements OnInit {
               JSON.stringify({
                 currentCircle: res?.resultDt?.data.currentLocation,
                 currentBillerId: res?.resultDt?.data.currentOptBillerId,
+                currentOperator: res?.resultDt?.data.currentOperator,
+                currentMobileNumber: f.value.mobile_no
               })
             );
           } else {

@@ -7,7 +7,7 @@
         <mat-card *ngFor="let plan of rechargePlan.plans" class="plan__card">
             <mat-card-title>{{plan.amount}}
 
-                <button class="btn primary select_btn">Select</button>
+                <button class="btn primary select_btn" (click)="onPlanSelect(plan.amount)">Select</button>
             </mat-card-title>
             <mat-card-subtitle>Talktime : {{plan.talktime}}</mat-card-subtitle>
             <mat-card-content>

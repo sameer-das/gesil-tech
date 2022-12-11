@@ -24,4 +24,10 @@ export class MobileRechargeService {
       }
     );
   }
+
+
+  prepaidRecharge(recharge: any) {
+    return this._http.post(`https://api.gesiltech.com/api/GSKRecharge/eGSKMobileRecharge`, recharge);
+  }
+  
 }
