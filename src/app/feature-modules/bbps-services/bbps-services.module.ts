@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/dynamic-form/shared.module';
 import { BillPaymentComponent } from './bill-payment/bill-payment.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.component';
+import { TrackComplaintComponent } from './track-complaint/track-complaint.component';
 
 
 
@@ -14,7 +15,8 @@ import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.compo
   declarations: [
     AllServicesComponent,
     BillPaymentComponent,
-    RaiseComplaintComponent
+    RaiseComplaintComponent,
+    TrackComplaintComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.compo
     },
     { path: 'payment/:transid', component: BillPaymentComponent, },
     { path: 'service/:servicename', component: AllServicesComponent, },
-    { path: 'raise-complaint', component: RaiseComplaintComponent, }
+    { path: 'raise-complaint', component: RaiseComplaintComponent, },
+    { path: 'track-complaint', component: TrackComplaintComponent, }
     ])
   ]
 })

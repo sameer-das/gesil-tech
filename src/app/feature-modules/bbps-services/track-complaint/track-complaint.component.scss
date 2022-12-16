@@ -1,0 +1,61 @@
+@import '../../../styles/constants.scss';
+
+.page_header {
+    font-size: 1.5rem;
+}
+.row {
+    margin: 2rem 0;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+
+    .form__field {
+        flex: 1;
+    }
+
+    
+}
+
+
+.row.w50 {
+    width: 33.33%;
+}
+
+h3 {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+h3.heading_transnum {
+    margin-top: 2rem;
+}
+
+
+.divider {
+    width: 100%;
+    position: relative;
+    text-align: center;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+
+.divider::before {
+    position: absolute;
+    content: '';
+    width: calc(50% - 1rem);
+    height: 1px;
+    background-color: rgba(0,0,0,0.8);
+    top: 50%;
+    left: 0;
+}
+
+.divider::after {
+    position: absolute;
+    content: '';
+    width: calc(50% - 1rem);
+    height: 1px;
+    background-color: rgba(0,0,0,0.8);
+    top: 50%;
+    right: 0;
+}

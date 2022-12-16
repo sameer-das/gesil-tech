@@ -36,10 +36,16 @@ export class PaytmPaymentComponent implements OnInit {
         "amount": transDetails.amount /* update amount */
       },
       "handler": {
-        "notifyMerchant": function (eventName: any, data: any) {
+        "notifyMerchant": (eventName: any, data: any) => {
           console.log("notifyMerchant handler function called");
           console.log("eventName => ", eventName);
           console.log("data => ", data);
+
+          if(eventName === 'APP_CLOSED' && data.message === 'App closed from the header icon') 
+          {
+            this._router.navigate(['wallet/initiate']);
+          }
+          
         }
       }
     };

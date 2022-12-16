@@ -13,7 +13,7 @@
 
 .page__baner {
     width: 100%;
-    background-color: hsla(199, 98%, 50%, 0.481);
+    background-color: hsla(199, 98%, 50%, 0.2);
     padding: 0.5rem;
     h2 {
         font-size: 1.2rem;
@@ -23,10 +23,24 @@
 
 .form_container {
     .row {
+        margin: 2rem 0;
         display: flex;
         gap: 1rem;
+        align-items: flex-end;
         .form__field {
             flex: 1;
+        }
+
+        .form__field2 {
+            flex: 2;
+            label {
+                display: block;
+            }
+
+            textarea {
+                width: 100%;
+                padding: 0.5rem;
+            }
         }
     }
 

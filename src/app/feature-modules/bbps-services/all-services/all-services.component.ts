@@ -82,7 +82,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           console.log(resp)
           if (resp.status === 'Success' && resp.code === 200) {
             this.billers = resp.resultDt;
-            this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
+            // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
           }
         })
     } else {
@@ -95,7 +95,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           console.log(resp)
           if (resp.status === 'Success' && resp.code === 200) {
             this.billers = resp.resultDt;
-            this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
+            // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
           }
         })
       } else {
@@ -173,8 +173,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "mac": "01-23-45-67-89-ab"
       },
       "customerInfo": {
-        "customerMobile": "9898990084",
-        "customerEmail": "rajiraju9279@gmail.com",
+        "customerMobile": "9777117452",
+        "customerEmail": "info.gskindiaorg@gmail.com ",
         "customerAdhaar": "",
         "customerPan": ""
       },
@@ -216,8 +216,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "mac": "01-23-45-67-89-ab"
       },
       "customerInfo": {
-        "customerMobile": "9898990084",
-        "customerEmail": "rajiraju9279@gmail.com",
+        "customerMobile": "9777117452",
+        "customerEmail": "info.gskindiaorg@gmail.com ",
         "customerAdhaar": "",
         "customerPan": ""
       },

@@ -52,14 +52,6 @@ const routes: Routes = [
         canLoad: [AuthGuardService],
       },
       {
-        path: 'dth',
-        loadChildren: () =>
-          import(
-            './feature-modules/dth/dth.module'
-          ).then((m) => m.DthModule),
-        canLoad: [AuthGuardService],
-      },
-      {
         path: 'bbps',
         loadChildren: () =>
           import(
