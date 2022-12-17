@@ -17,13 +17,19 @@ export class MobileRechargePlanComponent implements OnInit {
     this._route.data.subscribe({
       next: (resp: any) => {
         console.log(resp);
-        if (resp.data.code === 200 && resp.data.status === 'Success') {
+        if (resp.data.code === 200 && resp.data.status === 'Success' && resp.data.resultDt !== "") {
           const rechargePlans =
             resp?.data?.resultDt?.data?.rechargePlan?.rechargePlansDetails ||
             [];
           console.log(rechargePlans);
           this.rechargePlans = this.sortPlans(rechargePlans);
           console.log(this.rechargePlans)
+        } else {
+          this._popupService.openAlert({
+            header:'Alert',
+            message:'Problem fetching recharge plans, Please try after sometime!'
+          });
+          this._router.navigate(['mobile-recharge']);
         }
       },
     });

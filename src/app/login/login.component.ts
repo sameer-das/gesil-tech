@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { PopupService } from '../popups/popup.service';
 import { AuthService } from '../services/auth.service';
+import { LoaderService } from '../services/loader.service';
 import { ForgotPasswordComponent } from './forgot-password-dialog/forgot-password.component';
 import { RegisterDialogNewComponent } from './register-dialog-new/register-dialog-new.component';
 import { RegisterDialog } from './register-dialog/register-dialog.component';
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private _fb: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
-    private _popupService: PopupService
+    private _popupService: PopupService,
+    private _loaderService: LoaderService
   ) {}
   ngOnInit(): void {}
 
@@ -46,11 +48,13 @@ export class LoginComponent implements OnInit {
   buttonText: string = 'Login Securely';
   disabled: boolean = false;
   onLogin() {
+    this._loaderService.showLoader();
     console.log(this.loginForm.value);
     this.buttonText = 'Loging you in';
     this.disabled = true;
     this._authService.login(this.loginForm.value).subscribe({
       next: (result: any) => {
+        this._loaderService.hideLoader();
         console.log(result);
         if (result.status === 'Success' && result.data) {
           this._authService.userDetails = result.data;
@@ -92,6 +96,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (err) => {
+        this._loaderService.hideLoader();
         console.log(err);
         this._popupService.openAlert({
           header: 'Fail',

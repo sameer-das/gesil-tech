@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
+import { PopupService } from 'src/app/popups/popup.service';
 import { MobileRechargeService } from '../mobile-recharge.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { MobileRechargeService } from '../mobile-recharge.service';
 export class MobileNumberSearchComponent implements OnInit {
   constructor(
     private _router: Router,
-    private _mobileService: MobileRechargeService
+    private _mobileService: MobileRechargeService,
+    private _popupService:PopupService
   ) {}
   showCta: boolean = false;
   isFetching: boolean = false;
@@ -46,7 +48,8 @@ export class MobileNumberSearchComponent implements OnInit {
           if (
             res.code === 200 &&
             res.status === 'Success' &&
-            res?.resultDt?.data
+            res?.resultDt?.data &&
+            !!res?.resultDt?.data.currentOptBillerId
           ) {
             this.showCta = true;
             this.isFetching = false;
@@ -65,6 +68,10 @@ export class MobileNumberSearchComponent implements OnInit {
             console.log(res);
             this.showCta = false;
             this.isFetching = false;
+            this._popupService.openAlert({
+              header: 'Alert',
+              message: 'Problem occured while fetching operator details, Please try after sometime!'
+            })
           }
         },
         error: (err) => {

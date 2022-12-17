@@ -3,7 +3,8 @@ import { FormControl, FormControlName } from '@angular/forms';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap, Subscription } from 'rxjs';
-import { BbpsService } from 'src/app/services/bbps.service';
+import { BbpsService } from 'src/app/feature-modules/bbps-services/bbps.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-all-services',
@@ -16,7 +17,10 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   serviceCatId!: string;
   serviceId!: string;
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
-  constructor(private _bbpsService: BbpsService, private _router: Router, private _route: ActivatedRoute) {
+  constructor(private _bbpsService: BbpsService, 
+    private _router: Router,
+     private _route: ActivatedRoute,
+     private _loaderService:LoaderService) {
     this._route.params.subscribe((params: any) => {
       console.log(params);
       this.serviceName = params.servicename;
@@ -110,16 +114,18 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         this.biller = x.value;
         this.billerResponse = undefined;
         console.log(this.biller);
-
+        this.params = [];
+        this._loaderService.showLoader();
       }),
       switchMap(x => this._bbpsService.getBillerInfo(x.value.blr_id))
     ).subscribe((billerDetailsResp: any) => {
+      this._loaderService.hideLoader();
       console.log(billerDetailsResp)
-      if (billerDetailsResp.status === 'Success' && billerDetailsResp.code === 200 && billerDetailsResp?.resultDt?.biller.length > 0) {
+      if (billerDetailsResp.status === 'Success' && billerDetailsResp.code === 200 && billerDetailsResp?.resultDt?.resultDt?.biller.length > 0) {
 
-        console.log(billerDetailsResp?.resultDt?.biller[0].billerInputParams.paramInfo);
-        this.params = billerDetailsResp?.resultDt?.biller[0].billerInputParams.paramInfo;
-        this.billerPaymentModes = billerDetailsResp?.resultDt?.biller[0].billerPaymentModes.split(',');
+        console.log(billerDetailsResp?.resultDt?.resultDt?.biller[0].billerInputParams.paramInfo);
+        this.params = billerDetailsResp?.resultDt?.resultDt?.biller[0].billerInputParams.paramInfo;
+        this.billerPaymentModes = billerDetailsResp?.resultDt?.resultDt?.biller[0].billerPaymentModes.split(',');
 
       } else {
         this.params = []
@@ -166,7 +172,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
     this.inputParam = input;
     const fetchBill = {
-      "agentId": "CC01CC01513515340681",
+      "agentId": "CC01BA48DMT000000001",
       "agentDeviceInfo": {
         "ip": "192.168.2.73",
         "initChannel": "AGT",
@@ -185,8 +191,10 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
     console.log(fetchBill);
     this.isBillFetching = true;
+    this._loaderService.showLoader();
     this._bbpsService.fetchBill(fetchBill).subscribe({
       next: (resp: any) => {
+        this._loaderService.hideLoader();
         this.isBillFetching = false;
         console.log(resp)
         if (resp.status === 'Success' && resp.code === 200) {
@@ -198,6 +206,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
+        this._loaderService.hideLoader();
         this.isBillFetching = false;
         console.log(err)
       }
@@ -208,7 +217,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   billPay() {
     const payBill = {
-      "agentId": "CC01CC01513515340681",
+      "agentId": "CC01BA48DMT000000001",
       "billerAdhoc": true,
       "agentDeviceInfo": {
         "ip": "192.168.2.73",
@@ -253,7 +262,10 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
 
     console.log(payBill);
-    this._bbpsService.payBill(this.requestID, payBill, this.serviceCatId, this.serviceId,this.currentUser.user.user_EmailID).subscribe((resp: any) => {
+    this._loaderService.showLoader();
+    this._bbpsService.payBill(this.requestID, payBill, this.serviceCatId, this.serviceId,this.currentUser.user.user_EmailID)
+    .subscribe((resp: any) => {
+      this._loaderService.hideLoader();
       console.log(resp);
       sessionStorage.setItem(`TRANS_${resp.resultDt.txnRefId}`, JSON.stringify({ payBill: payBill, billerDetails: this.biller, resp }))
       this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {

@@ -9,6 +9,7 @@ export class BbpsService {
 
     private readonly URL_POST_GET_BILLER_BY_CATEGORY: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillerInfoByCategory`;
     private readonly URL_POST_GET_BILLER_INFO: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillerInfo`;
+    private readonly URL_POST_GET_BILLER_INFO_BY_BILLER_ID: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillerInfoByBillerID`;
     private readonly URL_POST_FETCH_BILL: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillFetch`;
     private readonly URL_POST_PAY_BILL: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillPay`;
 
@@ -16,10 +17,13 @@ export class BbpsService {
         return this._http.post(`${this.URL_POST_GET_BILLER_BY_CATEGORY}?category=${categorName.toLowerCase()}`, {})
     }
 
+    // getBillerInfo(billerId: string) {
+    //     return this._http.post(this.URL_POST_GET_BILLER_INFO, {
+    //         "billerId": [billerId]
+    //     })
+    // }
     getBillerInfo(billerId: string) {
-        return this._http.post(this.URL_POST_GET_BILLER_INFO, {
-            "billerId": [billerId]
-        })
+        return this._http.post(`${this.URL_POST_GET_BILLER_INFO_BY_BILLER_ID}?billerid=${billerId}`,{})
     }
 
     fetchBill(fetchBillDetails: any) {

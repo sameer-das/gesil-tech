@@ -19,6 +19,7 @@ import { APIInterceptor } from './services/api-interceptor.service';
 import { RegisterDialogNewComponent } from './login/register-dialog-new/register-dialog-new.component';
 import { ForgotPasswordComponent } from './login/forgot-password-dialog/forgot-password.component';
 import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sidebar2.component';
+import { LoaderComponent } from './loader/loader.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -37,6 +38,7 @@ import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sideb
     ForgotPasswordComponent,
     Sidebar2Component,
     HaveSubmenuDirective,
+    LoaderComponent,
 
     // DashboardComponent,
     // QuickMenuDialog

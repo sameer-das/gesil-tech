@@ -35,6 +35,7 @@
         background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         transition: 0.3s ease;
         font-weight: bold;  
+        font-size: 1.05rem;
         text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
       }
 
@@ -51,6 +52,14 @@
         top: 1rem;
         transition: 0.3s ease;
       }
+    }
+
+    a.activelink {
+      background: $purple;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom right, $gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      font-weight: bold;  
+      text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
     }
 
     ul.sub_menu {
@@ -78,6 +87,7 @@
             background: -webkit-linear-gradient(to bottom,$gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to bottom,$gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             font-weight: bold;
+            font-size: 0.85rem;
             border-left: 6px solid $blue-white;
           }
         }

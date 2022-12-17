@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { switchMap, tap } from 'rxjs';
-import { BbpsService } from 'src/app/services/bbps.service';
+import { BbpsService } from 'src/app/feature-modules/bbps-services/bbps.service';
 
 
 @Component({

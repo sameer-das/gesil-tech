@@ -3,7 +3,7 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
+  HttpResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class APIInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor() { }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -26,7 +26,7 @@ export class APIInterceptor implements HttpInterceptor {
     return next.handle(colnedRequest).pipe(
       map((event) => {
         if (event instanceof HttpResponse) {
-        //   console.log('Http Response');
+          //   console.log('Http Response');
         }
         return event;
       })

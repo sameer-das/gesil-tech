@@ -1,42 +1,61 @@
 <ul class="menu">
     <h2 class="menu_label">Main Navigation</h2>
-    <li><a class="main_menu_link" routerLink="/dashboard">
+    <li><a class="main_menu_link" routerLink="/dashboard" routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:
+true}">
             <mat-icon>widgets</mat-icon> Dashboard
         </a></li>
-    <li><a class="main_menu_link" >
+    <!-- <li><a class="main_menu_link">
             <mat-icon>design_services</mat-icon>Services
-        </a> </li>
+        </a> </li> -->
     <li><a class="main_menu_link" haveSubmenu>
             <mat-icon>account_balance_wallet</mat-icon>
             Wallet
             <mat-icon class="carret">arrow_right</mat-icon>
         </a>
         <ul class="sub_menu">
-            <li><a class="sub_menu_link" routerLink="wallet">Summary</a></li>
-            <li><a class="sub_menu_link" routerLink="wallet/initiate" >Add Money</a></li>
+            <li><a class="sub_menu_link" routerLink="wallet" routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:
+true}">Summary</a></li>
+            <li><a class="sub_menu_link" routerLink="wallet/initiate" routerLinkActive="activelink"
+                    [routerLinkActiveOptions]="{exact:
+true}">Add Money</a></li>
             <!-- <li><a class="sub_menu_link" >EMI and Bill Payments</a></li>
             <li><a class="sub_menu_link" >Balance Transfer</a></li>
             <li><a class="sub_menu_link" >Revoke Balance</a></li>
             <li><a class="sub_menu_link" >Recharge History</a></li> -->
         </ul>
     </li>
-    <li><a class="main_menu_link" haveSubmenu>
+    <!-- <li><a class="main_menu_link" haveSubmenu>
 
             <mat-icon>list_alt</mat-icon>Orders
             <mat-icon class="carret">arrow_right</mat-icon>
         </a>
         <ul class="sub_menu">
-            <li><a class="sub_menu_link" >Order History</a></li>
-            <li><a class="sub_menu_link" >Operator Order</a></li>
+            <li><a class="sub_menu_link">Order History</a></li>
+            <li><a class="sub_menu_link">Operator Order</a></li>
         </ul>
-    </li>
+    </li> -->
     <hr>
     <h2 class="menu_label">Settings</h2>
-    <li><a class="main_menu_link" routerLink="/account">
-        <mat-icon>manage_accounts</mat-icon> Account
-    </a></li>
+    <li><a class="main_menu_link" routerLink="/account" routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:
+true}">
+            <mat-icon>manage_accounts</mat-icon> Account
+        </a></li>
 
-    <li><a class="main_menu_link" routerLink="/support">
-        <mat-icon>chat_bubble</mat-icon> Support
-    </a></li>
+    <li><a class="main_menu_link" haveSubmenu>
+            <mat-icon>chat_bubble</mat-icon> Support
+            <mat-icon class="carret">arrow_right</mat-icon>
+        </a>
+
+        <ul class="sub_menu">
+            <li><a class="sub_menu_link" routerLink="bbps/raise-complaint" routerLinkActive="activelink"
+                    [routerLinkActiveOptions]="{exact:
+true}">Raise
+                    Complaint</a></li>
+            <li><a class="sub_menu_link" routerLink="bbps/track-complaint" routerLinkActive="activelink"
+                    [routerLinkActiveOptions]="{exact:
+true}">Track
+                    Complaint</a></li>
+        </ul>
+
+    </li>
 </ul>
