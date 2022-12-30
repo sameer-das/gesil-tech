@@ -20,6 +20,7 @@ import { RegisterDialogNewComponent } from './login/register-dialog-new/register
 import { ForgotPasswordComponent } from './login/forgot-password-dialog/forgot-password.component';
 import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sidebar2.component';
 import { LoaderComponent } from './loader/loader.component';
+import { ModalComponent } from './modal/modal.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -39,7 +40,6 @@ import { LoaderComponent } from './loader/loader.component';
     Sidebar2Component,
     HaveSubmenuDirective,
     LoaderComponent,
-
     // DashboardComponent,
     // QuickMenuDialog
   ],

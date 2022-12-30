@@ -1,0 +1,50 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba($color: #000000, $alpha: 0.7);
+
+    height: 100vh;
+    width: 100vw;
+    z-index: 10;
+}
+
+
+.modal-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    margin: auto 0;
+    width: 75%;
+    height: 75vh;
+    background-color: #fff;
+    color: #000000;
+    padding: 0.5rem;
+    z-index: 11;
+}
+
+.close_button {
+    position: absolute;
+    right: 0.5rem;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    transition: 0.3s ease-in-out;
+    span {
+        display: block;
+        width: 100%;
+        height: 4px;
+        background-color: #000;
+        &:first-child{
+            transform: rotate(45deg) translate(9px,9px);
+        }
+        &:nth-child(2) {
+            transform: rotate(-45deg) translate(-6px,6px);
+        }
+    }
+
+    &:hover {
+        transform: translateY(-2px) rotate(90deg);
+    }
+}
