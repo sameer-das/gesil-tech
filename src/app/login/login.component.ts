@@ -56,10 +56,10 @@ export class LoginComponent implements OnInit {
       next: (result: any) => {
         this._loaderService.hideLoader();
         console.log(result);
-        if (result.status === 'Success' && result.data) {
+        if (result.status === 'Success' && result.data && result?.data?.userDetais && result?.data?.userDetais?.user_ID) {
           this._authService.userDetails = result.data;
 
-          this._authService.getUserInfos(result.data.userDetais.user_ID).subscribe({
+          this._authService.getUserInfos(result?.data?.userDetais?.user_ID).subscribe({
             next: (resp: any) => {
               console.log(resp);
               if (resp.status === 'Success' && resp.code === 200) {
