@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +36,10 @@ export class DashboardComponent {
 
   getState(service:any) {
     return {services_ID: service.services_ID ,services_Cat_ID: service.services_Cat_ID}
+  }
+
+  openPopup() {
+    this.dialog.open(PinPopupComponent, {disableClose: true})
   }
 }
 

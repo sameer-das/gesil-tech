@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './layout/layout.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './header/user/user.component';
@@ -20,6 +20,7 @@ import { RegisterDialogNewComponent } from './login/register-dialog-new/register
 import { ForgotPasswordComponent } from './login/forgot-password-dialog/forgot-password.component';
 import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sidebar2.component';
 import { LoaderComponent } from './loader/loader.component';
+import { PinPopupComponent } from './popups/pin-popup/pin-popup.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -39,6 +40,7 @@ import { LoaderComponent } from './loader/loader.component';
     Sidebar2Component,
     HaveSubmenuDirective,
     LoaderComponent,
+    PinPopupComponent,
 
     // DashboardComponent,
     // QuickMenuDialog
@@ -49,6 +51,7 @@ import { LoaderComponent } from './loader/loader.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   exports:  [],

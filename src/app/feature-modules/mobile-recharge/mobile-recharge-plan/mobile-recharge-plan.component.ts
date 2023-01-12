@@ -3,13 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MobileRechargeService } from '../mobile-recharge.service';
 import { v4 as uuidv4 } from 'uuid';
 import { PopupService } from 'src/app/popups/popup.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 @Component({
   selector: 'app-mobile-recharge-plan',
   templateUrl: './mobile-recharge-plan.component.html',
   styleUrls: ['./mobile-recharge-plan.component.scss'],
 })
 export class MobileRechargePlanComponent implements OnInit {
-  constructor(private _route: ActivatedRoute, private _router: Router,
+  constructor(private _route: ActivatedRoute, private _router: Router, private _matDialog:MatDialog,
     private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService) { }
   rechargePlans: any[] = [];
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
@@ -93,6 +95,16 @@ export class MobileRechargePlanComponent implements OnInit {
       "provider": "Vodafone"
     }
   ]
+
+  openPinDialog(amount: string) {
+    const dialogRef = this._matDialog.open(PinPopupComponent, {disableClose: true});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Pin Dialog closed ${result}`);
+      if(result)
+        this.onPlanSelect(amount);
+    });
+  }
+
 
   onPlanSelect(amount: string) {
     const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');

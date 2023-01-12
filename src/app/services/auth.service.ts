@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   userDetails: any = {};
 
@@ -115,7 +115,7 @@ export class AuthService {
 
 
 
-  
+
   isLoggedIn(): boolean {
     const token = localStorage.getItem('auth_token');
     // write validation logic here
@@ -167,7 +167,7 @@ export class AuthService {
   }
 
   private URL_GET_USER_KYC_DETAIL = `/api/User/GetUserKycDetail`;
-  getUserKycDetail(userId: string){
+  getUserKycDetail(userId: string) {
     return this._http.get(
       `${environment.service_base_url}${this.URL_GET_USER_KYC_DETAIL}?userId=${userId}`
     );
@@ -180,4 +180,12 @@ export class AuthService {
     );
   }
 
+  private URL_VALIDATE_TPIN = `/api/User/ValidateUserTPin`;
+  validateTPin(userid: number, pin: string) {
+    return this._http.post(`${environment.service_base_url}${this.URL_VALIDATE_TPIN}`, {
+      "userId": userid,
+      "tpin": Number(pin)
+    })
+  }
 }
+
