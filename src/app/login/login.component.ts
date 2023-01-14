@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { LoaderService } from '../services/loader.service';
 import { ForgotPasswordComponent } from './forgot-password-dialog/forgot-password.component';
 import { RegisterDialogNewComponent } from './register-dialog-new/register-dialog-new.component';
-import { RegisterDialog } from './register-dialog/register-dialog.component';
+// import { RegisterDialog } from './register-dialog/register-dialog.component';
 
 @Component({
   selector: 'app-login',

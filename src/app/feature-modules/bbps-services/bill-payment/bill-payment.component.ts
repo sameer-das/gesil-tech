@@ -29,7 +29,7 @@ export class BillPaymentComponent implements OnInit {
   }
 
   goBack():void {
-    this._router.navigate(['bbps']);
+    this._router.navigate([this.state.currentServiceUrl]);
     sessionStorage.removeItem(`TRANS_${this.transid}`);
   }
 }

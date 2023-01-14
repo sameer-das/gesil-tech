@@ -66,19 +66,19 @@
 
         <div class="header__right">
           <h3>Bill Amount</h3>
-          <h3>{{billerResponse.billAmount}}</h3>
+          <h3>{{billerResponse.billAmount / 100}}</h3>
         </div>
       </div>
 
       <div class="amount__options">
         <div *ngFor="let amountOption of billerResponse?.amountOptions?.option" class="amount__option">
           <h3>{{amountOption.amountName}}</h3>
-          <h3>{{amountOption.amountValue}}</h3>
+          <h3>{{amountOption.amountValue / 100}}</h3>
         </div>
       </div>
 
       <div class="payment_action">
-        <div class="payment_option">
+        <!-- <div class="payment_option">
           <mat-form-field class="form__field" appearance="standard">
             <mat-label>Choose Payment Mode</mat-label>
             <mat-select (selectionChange)="onPaymentModeChange($event)">
@@ -86,7 +86,7 @@
                 [value]="paymentOption">{{paymentOption}}</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <div class="payment_cta_container">
           <button type="button" class="btn primary payment_cta" (click)="billPay()">Pay Now</button>

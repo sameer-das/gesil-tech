@@ -14,4 +14,9 @@ export class WalletService {
     getPaymentTransactionId(body: any){
         return this._http.post(this.URL_POST_GET_PAYMENT_TRANSACTION_ID, body);
     }
+
+    private readonly URL_GET_WALLET_TRANSACTION_HISTORY = `${environment.service_base_url}/api/GSKRecharge/GetTransactions`;
+    getTransactionHistory(emailid: string) {
+        return this._http.post(`${this.URL_GET_WALLET_TRANSACTION_HISTORY}?emailid=${emailid}`, {})
+    }
 }

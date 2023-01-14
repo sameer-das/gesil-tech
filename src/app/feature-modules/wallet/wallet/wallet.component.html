@@ -34,3 +34,31 @@
 <div class="cta_container">
     <button (click)="addMoney()">Add money to your wallet</button>
 </div>
+
+
+<div class="table_container">
+    <h3>Transaction History</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Serial ID</th>
+                <!-- <th>Transaction ID</th> -->
+                <th>Transaction Date</th>
+                <th>Transaction Amount</th>
+                <th>Transaction Type</th>
+                <th>Transaction Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let trans of lastTransaction; let i = index">
+                <td>{{i + 1}}</td>
+                <!-- <td>{{trans.wallet_transaction_ID}}</td> -->
+                <td>{{trans.wallet_transaction_Date | date:'medium'}}</td>
+                <td>{{trans.wallet_Amount}}</td>
+                <td>{{trans.wallet_transaction_type}}</td>
+                <td>{{trans.wallet_transaction_Status}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

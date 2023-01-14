@@ -29,7 +29,7 @@ export class PinPopupComponent implements OnInit {
       console.log(this.pin);
       this.disabled = true;
       this.message = 'Validating ...'
-      this._authService.validateTPin(this.currentUser.user.user_ID, this.pin).subscribe({
+      this._authService.validateTPin(this.currentUser.user.user_ID, String(this.pin)).subscribe({
         next: (resp: any) => {
           console.log(resp)
           if (resp.status === 'Success' && resp.code === 200 && resp.data) {

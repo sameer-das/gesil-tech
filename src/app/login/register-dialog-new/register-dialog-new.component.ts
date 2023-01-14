@@ -30,6 +30,9 @@ export class RegisterDialogNewComponent implements OnInit {
   districts: any[] = [];
   blocks: any[] = [];
 
+  stateId!: number;
+  districtId!: number;
+
   refNoFormGroup: FormGroup = new FormGroup({
     refNo: new FormControl('', Validators.required),
   });
@@ -63,9 +66,9 @@ export class RegisterDialogNewComponent implements OnInit {
     if (this.states.length === 0) {
       this.populateStates(1);
     }
-    if (this.blocks.length === 0) {
-      this.populateBlocks();
-    }
+    // if (this.blocks.length === 0) {
+    //   this.populateBlocks();
+    // }
   }
 
   disabled: boolean = false;
@@ -119,10 +122,12 @@ export class RegisterDialogNewComponent implements OnInit {
   }
 
   onDistrictChange(e: MatSelectChange) {
-    console.log(e);
+    this.districtId = e.value;
+    this.populateBlocks(this.stateId, this.districtId);
   }
 
   onStateChange(e: MatSelectChange) {
+    this.stateId = e.value;
     this.populateDistricts(e.value);
   }
 
@@ -236,8 +241,8 @@ export class RegisterDialogNewComponent implements OnInit {
     });
   }
 
-  populateBlocks() {
-    this._authService.getBlocks(1).subscribe({
+  populateBlocks(stateId: number, districtId: number) {
+    this._authService.getBlocks(stateId, districtId).subscribe({
       next: (resp: any) => {
         if (resp.status === 'Success' && resp.code === 200) {
           this.blocks = resp.data;

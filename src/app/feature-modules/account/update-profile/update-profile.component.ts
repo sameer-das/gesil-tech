@@ -514,16 +514,16 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   blocks: any[] = [];
   populateBlocks() {
-    this._authService.getBlocks(1).subscribe({
-      next: (resp: any) => {
-        if (resp.status === 'Success' && resp.code === 200) {
-          this.blocks = resp.data;
-        }
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
+    // this._authService.getBlocks(1).subscribe({
+    //   next: (resp: any) => {
+    //     if (resp.status === 'Success' && resp.code === 200) {
+    //       this.blocks = resp.data;
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.error(err);
+    //   },
+    // });
   }
 
   populateDistricts(stateId: number) {

@@ -134,7 +134,7 @@ export class RegisterDialog implements OnInit {
     }
 
     if (this.blocks.length === 0) {
-      this.populateBlocks();
+      // this.populateBlocks();
     }
 
     if (this.states.length === 0) {
@@ -165,18 +165,18 @@ export class RegisterDialog implements OnInit {
     console.log(e);
   }
 
-  populateBlocks() {
-    this._authService.getBlocks(1).subscribe({
-      next: (resp: any) => {
-        if (resp.status === 'Success' && resp.code === 200) {
-          this.blocks = resp.data;
-        }
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
-  }
+  // populateBlocks() {
+  //   this._authService.getBlocks(1).subscribe({
+  //     next: (resp: any) => {
+  //       if (resp.status === 'Success' && resp.code === 200) {
+  //         this.blocks = resp.data;
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error(err);
+  //     },
+  //   });
+  // }
 
   populateDistricts(stateId: number) {
     this._authService.getDistrict(stateId).subscribe({

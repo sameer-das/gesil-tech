@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormControlName } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap, Subscription } from 'rxjs';
 import { BbpsService } from 'src/app/feature-modules/bbps-services/bbps.service';
+import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
+import { PopupService } from 'src/app/popups/popup.service';
 import { LoaderService } from 'src/app/services/loader.service';
+import { WalletService } from '../../wallet/wallet.service';
 
 @Component({
   selector: 'app-all-services',
@@ -17,22 +21,25 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   serviceCatId!: string;
   serviceId!: string;
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
-  constructor(private _bbpsService: BbpsService, 
+  constructor(private _bbpsService: BbpsService,
     private _router: Router,
-     private _route: ActivatedRoute,
-     private _loaderService:LoaderService) {
+    private _route: ActivatedRoute,
+    private _loaderService: LoaderService,
+    private _walletService: WalletService,
+    private _popupService: PopupService,
+    private _matDialog: MatDialog) {
     this._route.params.subscribe((params: any) => {
       console.log(params);
       this.serviceName = params.servicename;
     });
 
     console.log(this._router.getCurrentNavigation()?.extras.state)
-    if(this._router.getCurrentNavigation()?.extras.state) {
+    if (this._router.getCurrentNavigation()?.extras.state) {
       sessionStorage.setItem('current_service', JSON.stringify(this._router.getCurrentNavigation()?.extras.state));
     }
 
     const current_service_details = JSON.parse(sessionStorage.getItem('current_service') || '{}');
-    if(Object.keys(current_service_details).length === 0) {
+    if (Object.keys(current_service_details).length === 0) {
       // If services_Cat_ID and services_ID not found go back to dashboard
       this._router.navigate(['dashboard']);
     } else {
@@ -42,9 +49,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy(): void {
-    if(this.getBillerdByCategorySubscription)
+    if (this.getBillerdByCategorySubscription)
       this.getBillerdByCategorySubscription.unsubscribe();
-    if(this.getBillerInfoSubscription)
+    if (this.getBillerInfoSubscription)
       this.getBillerInfoSubscription.unsubscribe()
   }
 
@@ -67,48 +74,49 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
 
   isBillFetching: boolean = false;
-  
+
   getBillerdByCategorySubscription!: Subscription;
   getBillerInfoSubscription!: Subscription;
-  
+
   onServiceChange(e: MatSelectChange) {
     console.log(e)
   }
 
   ngOnInit(): void {
+    console.log(this._router.url);
 
-    if(!this.serviceName) {
+    if (!this.serviceName) {
 
       this.getBillerdByCategorySubscription = this.servicesSelectBox?.valueChanges.pipe(
-          tap(() => this.billers = []),
-          switchMap((x: string) => this._bbpsService.getBillerdByCategory(x))
-        ).subscribe((resp: any) => {
-          console.log(resp)
-          if (resp.status === 'Success' && resp.code === 200) {
-            this.billers = resp.resultDt;
-            // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
-          }
-        })
+        tap(() => this.billers = []),
+        switchMap((x: string) => this._bbpsService.getBillerdByCategory(x))
+      ).subscribe((resp: any) => {
+        console.log(resp)
+        if (resp.status === 'Success' && resp.code === 200) {
+          this.billers = resp.resultDt;
+          // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
+        }
+      })
     } else {
-      const searchValue = this.allServices.filter((s:any) =>  s.path === this.serviceName);
-      if(searchValue.length > 0) {
+      const searchValue = this.allServices.filter((s: any) => s.path === this.serviceName);
+      if (searchValue.length > 0) {
 
         console.log(searchValue);
         this.getBillerdByCategorySubscription = this._bbpsService.getBillerdByCategory(searchValue[0].searchValue)
-        .subscribe((resp: any) => {
-          console.log(resp)
-          if (resp.status === 'Success' && resp.code === 200) {
-            this.billers = resp.resultDt;
-            // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
-          }
-        })
+          .subscribe((resp: any) => {
+            console.log(resp)
+            if (resp.status === 'Success' && resp.code === 200) {
+              this.billers = resp.resultDt;
+              // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
+            }
+          })
       } else {
         this._router.navigate(['dashboard'])
       }
     }
 
 
-   this.getBillerInfoSubscription =  this.billerSelectBox?.selectionChange.pipe(
+    this.getBillerInfoSubscription = this.billerSelectBox?.selectionChange.pipe(
       tap(x => {
         this.billerId = x.value.blr_id;
         this.biller = x.value;
@@ -121,11 +129,11 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     ).subscribe((billerDetailsResp: any) => {
       this._loaderService.hideLoader();
       console.log(billerDetailsResp)
-      if (billerDetailsResp.status === 'Success' && billerDetailsResp.code === 200 && billerDetailsResp?.resultDt?.resultDt?.biller.length > 0) {
+      if (billerDetailsResp.status === 'Success' && billerDetailsResp.code === 200 && billerDetailsResp?.resultDt?.resultDt?.billerId.length > 0) {
 
-        console.log(billerDetailsResp?.resultDt?.resultDt?.biller[0].billerInputParams.paramInfo);
-        this.params = billerDetailsResp?.resultDt?.resultDt?.biller[0].billerInputParams.paramInfo;
-        this.billerPaymentModes = billerDetailsResp?.resultDt?.resultDt?.biller[0].billerPaymentModes.split(',');
+        console.log(billerDetailsResp?.resultDt?.resultDt?.billerInputParams.paramInfo);
+        this.params = billerDetailsResp?.resultDt?.resultDt?.billerInputParams.paramInfo;
+        this.billerPaymentModes = billerDetailsResp?.resultDt?.resultDt?.billerPaymentModes.split(',');
 
       } else {
         this.params = []
@@ -134,28 +142,28 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   }
 
 
-  allServices: any[] = [    
-    {path:'landline-postpaid',searchValue:'Landline Postpaid',},
-    {path:'water',searchValue:'Water',},
-    {path:'insurance',searchValue:'Insurance',},
-    {path:'hospital',searchValue:'Hospital',},
-    {path:'electricity',searchValue:'Electricity',},
-    {path:'health-insurance',searchValue:'Health Insurance',},
-    {path:'mobile-postpaid',searchValue:'Mobile Postpaid',},
-    {path:'fasttag',searchValue:'Fastag',},
-    {path:'gas',searchValue:'Gas',},
-    {path:'subscription',searchValue:'Subscription',},
-    {path:'housing-society',searchValue:'Housing Society',},
-    {path:'cable-tv',searchValue:'Cable TV',},
-    {path:'broadband-postpaid',searchValue:'Broadband Postpaid',},
-    {path:'lpg-gas',searchValue:'LPG Gas',},
-    {path:'municipal-services',searchValue:'Municipal Services',},
-    {path:'loan-repayment',searchValue:'Loan Repayment',},
-    {path:'life-insurance',searchValue:'Life Insurance',},
-    {path:'credit-card',searchValue:'Credit Card',},
-    {path:'municipal-taxes',searchValue:'Municipal Taxes',},
-    {path:'dth',searchValue:'DTH',},
-    {path:'education-fees',searchValue:'Education Fees',},
+  allServices: any[] = [
+    { path: 'landline-postpaid', searchValue: 'Landline Postpaid', },
+    { path: 'water', searchValue: 'Water', },
+    { path: 'insurance', searchValue: 'Insurance', },
+    { path: 'hospital', searchValue: 'Hospital', },
+    { path: 'electricity', searchValue: 'Electricity', },
+    { path: 'health-insurance', searchValue: 'Health Insurance', },
+    { path: 'mobile-postpaid', searchValue: 'Mobile Postpaid', },
+    { path: 'fasttag', searchValue: 'Fastag', },
+    { path: 'gas', searchValue: 'Gas', },
+    { path: 'subscription', searchValue: 'Subscription', },
+    { path: 'housing-society', searchValue: 'Housing Society', },
+    { path: 'cable-tv', searchValue: 'Cable TV', },
+    { path: 'broadband-postpaid', searchValue: 'Broadband Postpaid', },
+    { path: 'lpg-gas', searchValue: 'LPG Gas', },
+    { path: 'municipal-services', searchValue: 'Municipal Services', },
+    { path: 'loan-repayment', searchValue: 'Loan Repayment', },
+    { path: 'life-insurance', searchValue: 'Life Insurance', },
+    { path: 'credit-card', searchValue: 'Credit Card', },
+    { path: 'municipal-taxes', searchValue: 'Municipal Taxes', },
+    { path: 'dth', searchValue: 'DTH', },
+    { path: 'education-fees', searchValue: 'Education Fees', },
   ]
 
 
@@ -172,7 +180,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
     this.inputParam = input;
     const fetchBill = {
-      "agentId": "CC01BA48DMT000000001",
+      "agentId": "CC01BA48AGTU00000001",
       "agentDeviceInfo": {
         "ip": "192.168.2.73",
         "initChannel": "AGT",
@@ -217,7 +225,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   billPay() {
     const payBill = {
-      "agentId": "CC01BA48DMT000000001",
+      "agentId": "CC01BA48AGTU00000001",
       "billerAdhoc": true,
       "agentDeviceInfo": {
         "ip": "192.168.2.73",
@@ -247,15 +255,18 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         ]
       },
       "paymentMethod": {
-        "paymentMode": "Cash",//this.paymentMode.trim(),
+        "paymentMode": 'Wallet',
         "quickPay": "N",
         "splitPay": "N"
       },
       "paymentInfo": {
         "info": [
           {
-            "infoName": "Remarks",
-            "infoValue": "Received"
+            "infoName": "WalletName",
+            "infoValue": "Paytm"
+          }, {
+            "infoName": "MobileNo",
+            "infoValue": "9658646979"
           }
         ]
       }
@@ -263,15 +274,54 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
     console.log(payBill);
     this._loaderService.showLoader();
-    this._bbpsService.payBill(this.requestID, payBill, this.serviceCatId, this.serviceId,this.currentUser.user.user_EmailID)
-    .subscribe((resp: any) => {
-      this._loaderService.hideLoader();
-      console.log(resp);
-      sessionStorage.setItem(`TRANS_${resp.resultDt.txnRefId}`, JSON.stringify({ payBill: payBill, billerDetails: this.biller, resp }))
-      this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {
-        state: { payBill: payBill, billerDetails: this.biller, resp }
-      });
+    this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
+      next: (resp: any) => {
+        this._loaderService.hideLoader();
+        console.log(resp);
+        if (resp.status === 'Success' && resp.code === 200 && resp.data) {
+          console.log(resp.data)
+          if (+resp.data < (+this.billerResponse.billAmount / 100)) {
+          // if (false) {
+            // show less wallet popup
+            this._popupService.openAlert({
+              header: 'Alert',
+              message: 'You do not have sufficient balance in your wallet! Please recharge to proceed.'
+            });
+          } else {
+            const dialogRef = this._matDialog.open(PinPopupComponent, { disableClose: true });
+
+            dialogRef.afterClosed().subscribe(result => {
+              console.log(`Pin Dialog closed ${result}`);
+              this._loaderService.showLoader();
+              if (result) {
+                this._bbpsService.payBill(this.requestID, payBill, this.serviceCatId, this.serviceId, this.currentUser.user.user_EmailID)
+                  .subscribe((resp: any) => {
+                    this._loaderService.hideLoader();
+                    console.log(resp);
+                    sessionStorage.setItem(`TRANS_${resp.resultDt.txnRefId}`, JSON.stringify({ payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url }))
+                    this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {
+                      state: { payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url}
+                    });
+                  })
+              }
+
+            });
+
+
+          }
+        } else {
+          console.log('Error while getting wallet balance');
+        }
+
+      },
+      error: (err: any) => {
+        this._loaderService.hideLoader();
+        console.log(err);
+      }
     })
+
+
+
 
   }
 

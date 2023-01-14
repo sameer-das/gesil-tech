@@ -8,6 +8,8 @@ import { BillPaymentComponent } from './bill-payment/bill-payment.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.component';
 import { TrackComplaintComponent } from './track-complaint/track-complaint.component';
+import { WalletService } from '../wallet/wallet.service';
+import { BbpsService } from './bbps.service';
 
 
 
@@ -31,6 +33,7 @@ import { TrackComplaintComponent } from './track-complaint/track-complaint.compo
     { path: 'raise-complaint', component: RaiseComplaintComponent, },
     { path: 'track-complaint', component: TrackComplaintComponent, }
     ])
-  ]
+  ],
+  providers: [BbpsService, WalletService]
 })
 export class BbpsServicesModule { }

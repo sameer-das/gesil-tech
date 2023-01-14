@@ -10,23 +10,24 @@ import { WalletService } from '../wallet.service';
 })
 export class WalletComponent implements OnInit {
 
-  constructor(private _walletService:WalletService, private _router: Router, private _loaderService:LoaderService) { }
+  constructor(private _walletService: WalletService, private _router: Router, private _loaderService: LoaderService) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   currentBalance: string = 'XXXXXX'
   ngOnInit(): void {
+    this.getTransHistory();
     this._loaderService.showLoader();
     this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
-      next: (resp:any) => {
+      next: (resp: any) => {
         this._loaderService.hideLoader();
         console.log(resp);
-        if(resp.status === 'Success' && resp.code === 200){
+        if (resp.status === 'Success' && resp.code === 200) {
           this.currentBalance = resp.data
         } else {
           this.currentBalance = 'Error'
         }
-      
+
       },
-      error: (err:any) => {
+      error: (err: any) => {
         this._loaderService.hideLoader();
         console.log(err);
         this.currentBalance = 'Error fetching the balance'
@@ -34,8 +35,25 @@ export class WalletComponent implements OnInit {
     })
   }
 
-  addMoney(){
+  addMoney() {
     this._router.navigate(['wallet/initiate']);
+  }
+
+  lastTransaction: any[] = [];
+  getTransHistory() {
+    this._walletService.getTransactionHistory(this.currentUser.user.user_EmailID).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        if (resp.status === 'Success' && resp.code === 200 && resp.data?.length > 0)
+          this.lastTransaction = resp.data
+          .map((trans: any) => {
+            return { ...trans, wallet_transaction_Date: new Date(trans.wallet_transaction_Date) }
+          });
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
 
 }

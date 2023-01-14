@@ -38,9 +38,9 @@ export class AuthService {
   }
 
   private URL_GET_BLOCK: string = '/api/Master/GetBlockMaster';
-  getBlocks(districtId: number) {
+  getBlocks(stateId:number,districtId: number) {
     return this._http.get(
-      `${environment.service_base_url}${this.URL_GET_BLOCK}`
+      `${environment.service_base_url}${this.URL_GET_BLOCK}?stateId=${stateId}&distId=${districtId}`
     );
   }
 
@@ -184,7 +184,7 @@ export class AuthService {
   validateTPin(userid: number, pin: string) {
     return this._http.post(`${environment.service_base_url}${this.URL_VALIDATE_TPIN}`, {
       "userId": userid,
-      "tpin": Number(pin)
+      "tpin": pin
     })
   }
 }

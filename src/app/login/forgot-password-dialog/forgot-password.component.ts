@@ -62,16 +62,16 @@ export class ForgotPasswordComponent implements OnInit {
       .sendForgotPasswordMail(this.forgotPasswordFormGroup.value.email)
       .subscribe({
         next: (resp: any) => {
+          console.log(resp);
           if (
             resp.status === 'Success' &&
-            resp.code === 200 &&
-            resp.data === 'Mail sent successfully.'
+            resp.code === 200
           ) {
             this.closeRegDialog();
             this._popup.openAlert({
               header: 'Success',
               message:
-                'Details for password recovery has been sent to your registered email id! Please check your email.',
+                'Your password has been reset. The updated password has been sent to your registered email and phone number.',
             });
             this.disabled = false;
             this.buttonLable = 'Send';

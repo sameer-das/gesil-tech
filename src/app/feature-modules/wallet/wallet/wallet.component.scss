@@ -4,9 +4,11 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+
   @media (max-width: $medium) {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .card {
     height: 150px;
     // border: 1px solid $grey;
@@ -18,55 +20,55 @@
     // background: linear-gradient(to  right, #49a09d,#ace0df);
 
     .icon_container {
-        display: block;
-        margin-top: 1rem;
-        text-align: center;
-        mat-icon {
-            font-size: 2rem;
-            color: $primary-blue;
-        }
+      display: block;
+      margin-top: 1rem;
+      text-align: center;
+
+      mat-icon {
+        font-size: 2rem;
+        color: $primary-blue;
+      }
     }
 
     .card_title {
-        display: block;
-        text-align: center;
-        font-size: 1rem;
-        color: #fff;
-        background: #ace0df;
-        background: linear-gradient(to right, $gradient1, $gradient2);
-        text-transform: uppercase;
-        padding: 0.3rem 0;
-        position: absolute;
-        width: 100%;
-        bottom: 0.8rem;
+      display: block;
+      text-align: center;
+      font-size: 1rem;
+      color: #fff;
+      background: #ace0df;
+      background: linear-gradient(to right, $gradient1, $gradient2);
+      text-transform: uppercase;
+      padding: 0.3rem 0;
+      position: absolute;
+      width: 100%;
+      bottom: 0.8rem;
 
-        @media (max-width: $medium) {
-            font-size: 0.8rem;
-          }
+      @media (max-width: $medium) {
+        font-size: 0.8rem;
+      }
 
     }
 
     p.card_value {
+      text-align: center;
+      font-size: 1.5rem;
+      color: $primary-blue;
+
+      a {
+        display: block;
+        font-size: 0.8rem;
         text-align: center;
-        font-size: 1.5rem;
         color: $primary-blue;
-
-        a {
-            display: block;
-            font-size: 0.8rem;
-            text-align: center;
-            color: $primary-blue;
-        }
+      }
     }
 
-    &.card_1 {
-    }
-    &.card_2 {
-    }
-    &.card_3 {
-    }
-    &.card_4 {
-    }
+    &.card_1 {}
+
+    &.card_2 {}
+
+    &.card_3 {}
+
+    &.card_4 {}
 
 
   }
@@ -74,33 +76,64 @@
 
 
 .cta_container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    button {
-        width: 60%;
-        outline: none;
-        border: none;
-        padding: 0.5rem;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        background: $gradient1;
-background: radial-gradient(circle, $gradient2 0%, $gradient1 100%);
-        border-radius: 2px;
-        // background: linear-gradient(to right, #49a09d, #ace0df);
-        color: #fff;
-        cursor: pointer;
-        &:hover {
-            box-shadow: 0px 0px 20px 0px rgba($color: #000, $alpha: 0.5);
-            // background: #49a09d;
-        }
-        @media (max-width: $medium) {
-            padding: 1rem;
-            font-size: 1.25rem;
-            width: 100%;
-          }
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
 
+  button {
+    width: 60%;
+    outline: none;
+    border: none;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    background: $gradient1;
+    background: radial-gradient(circle, $gradient2 0%, $gradient1 100%);
+    border-radius: 2px;
+    // background: linear-gradient(to right, #49a09d, #ace0df);
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0px 0px 20px 0px rgba($color: #000, $alpha: 0.5);
+      // background: #49a09d;
     }
+
+    @media (max-width: $medium) {
+      padding: 1rem;
+      font-size: 1.25rem;
+      width: 100%;
+    }
+
+  }
+}
+
+
+.table_container {
+  margin-top: 2rem;
+
+  h3 {
+    font-size: 1.4rem;
+    text-align: center;
+    color: #666;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      padding: 12px 0;
+      text-align: left;
+      background-color: $gradient1;
+      color: white;
+    }
+
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+  }
 }
