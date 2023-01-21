@@ -52,6 +52,7 @@ export class MyProfileComponent implements OnInit {
   bankDetails: any = {};
   personalDetail: any = {};
   registrationDetail: any = {};
+  kycDetails: any = {};
   states: [] = [];
   banks: [] = [];
 
@@ -83,6 +84,18 @@ export class MyProfileComponent implements OnInit {
             console.error(err);
           },
         });
+    } else if(e.index === 2) {
+        this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
+          next: (resp:any) => {
+            console.log(resp)
+            if(resp.status === 'Success' && resp.code === 200){
+              this.kycDetails = resp.data;
+            }
+          }, error: (error) => {
+            console.log('Error while fetching Kyc detaiils');
+            console.log(error)
+          }
+        })
     }
   }
 

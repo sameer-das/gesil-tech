@@ -21,7 +21,7 @@ export class PinPopupComponent implements OnInit {
   }
 
   closeDialog() {
-    this.dialogRef.close('sameer')
+    this.dialogRef.close(false)
   }
 
   validatePin() {

@@ -38,11 +38,38 @@ export class AuthService {
   }
 
   private URL_GET_BLOCK: string = '/api/Master/GetBlockMaster';
-  getBlocks(stateId:number,districtId: number) {
+  getBlocks(stateId: number, districtId: number) {
     return this._http.get(
       `${environment.service_base_url}${this.URL_GET_BLOCK}?stateId=${stateId}&distId=${districtId}`
     );
   }
+  private URL_GET_KYC_DETAILS: string = '/api/User/GetUserKycDetail';
+  getKycDetails(userId: number) {
+    return this._http.get(
+      `${environment.service_base_url}${this.URL_GET_KYC_DETAILS}?userId=${userId}`
+    );
+  }
+
+
+  private URL_POST_UPDATE_PASSWORD: string = '/api/User/UpdateUserPWD';
+  updatePassword(passwords: any) {
+    return this._http.post(
+      `${environment.service_base_url}${this.URL_POST_UPDATE_PASSWORD}`,
+      passwords
+    );
+  }
+
+
+  private URL_GET_USER_LOCATION_TYPE = `/api/User/GetUserLocations`
+  getUserLocationType() {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_USER_LOCATION_TYPE}`);
+  }
+
+
+
+
+
+
 
   private URL_SAVE_USER_REG: string = '/api/User/SaveUserMPInfo';
   saveUserRegistrationDetails(userRegDetails: any): Observable<any> {

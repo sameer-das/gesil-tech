@@ -1,315 +1,376 @@
+<mat-horizontal-stepper #stepper (selectionChange)="onStepChange($event)">
+  <mat-step label="User Registration">
+    <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+    <h5 class="steper__label">User Registration</h5>
+    <form [formGroup]="userRegistrationFormGroup" class="form__wrapper" (submit)="submitUserRegistration()">
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose User Type</mat-label>
+          <mat-select formControlName="userType">
+            <mat-option value="1">e-Sathi</mat-option>
+            <mat-option value="2">End User</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-horizontal-stepper #stepper (selectionChange)="onStepChange($event)">
-      <mat-step label="User Registration">
-        <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
-        <h5 class="steper__label">User Registration</h5>
-        <form [formGroup]="userRegistrationFormGroup" class="form__wrapper" (submit)="submitUserRegistration()">
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose User Type</mat-label>
-              <mat-select formControlName="userType">
-                <mat-option value="1">e-Sathi</mat-option>
-                <mat-option value="2">End User</mat-option>
-              </mat-select>
-            </mat-form-field>
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Reference No.</mat-label>
-              <input matInput type="text" formControlName="refNo">
-              <!-- <mat-icon class="info__icon" matTooltipClas="mat__tooltip"  matTooltip="If you are a e-Sathi provide your admin ref code. If you are a retailer provide your e-Sathi ref code.">info</mat-icon> -->
-              <mat-error *ngIf="getUserRegistrationFormErrorMessage('refNo')">{{getUserRegistrationFormErrorMessage('refNo')}}</mat-error>
-            </mat-form-field>
-  
-          </div>
-  
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose Location Type</mat-label>
-              <mat-select formControlName="locationType">
-                <mat-option value="1">Urban</mat-option>
-                <mat-option value="2">City</mat-option>
-                <mat-option value="3">Metro</mat-option>
-              </mat-select>
-              <mat-error *ngIf="getUserRegistrationFormErrorMessage('locationType')">{{getUserRegistrationFormErrorMessage('locationType')}}</mat-error>
-  
-            </mat-form-field>
-  
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose State</mat-label>
-              <mat-select formControlName="state">
-                <mat-option *ngFor="let state of states" [value]="state.state_ID">{{state.state_Name}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="getUserRegistrationFormErrorMessage('state')">{{getUserRegistrationFormErrorMessage('state')}}</mat-error>
-            </mat-form-field>
-  
-          </div>
-  
-          <div class="form__row">
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Mobile No.</mat-label>
-              <input matInput type="text" formControlName="mobile">
-              <mat-error *ngIf="getUserRegistrationFormErrorMessage('mobile')">{{getUserRegistrationFormErrorMessage('mobile')}}</mat-error>
-            </mat-form-field>
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Email Id</mat-label>
-              <input matInput type="email" formControlName="email">
-              <mat-error *ngIf="getUserRegistrationFormErrorMessage('email')">{{getUserRegistrationFormErrorMessage('email')}}</mat-error>
-            </mat-form-field>
-          </div>
-  
-          <div class="form__row cta__container">
-            <button type="submit" class="btn primary" [disabled]="userRegistrationFormGroup.invalid">Update Registration Details</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step label="Personal Details">
-        <h5 class="steper__label">Personal Details</h5>
-        <form [formGroup]="personalDetailsFormGroup" (submit)="submitUserPersonalDetails()">
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter First Name</mat-label>
-              <input matInput type="text" formControlName="firstName">
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('firstName')">{{getUserPersonalDetailsFormErrorMessage('firstName')}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Last Name</mat-label>
-              <input matInput type="text" formControlName="lastName">
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('lastName')">{{getUserPersonalDetailsFormErrorMessage('lastName')}}</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose Gender</mat-label>
-              <mat-select formControlName="gender">
-                <mat-option value="Male">Male</mat-option>
-                <mat-option value="Female">Female</mat-option>
-                <mat-option value="Others">Others</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Date Of Birth</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="dob">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('dob')">{{getUserPersonalDetailsFormErrorMessage('dob')}}</mat-error>
-            </mat-form-field>
-          </div>
-  
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose State</mat-label>
-              <mat-select formControlName="state" (selectionChange)="onStateChange($event)">
-                <mat-option *ngFor="let state of states" [value]="state.state_ID">{{state.state_Name}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('state')">{{getUserPersonalDetailsFormErrorMessage('state')}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose District</mat-label>
-              <mat-select formControlName="district" (selectionChange)="onDistrictChange($event)">
-                <mat-option *ngFor="let district of districts" [value]="district.district_ID">{{district.district_Name}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('district')">{{getUserPersonalDetailsFormErrorMessage('district')}}</mat-error>
-  
-            </mat-form-field>
-          </div>
-  
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose Block</mat-label>
-              <mat-select formControlName="block">
-                <mat-option *ngFor="let block of blocks" [value]="block.block_ID">{{block.block_Name}}</mat-option>
-  
-              </mat-select>
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('block')">{{getUserPersonalDetailsFormErrorMessage('block')}}</mat-error>
-  
-            </mat-form-field>
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter GP/WARD</mat-label>
-              <input matInput type="text" formControlName="gpWard">
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('gpWard')">{{getUserPersonalDetailsFormErrorMessage('gpWard')}}</mat-error>
-            </mat-form-field>
-  
-          </div>
-  
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter PIN</mat-label>
-              <input matInput type="text" formControlName="pin">
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('pin')">{{getUserPersonalDetailsFormErrorMessage('pin')}}</mat-error>
-  
-            </mat-form-field>
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Nominee Name</mat-label>
-              <input matInput type="text" formControlName="nomineeName">
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('nomineeName')">{{getUserPersonalDetailsFormErrorMessage('nomineeName')}}</mat-error>
-  
-            </mat-form-field>
-  
-          </div>
-  
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Relation Wtih Nominee</mat-label>
-              <mat-select formControlName="relationWithNominee">
-                <mat-option *ngFor="let relation of relations" [value]="relation.id">{{relation.name}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('relationWithNominee')">{{getUserPersonalDetailsFormErrorMessage('relationWithNominee')}}</mat-error>
-            </mat-form-field>
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Nominee Contact No</mat-label>
-              <input matInput type="text" formControlName="nomineeContact">
-              <mat-error *ngIf="getUserPersonalDetailsFormErrorMessage('nomineeContact')">{{getUserPersonalDetailsFormErrorMessage('nomineeContact')}}</mat-error>
-  
-            </mat-form-field>
-  
-          </div>
-          <div class="form__row cta__container">
-            <button type="submit" class="btn primary" [disabled]="personalDetailsFormGroup.invalid">Update Personal Details</button>
-          </div>
-  
-        </form>
-      </mat-step>
-      <mat-step label="Bank Details">
-        <h5 class="steper__label">Bank Details</h5>
-        <form [formGroup]="bankDetailsFormGroup" (submit)="submitBankDetails()">
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Choose Bank</mat-label>
-              <mat-select formControlName="bank_id">
-                <mat-option *ngFor="let bank of banks" [value]="bank.id">{{bank.bank_Name}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="getUserBankDetailsFormErrorMessage('bank_id')">{{getUserBankDetailsFormErrorMessage('bank_id')}}</mat-error>
-            </mat-form-field>
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Account Holder Name</mat-label>
-              <input matInput type="text" formControlName="accountHolderName">
-              <mat-error *ngIf="getUserBankDetailsFormErrorMessage('accountHolderName')">{{getUserBankDetailsFormErrorMessage('accountHolderName')}}</mat-error>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Reference No.</mat-label>
+          <input matInput type="text" formControlName="refNo">
+          <!-- <mat-icon class="info__icon" matTooltipClas="mat__tooltip"  matTooltip="If you are a e-Sathi provide your admin ref code. If you are a retailer provide your e-Sathi ref code.">info</mat-icon> -->
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('refNo')">{{getUserRegistrationFormErrorMessage('refNo')}}</mat-error>
+        </mat-form-field>
 
-            </mat-form-field>
-          </div>
-  
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Account Number</mat-label>
-              <input matInput type="text" formControlName="accountNumber">
-              <mat-error *ngIf="getUserBankDetailsFormErrorMessage('accountNumber')">{{getUserBankDetailsFormErrorMessage('accountNumber')}}</mat-error>
+      </div>
 
-            </mat-form-field>
-  
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter IFSC Code</mat-label>
-              <input matInput type="text" formControlName="ifsc">
-              <mat-error *ngIf="getUserBankDetailsFormErrorMessage('ifsc')">{{getUserBankDetailsFormErrorMessage('ifsc')}}</mat-error>
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Location Type</mat-label>
+          <mat-select formControlName="locationType">
+            <mat-option value="1">Urban</mat-option>
+            <mat-option value="2">City</mat-option>
+            <mat-option value="3">Metro</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('locationType')">{{getUserRegistrationFormErrorMessage('locationType')}}</mat-error>
 
-            </mat-form-field>
-          </div>
-          <div class="form__row">
-            <mat-form-field class="form__field" appearance="standard">
-              <mat-label>Enter Branch Name</mat-label>
-              <input matInput type="text" formControlName="branchName">
-            </mat-form-field>
-          </div>
+        </mat-form-field>
 
-          <div class="form__row cta__container">
-            <button type="submit" class="btn primary" [disabled]="bankDetailsFormGroup.invalid">Update Bank Details</button>
-          </div>
-        </form>
-      </mat-step>
-     
-      <mat-step label="KYC Documents">
-        <h5 class="steper__label">KYC Documents</h5>
-        <form [formGroup]="kycDetailsFormGroup">         
-          <div class="document__row">
-            <p class="document__name">Addhar Card Frontside</p>
-            <mat-form-field class="document__field" appearance="standard">
-              <mat-label>Enter Adhar Card Number</mat-label>
-              <input matInput type="text" formControlName="adhar_no">
-            </mat-form-field>
-            <div class=" document__upload">
-              <input type="file" #adhar_front (change)="handleUpload($event,'adhar_front')">
-              <button type="button" (click)="remove_file('adhar_front')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">Addhar Card Backside</p>
-            <div class=" document__upload">
-              <input type="file" #adhar_back  (change)="handleUpload($event,'adhar_back')">
-              <button type="button" (click)="remove_file('adhar_back')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">PAN Card</p>
-            <mat-form-field class="document__field" appearance="standard">
-              <mat-label>Enter PAN Card Number</mat-label>
-              <input matInput type="text" formControlName="pan_no">
-            </mat-form-field>
-            <div class=" document__upload">
-              <input type="file" #pan  (change)="handleUpload($event,'pan')">
-              <button type="button" (click)="remove_file('pan')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">Bank Passbook / Canceled Check</p>
-            <mat-form-field class="document__field" appearance="standard">
-              <mat-label>Enter Account Number</mat-label>
-              <input matInput type="text" formControlName="bank_account_no">
-            </mat-form-field>
-            <div class=" document__upload">
-              <input type="file" #bank_passbook (change)="handleUpload($event,'bank_passbook')">
-              <button type="button" (click)="remove_file('bank_passbook')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">Passport size photo</p>
-            <div class=" document__upload">
-              <input type="file" #pass_photo (change)="handleUpload($event,'pass_photo')">
-              <button type="button" (click)="remove_file('pass_photo')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">GST Certificate</p>
-            <mat-form-field class="document__field" appearance="standard">
-              <mat-label>Enter GSTIN</mat-label>
-              <input matInput type="text" formControlName="gstin_no">
-            </mat-form-field>
-            <div class=" document__upload">
-              <input type="file" #gst_cert (change)="handleUpload($event,'gst_cert')">
-              <button type="button" (click)="remove_file('gst_cert')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">Center Indoor Photo</p>
-            <div class=" document__upload">
-              <input type="file" #center_indoor (change)="handleUpload($event,'center_indoor')">
-              <button type="button" (click)="remove_file('center_indoor')">Remove</button>
-            </div>
-          </div>
-    
-          <div class="document__row">
-            <p class="document__name">Center Outdoor Photo</p>
-            <div class=" document__upload">
-              <input type="file" #center_outdoor (change)="handleUpload($event,'center_outdoor')">
-              <button type="button" (click)="remove_file('center_outdoor')">Remove</button>
-            </div>
-          </div>
-          <div class="kyc_cta_container">
-            <button type="button" class="btn primary" (click)="submitKYCDetails()" >Update KYC Details</button>
-          </div>
-    
 
-        </form>
-  
-      </mat-step>
-    </mat-horizontal-stepper>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let state of states" [value]="state.state_ID">{{state.state_Name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('state')">{{getUserRegistrationFormErrorMessage('state')}}</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="form__row">
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Mobile No.</mat-label>
+          <input matInput type="text" formControlName="mobile">
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('mobile')">{{getUserRegistrationFormErrorMessage('mobile')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Email Id</mat-label>
+          <input matInput type="email" formControlName="email">
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('email')">{{getUserRegistrationFormErrorMessage('email')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form__row cta__container">
+        <button type="submit" class="btn primary" [disabled]="userRegistrationFormGroup.invalid">Update Registration
+          Details</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step label="Personal Details">
+    <h5 class="steper__label">Personal Details</h5>
+    <form [formGroup]="personalDetailsFormGroup" (submit)="submitUserPersonalDetails()">
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter First Name</mat-label>
+          <input matInput type="text" formControlName="firstName">
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('firstName')">{{getUserPersonalDetailsFormErrorMessage('firstName')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Last Name</mat-label>
+          <input matInput type="text" formControlName="lastName">
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('lastName')">{{getUserPersonalDetailsFormErrorMessage('lastName')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Others">Others</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Date Of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('dob')">{{getUserPersonalDetailsFormErrorMessage('dob')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose State</mat-label>
+          <mat-select formControlName="state" (selectionChange)="onStateChange($event)">
+            <mat-option *ngFor="let state of states" [value]="state.state_ID">{{state.state_Name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('state')">{{getUserPersonalDetailsFormErrorMessage('state')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose District</mat-label>
+          <mat-select formControlName="district" (selectionChange)="onDistrictChange($event)">
+            <mat-option *ngFor="let district of districts"
+              [value]="district.district_ID">{{district.district_Name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('district')">{{getUserPersonalDetailsFormErrorMessage('district')}}</mat-error>
+
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Block</mat-label>
+          <mat-select formControlName="block">
+            <mat-option *ngFor="let block of blocks" [value]="block.block_ID">{{block.block_Name}}</mat-option>
+
+          </mat-select>
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('block')">{{getUserPersonalDetailsFormErrorMessage('block')}}</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter GP/WARD</mat-label>
+          <input matInput type="text" formControlName="gpWard">
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('gpWard')">{{getUserPersonalDetailsFormErrorMessage('gpWard')}}</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter PIN</mat-label>
+          <input matInput type="text" formControlName="pin">
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('pin')">{{getUserPersonalDetailsFormErrorMessage('pin')}}</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Nominee Name</mat-label>
+          <input matInput type="text" formControlName="nomineeName">
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('nomineeName')">{{getUserPersonalDetailsFormErrorMessage('nomineeName')}}</mat-error>
+
+        </mat-form-field>
+
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Relation Wtih Nominee</mat-label>
+          <mat-select formControlName="relationWithNominee">
+            <mat-option *ngFor="let relation of relations" [value]="relation.id">{{relation.name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('relationWithNominee')">{{getUserPersonalDetailsFormErrorMessage('relationWithNominee')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Nominee Contact No</mat-label>
+          <input matInput type="text" formControlName="nomineeContact">
+          <mat-error
+            *ngIf="getUserPersonalDetailsFormErrorMessage('nomineeContact')">{{getUserPersonalDetailsFormErrorMessage('nomineeContact')}}</mat-error>
+
+        </mat-form-field>
+
+      </div>
+      <div class="form__row cta__container">
+        <button type="submit" class="btn primary" [disabled]="personalDetailsFormGroup.invalid">Update Personal
+          Details</button>
+      </div>
+
+    </form>
+  </mat-step>
+  <mat-step label="Bank Details">
+    <h5 class="steper__label">Bank Details</h5>
+    <form [formGroup]="bankDetailsFormGroup" (submit)="submitBankDetails()">
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Choose Bank</mat-label>
+          <mat-select formControlName="bank_id">
+            <mat-option *ngFor="let bank of banks" [value]="bank.id">{{bank.bank_Name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="getUserBankDetailsFormErrorMessage('bank_id')">{{getUserBankDetailsFormErrorMessage('bank_id')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Account Holder Name</mat-label>
+          <input matInput type="text" formControlName="accountHolderName">
+          <mat-error
+            *ngIf="getUserBankDetailsFormErrorMessage('accountHolderName')">{{getUserBankDetailsFormErrorMessage('accountHolderName')}}</mat-error>
+
+        </mat-form-field>
+      </div>
+
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Account Number</mat-label>
+          <input matInput type="text" formControlName="accountNumber">
+          <mat-error
+            *ngIf="getUserBankDetailsFormErrorMessage('accountNumber')">{{getUserBankDetailsFormErrorMessage('accountNumber')}}</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter IFSC Code</mat-label>
+          <input matInput type="text" formControlName="ifsc">
+          <mat-error
+            *ngIf="getUserBankDetailsFormErrorMessage('ifsc')">{{getUserBankDetailsFormErrorMessage('ifsc')}}</mat-error>
+
+        </mat-form-field>
+      </div>
+      <div class="form__row">
+        <mat-form-field class="form__field" appearance="standard">
+          <mat-label>Enter Branch Name</mat-label>
+          <input matInput type="text" formControlName="branchName">
+        </mat-form-field>
+      </div>
+
+      <div class="form__row cta__container">
+        <button type="submit" class="btn primary" [disabled]="bankDetailsFormGroup.invalid">Update Bank Details</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step label="KYC Documents">
+    <h5 class="steper__label">KYC Documents</h5>
+    <form [formGroup]="kycDetailsFormGroup">
+      <div class="document__row">
+        <p class="document__name">Addhar Card Frontside</p>
+        <mat-form-field class="document__field" appearance="standard">
+          <mat-label>Enter Adhar Card Number</mat-label>
+          <input matInput type="text" formControlName="adhar_no">
+        </mat-form-field>
+        <div class="document__upload">
+          <div class="upload-btn-wrapper">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #adhar_front (change)="handleUpload($event,'adhar_front')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('adhar_front')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.aadhar_FontPhoto" class="btn"
+            (click)="showDocument(kycDetails?.aadhar_FontPhoto)">View</button>
+        </div>
+      </div>
+
+      <div class="document__row">
+        <p class="document__name">Addhar Card Backside</p>
+        <div class="document__upload ">
+          <div class="upload-btn-wrapper ml05">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #adhar_back (change)="handleUpload($event,'adhar_back')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('adhar_back')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.aadhar_BackPhoto" class="btn"
+            (click)="showDocument(kycDetails?.aadhar_BackPhoto)">View</button>
+        </div>
+      </div>
+
+      <div class="document__row">
+        <p class="document__name">PAN Card</p>
+        <mat-form-field class="document__field" appearance="standard">
+          <mat-label>Enter PAN Card Number</mat-label>
+          <input matInput type="text" formControlName="pan_no">
+        </mat-form-field>
+        <div class=" document__upload">
+          <div class="upload-btn-wrapper">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #pan (change)="handleUpload($event,'pan')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('pan')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.pancard_Photo" class="btn"
+            (click)="showDocument(kycDetails?.pancard_Photo)">View</button>
+        </div>
+      </div>
+
+      <!-- <div class="document__row">
+        <p class="document__name">Bank Passbook / Canceled Check</p>
+        <mat-form-field class="document__field" appearance="standard">
+          <mat-label>Enter Account Number</mat-label>
+          <input matInput type="text" formControlName="bank_account_no">
+        </mat-form-field>
+        <div class=" document__upload">
+          <div class="upload-btn-wrapper">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #bank_passbook (change)="handleUpload($event,'bank_passbook')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('bank_passbook')">Remove</button>
+
+        </div>
+      </div> -->
+
+      <div class="document__row">
+        <p class="document__name">Passport size photo</p>
+        <div class=" document__upload">
+          <div class="upload-btn-wrapper ml05">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #pass_photo (change)="handleUpload($event,'pass_photo')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('pass_photo')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.passport_Photo" class="btn"
+            (click)="showDocument(kycDetails?.passport_Photo)">View</button>
+        </div>
+      </div>
+
+      <div class="document__row">
+        <p class="document__name">GST Certificate</p>
+        <mat-form-field class="document__field" appearance="standard">
+          <mat-label>Enter GSTIN</mat-label>
+          <input matInput type="text" formControlName="gstin_no">
+        </mat-form-field>
+        <div class=" document__upload">
+          <div class="upload-btn-wrapper">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #gst_cert (change)="handleUpload($event,'gst_cert')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('gst_cert')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.gsT_Photo" class="btn"
+            (click)="showDocument(kycDetails?.gsT_Photo)">View</button>
+        </div>
+      </div>
+
+      <div class="document__row">
+        <p class="document__name">Center Indoor Photo</p>
+        <div class=" document__upload">
+          <div class="upload-btn-wrapper ml05">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #center_indoor (change)="handleUpload($event,'center_indoor')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('center_indoor')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.center_IndoorPhoto" class="btn"
+            (click)="showDocument(kycDetails?.center_IndoorPhoto)">View</button>
+        </div>
+      </div>
+
+      <div class="document__row">
+        <p class="document__name">Center Outdoor Photo</p>
+        <div class=" document__upload ">
+          <div class="upload-btn-wrapper ml05">
+            <button class="btn primary">Upload a file</button>
+            <input type="file" #center_outdoor (change)="handleUpload($event,'center_outdoor')">
+          </div>
+          <button type="button" class="btn secondary" (click)="remove_file('center_outdoor')">Remove</button>
+          <button type="button" *ngIf="kycDetails?.center_OutDoorPhoto" class="btn"
+            (click)="showDocument(kycDetails?.center_OutDoorPhoto)">View</button>
+        </div>
+      </div>
+      <div class="kyc_cta_container">
+        <button type="button" class="btn primary" (click)="submitKYCDetails()">Update KYC Details</button>
+      </div>
+
+
+    </form>
+
+  </mat-step>
+</mat-horizontal-stepper>

@@ -8,6 +8,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ChangePinComponent } from './change-pin/change-pin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { DocumentPopupComponent } from './document-popup/document-popup.component';
 
 
 
@@ -17,7 +18,8 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
     MyProfileComponent,
     ChangePasswordComponent,
     ChangePinComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    DocumentPopupComponent
   ],
   imports: [
     CommonModule,

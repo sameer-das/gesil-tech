@@ -71,6 +71,12 @@
   }
   .document__upload {
     width: 30%;
+    display: flex;
+    // border: 1px solid red;
+
+    .btn {
+      font-size: 0.8rem;
+    }
   }
 
   @media (max-width: $medium) {
@@ -127,3 +133,35 @@
 //   visibility: hidden;
 // }
 
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  // display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.upload-btn-wrapper button {
+  font-size: 0.8rem;
+}
+
+.ml05 {
+  margin-left: 0.5rem;
+}
+
+
+// Corn flakes - 15Kg 
+// Bread crumbs - 15Kg
+// Green Peas - 12Kg 110
+// Badam Sarbat - 7ta 
+// ------------------------
+// Sweet Corn - 25Kg
+// Baby Corn - 25Kg
+// Paneer    - 30Kg
+// Mashroom - 30Kg

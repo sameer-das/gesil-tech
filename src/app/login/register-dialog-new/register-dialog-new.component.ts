@@ -66,6 +66,8 @@ export class RegisterDialogNewComponent implements OnInit {
     if (this.states.length === 0) {
       this.populateStates(1);
     }
+    if(this.locationTypes.length === 0)
+      this.getUserLocationType();
     // if (this.blocks.length === 0) {
     //   this.populateBlocks();
     // }
@@ -257,6 +259,20 @@ export class RegisterDialogNewComponent implements OnInit {
   getDate(date: Date | string) {
     const d = new Date(date).getTime() + 19800000;
     return new Date(d).toISOString();
+  }
+
+  locationTypes: any[] = [];
+  getUserLocationType() {
+    this._authService.getUserLocationType().subscribe({
+      next: (resp: any) => {
+        if(resp.status === 'Success' && resp.code === 200) {
+          this.locationTypes = resp.data;
+        }
+      }, error: (err:any) => {
+        console.log('error getting user location Type');
+        console.log(err);
+      }
+    })
   }
 
 

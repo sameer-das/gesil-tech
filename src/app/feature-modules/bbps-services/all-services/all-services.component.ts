@@ -188,7 +188,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       },
       "customerInfo": {
         "customerMobile": "9777117452",
-        "customerEmail": "info.gskindiaorg@gmail.com ",
+        "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
         "customerPan": ""
       },
@@ -233,8 +233,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "mac": "01-23-45-67-89-ab"
       },
       "customerInfo": {
-        "customerMobile": "9777117452",
-        "customerEmail": "info.gskindiaorg@gmail.com ",
+         "customerMobile": "9777117452",
+        "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
         "customerPan": ""
       },
@@ -266,7 +266,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
             "infoValue": "Paytm"
           }, {
             "infoName": "MobileNo",
-            "infoValue": "9658646979"
+            "infoValue": this.currentUser.user.mobile_Number
           }
         ]
       }

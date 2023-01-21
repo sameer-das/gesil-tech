@@ -21,7 +21,7 @@
                 
             </div>
             <div class="info__details">
-                <p>{{personalDetail.user_Dob}}</p>
+                <p>{{personalDetail.user_Dob | date : 'mediumDate'}}</p>
                 <p>{{personalDetail.user_Gender}}</p>
                 <p>{{registrationDetail.user_EmailID}}</p>
                 <p>{{registrationDetail.mobile_Number}}</p>
@@ -53,9 +53,9 @@
                 <p>PAN</p>
                 <p>GSTIN</p>
             </div>
-            <div *ngIf="!currentUser.kycDetail" class="info__details">
-                <p>-</p>
-                <p>-</p>
+            <div *ngIf="kycDetails" class="info__details">
+                <p>{{kycDetails?.pancard_Number}}</p>
+                <p>{{kycDetails?.gsT_Number}}</p>
             </div>
         </div> </mat-tab>
 </mat-tab-group>
