@@ -74,8 +74,34 @@
     display: flex;
     // border: 1px solid red;
 
-    .btn {
-      font-size: 0.8rem;
+    button {
+      padding: 0.5rem;
+
+      border: none;
+      outline: none;
+      border-radius: 2px;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 4px 4px 8px #ddd;
+      }
+    }
+    button:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    .upload_button {
+      background-color: $gradient1;
+      color: #fff;
+    }
+
+    .remove_button {
+      background-color: $pink;
+      color: #fff;
+    }
+
+    .preview_button {
+      background-color: $yellow;
+      color: #fff;
     }
   }
 
@@ -155,6 +181,16 @@
   margin-left: 0.5rem;
 }
 
+
+.file_name {
+  position: absolute;
+  left: -3rem;
+
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 // Corn flakes - 15Kg 
 // Bread crumbs - 15Kg

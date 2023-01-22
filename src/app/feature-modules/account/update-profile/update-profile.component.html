@@ -255,12 +255,21 @@
         </mat-form-field>
         <div class="document__upload">
           <div class="upload-btn-wrapper">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button" title="Upload file">
+              <mat-icon> upload_file</mat-icon>
+            </button>
             <input type="file" #adhar_front (change)="handleUpload($event,'adhar_front')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('adhar_front')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.aadhar_FontPhoto" class="btn"
-            (click)="showDocument(kycDetails?.aadhar_FontPhoto)">View</button>
+          <div *ngIf="file_names.adhar_front" style="position: relative;">
+            <button type="button" title="Remove file" class="remove_button"  (click)="remove_file('adhar_front')">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <p class="file_name">{{file_names.adhar_front}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.aadhar_FontPhoto"  class="preview_button"
+            (click)="showDocument(kycDetails?.aadhar_FontPhoto)">
+          <mat-icon>preview</mat-icon>
+          </button>
         </div>
       </div>
 
@@ -268,12 +277,15 @@
         <p class="document__name">Addhar Card Backside</p>
         <div class="document__upload ">
           <div class="upload-btn-wrapper ml05">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #adhar_back (change)="handleUpload($event,'adhar_back')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('adhar_back')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.aadhar_BackPhoto" class="btn"
-            (click)="showDocument(kycDetails?.aadhar_BackPhoto)">View</button>
+          <div *ngIf="file_names.adhar_back" style="position: relative;">
+            <button type="button"  title="Remove file" class="remove_button" *ngIf="file_names.adhar_back" (click)="remove_file('adhar_back')"><mat-icon>delete</mat-icon></button>
+            <p class="file_name">{{file_names.adhar_back}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.aadhar_BackPhoto" class="preview_button"
+            (click)="showDocument(kycDetails?.aadhar_BackPhoto)"><mat-icon>preview</mat-icon></button>
         </div>
       </div>
 
@@ -285,12 +297,15 @@
         </mat-form-field>
         <div class=" document__upload">
           <div class="upload-btn-wrapper">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #pan (change)="handleUpload($event,'pan')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('pan')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.pancard_Photo" class="btn"
-            (click)="showDocument(kycDetails?.pancard_Photo)">View</button>
+          <div *ngIf="file_names.pan" style="position: relative;">
+            <button type="button"  title="Remove file" class="remove_button" *ngIf="file_names.pan"  (click)="remove_file('pan')"><mat-icon>delete</mat-icon></button>
+            <p class="file_name">{{file_names.pan}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.pancard_Photo" class="preview_button"
+            (click)="showDocument(kycDetails?.pancard_Photo)"><mat-icon>preview</mat-icon></button>
         </div>
       </div>
 
@@ -302,7 +317,7 @@
         </mat-form-field>
         <div class=" document__upload">
           <div class="upload-btn-wrapper">
-            <button class="btn primary">Upload a file</button>
+            <button class="btn primary"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #bank_passbook (change)="handleUpload($event,'bank_passbook')">
           </div>
           <button type="button" class="btn secondary" (click)="remove_file('bank_passbook')">Remove</button>
@@ -314,12 +329,15 @@
         <p class="document__name">Passport size photo</p>
         <div class=" document__upload">
           <div class="upload-btn-wrapper ml05">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #pass_photo (change)="handleUpload($event,'pass_photo')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('pass_photo')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.passport_Photo" class="btn"
-            (click)="showDocument(kycDetails?.passport_Photo)">View</button>
+          <div *ngIf="file_names.pass_photo" style="position: relative;">
+            <button type="button"  title="Remove file" class="remove_button" *ngIf="file_names.pass_photo"  (click)="remove_file('pass_photo')"><mat-icon>delete</mat-icon></button>
+            <p class="file_name">{{file_names.pass_photo}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.passport_Photo" class="preview_button"
+            (click)="showDocument(kycDetails?.passport_Photo)"><mat-icon>preview</mat-icon></button>
         </div>
       </div>
 
@@ -331,12 +349,15 @@
         </mat-form-field>
         <div class=" document__upload">
           <div class="upload-btn-wrapper">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #gst_cert (change)="handleUpload($event,'gst_cert')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('gst_cert')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.gsT_Photo" class="btn"
-            (click)="showDocument(kycDetails?.gsT_Photo)">View</button>
+          <div *ngIf="file_names.gst_cert" style="position: relative;">
+            <button type="button"  title="Remove file" class="remove_button" *ngIf="file_names.gst_cert"  (click)="remove_file('gst_cert')"><mat-icon>delete</mat-icon></button>
+            <p class="file_name">{{file_names.gst_cert}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.gsT_Photo" class="preview_button"
+            (click)="showDocument(kycDetails?.gsT_Photo)"><mat-icon>preview</mat-icon></button>
         </div>
       </div>
 
@@ -344,12 +365,15 @@
         <p class="document__name">Center Indoor Photo</p>
         <div class=" document__upload">
           <div class="upload-btn-wrapper ml05">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #center_indoor (change)="handleUpload($event,'center_indoor')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('center_indoor')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.center_IndoorPhoto" class="btn"
-            (click)="showDocument(kycDetails?.center_IndoorPhoto)">View</button>
+          <div *ngIf="file_names.center_indoor" style="position: relative;">
+            <button type="button"  title="Remove file" class="remove_button" *ngIf="file_names.center_indoor"  (click)="remove_file('center_indoor')"><mat-icon>delete</mat-icon></button>
+            <p class="file_name">{{file_names.center_indoor}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.center_IndoorPhoto" class="preview_button"
+            (click)="showDocument(kycDetails?.center_IndoorPhoto)"><mat-icon>preview</mat-icon></button>
         </div>
       </div>
 
@@ -357,12 +381,15 @@
         <p class="document__name">Center Outdoor Photo</p>
         <div class=" document__upload ">
           <div class="upload-btn-wrapper ml05">
-            <button class="btn primary">Upload a file</button>
+            <button class="upload_button"><mat-icon> upload_file</mat-icon></button>
             <input type="file" #center_outdoor (change)="handleUpload($event,'center_outdoor')">
           </div>
-          <button type="button" class="btn secondary" (click)="remove_file('center_outdoor')">Remove</button>
-          <button type="button" *ngIf="kycDetails?.center_OutDoorPhoto" class="btn"
-            (click)="showDocument(kycDetails?.center_OutDoorPhoto)">View</button>
+          <div *ngIf="file_names.center_outdoor" style="position: relative;">
+            <button type="button"  title="Remove file" class="remove_button" *ngIf="file_names.center_outdoor"  (click)="remove_file('center_outdoor')"><mat-icon>delete</mat-icon></button>
+            <p class="file_name">{{file_names.remove_button}}</p>
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.center_OutDoorPhoto" class="preview_button"
+            (click)="showDocument(kycDetails?.center_OutDoorPhoto)"><mat-icon>preview</mat-icon></button>
         </div>
       </div>
       <div class="kyc_cta_container">

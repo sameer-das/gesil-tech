@@ -181,6 +181,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
             console.log(error);
           }
         })
+      } else {
+        this.populateKycDetailsFormGroup(this.kycDetails);
       }
     }
   }
@@ -225,13 +227,13 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
     ]),
   });
-  
+
   bankDetailsFormGroup: FormGroup = this._formBuilder.group({
     bank_id: new FormControl('', Validators.required),
     accountHolderName: new FormControl('', Validators.required),
     ifsc: new FormControl('', Validators.required),
     branchName: new FormControl(),
-    accountNumber: new FormControl('',[Validators.required, Validators.pattern('^[0-9]*$')]),
+    accountNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
   });
 
   kycDetailsFormGroup: FormGroup = this._formBuilder.group({
@@ -545,15 +547,15 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       center_OutDoorPhoto: this.base64_file_data.center_outdoor,
     };
 
-    if(!/^[0-9]*$/.test(this.kycDetailsFormGroup.value.adhar_no) || this.kycDetailsFormGroup.value.adhar_no.length != 12){
+    if (!/^[0-9]*$/.test(this.kycDetailsFormGroup.value.adhar_no) || this.kycDetailsFormGroup.value.adhar_no.length != 12) {
       this._popupService.openAlert({
         header: 'Alert',
-        message:'Invalid adhar number! Please enter valid adhar number'
+        message: 'Invalid adhar number! Please enter valid adhar number'
       })
       return;
     }
 
-    
+
     this._loaderService.showLoader();
     this._authService.saveUserKycDetails(kycDetails).subscribe({
       next: (resp: any) => {
@@ -563,7 +565,23 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
           this._popupService.openAlert({
             header: 'Success',
             message: 'Details saved successfully!'
+          });
+
+          // To re update 
+          this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
+            next: (resp: any) => {
+              console.log(resp)
+              if (resp.status === 'Success' && resp.code === 200) {
+                this.kycDetails = resp.data;
+                this.populateKycDetailsFormGroup(this.kycDetails);
+              }
+  
+            }, error: (error: any) => {
+              console.log('error fetching kyc details')
+              console.log(error);
+            }
           })
+
         } else {
         }
       },
@@ -660,7 +678,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   getUserPersonalDetailsFormErrorMessage(field: string): string | null {
     const control: AbstractControl | null =
       this.personalDetailsFormGroup.get(field);
-      // console.log(control, field)
+    // console.log(control, field)
     if (control?.invalid) {
       if (control.hasError('required')) {
         if (field === 'firstName') return 'Please enter first name!';
@@ -691,7 +709,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   getUserBankDetailsFormErrorMessage(field: string): string | null {
     const control: AbstractControl | null =
       this.bankDetailsFormGroup.get(field);
-      // console.log(control , field);
+    // console.log(control , field);
     if (control?.invalid) {
       if (control.hasError('required')) {
         if (field === 'bank_id') return 'Please select your bank!';
@@ -727,11 +745,23 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     center_outdoor: '',
   };
 
+  file_names:any = {
+    adhar_front: '',
+    adhar_back: '',
+    pan: '',
+    bank_passbook: '',
+    pass_photo: '',
+    gst_cert: '',
+    center_indoor: '',
+    center_outdoor: '',
+  }
+
   handleUpload(e: Event, name: string) {
     console.log(name);
     const target: any = e.target;
     const file = target?.files[0];
     if (file && !this.isInvalidFile(file, name)) {
+      this.file_names[name] = file.name;
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -757,20 +787,28 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     this.base64_file_data[name] = '';
     if (name === 'adhar_front') {
       this.adhar_front.nativeElement.value = '';
+      this.file_names.adhar_front = '';
     } else if (name === 'adhar_back') {
       this.adhar_back.nativeElement.value = '';
+      this.file_names.adhar_back = '';
     } else if (name === 'pan') {
       this.pan.nativeElement.value = '';
+      this.file_names.pan = '';
     } else if (name === 'bank_passbook') {
       this.bank_passbook.nativeElement.value = '';
+      this.file_names.bank_passbook = '';
     } else if (name === 'pass_photo') {
       this.pass_photo.nativeElement.value = '';
+      this.file_names.pass_photo = '';
     } else if (name === 'gst_cert') {
       this.gst_cert.nativeElement.value = '';
+      this.file_names.gst_cert = '';
     } else if (name === 'center_indoor') {
       this.center_indoor.nativeElement.value = '';
+      this.file_names.center_indoor = '';
     } else if (name === 'center_outdoor') {
       this.center_outdoor.nativeElement.value = '';
+      this.file_names.center_outdoor = '';
     }
   }
 
