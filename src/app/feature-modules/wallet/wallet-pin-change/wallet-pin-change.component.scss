@@ -1,0 +1,42 @@
+@import '../../../styles/constants.scss';
+
+.container {
+    height: 80vh;
+
+    div.form_container {
+        height: 80%;
+        display: grid;
+        place-items: center;
+
+
+        form {
+            width: 35%;
+            height: 80%;
+            padding: 1rem;
+            // border: 1px solid $gradient2;
+            border-radius: 0.5rem;
+
+            @media (max-width : $small) {
+                width: 100%;
+                border: none;
+            }
+
+            .form__field {
+                width: 100%;
+
+                input {
+                    text-align: center;
+                    font-size: 1.5rem;
+                    letter-spacing: 0.5rem;
+                }
+            }
+
+            .cta__container {
+                margin-top: 1rem;
+                display: grid;
+                place-items: center;
+            }
+        }
+
+    }
+}

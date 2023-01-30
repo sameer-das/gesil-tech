@@ -102,7 +102,7 @@ export class MobileRechargePlanComponent implements OnInit {
       console.log(`Pin Dialog closed ${result}`);
       if(result)
         this.onPlanSelect(amount);
-    });
+      });
   }
 
 
@@ -141,6 +141,8 @@ export class MobileRechargePlanComponent implements OnInit {
           header:'Alert',
           message: message
         })
+        // route to first page
+        this._router.navigate(['mobile-recharge']);
       },
       error: (err: any) => {
         console.log(err)

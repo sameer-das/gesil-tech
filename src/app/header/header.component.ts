@@ -36,6 +36,7 @@ export class HeaderComponent  implements OnInit{
   ngOnInit(): void {
     this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
     this.email_id = this.currentUser.user.user_EmailID;
+    this.login_code = this.currentUser.user.login_Code;
   }
 
   public openMenu(): void {
@@ -48,6 +49,7 @@ export class HeaderComponent  implements OnInit{
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   full_name!: string;
   email_id!: string;
+  login_code!: string;
 
  
 }

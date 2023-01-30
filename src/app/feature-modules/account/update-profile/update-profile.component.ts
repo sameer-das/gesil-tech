@@ -51,6 +51,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   ];
 
   ngOnInit(): void {
+
+    if(this.locationTypes.length === 0)
+      this.getUserLocationType();
     this._authService
       .getUserRegistrationDetails(this.currentUser.user.user_ID)
       .subscribe({
@@ -255,7 +258,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
         disabled: true,
       }),
       locationType: new FormControl(
-        userRegDetails.location_Type,
+        +userRegDetails.location_Type,
         Validators.required
       ),
       state: new FormControl(
@@ -359,7 +362,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     const userRegData = {
       user_ID: this.currentUser.user.user_ID,
       user_Type_ID: this.currentUser.user.user_Type_ID,
-      location_Type: this.userRegistrationFormGroup.value.locationType,
+      location_Type: this.userRegistrationFormGroup.value.locationType+"",
       state_ID: this.userRegistrationFormGroup.value.state,
       mobile_Number: this.userRegistrationFormGroup.value.mobile,
       user_EmailID: this.userRegistrationFormGroup.value.email,
@@ -816,5 +819,19 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   showDocument(docName: string) {
     // console.log(docName)
     this._matDialog.open(DocumentPopupComponent, { data: docName })
+  }
+
+  locationTypes: any[] = [];
+  getUserLocationType() {
+    this._authService.getUserLocationType().subscribe({
+      next: (resp: any) => {
+        if(resp.status === 'Success' && resp.code === 200) {
+          this.locationTypes = resp.data;
+        }
+      }, error: (err:any) => {
+        console.log('error getting user location Type');
+        console.log(err);
+      }
+    })
   }
 }

@@ -26,9 +26,7 @@
         <mat-form-field class="form__field" appearance="standard">
           <mat-label>Choose Location Type</mat-label>
           <mat-select formControlName="locationType">
-            <mat-option value="1">Urban</mat-option>
-            <mat-option value="2">City</mat-option>
-            <mat-option value="3">Metro</mat-option>
+            <mat-option *ngFor="let loc of locationTypes" [value]="loc.id">{{loc.location}}</mat-option>
           </mat-select>
           <mat-error
             *ngIf="getUserRegistrationFormErrorMessage('locationType')">{{getUserRegistrationFormErrorMessage('locationType')}}</mat-error>
