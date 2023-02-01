@@ -2,15 +2,18 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss'],
 })
 export class MyProfileComponent implements OnInit {
-  constructor(private _authService: AuthService) {}
+  constructor(private _authService: AuthService) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  downloadAPI: string = '/api/User/Download';
+  imageSource!:string;
+
   ngOnInit(): void {
     console.log('oninit');
 
@@ -22,26 +25,33 @@ export class MyProfileComponent implements OnInit {
       personalDetail: this._authService.getUserPersonalDetail(
         this.currentUser.user.user_ID
       ),
+      kycDetails: this._authService.getKycDetails(this.currentUser.user.user_ID)
     }).subscribe({
       next: (resp: any) => {
+        console.log(resp)
         if (
           resp.stateMaster.status === 'Success' &&
           resp.stateMaster.code === 200 &&
           resp.registrationDetail.status === 'Success' &&
           resp.registrationDetail.code === 200 &&
           resp.personalDetail.status === 'Success' &&
-          resp.personalDetail.code === 200
+          resp.personalDetail.code === 200 &&
+          resp.kycDetails.status === 'Success' &&
+          resp.kycDetails.code === 200
         ) {
-          this.registrationDetail =  resp.registrationDetail.data;
+          this.registrationDetail = resp.registrationDetail.data;
           this.personalDetail = resp.personalDetail.data;
           this.states = resp.stateMaster.data;
+          this.kycDetails = resp.kycDetails.data;
+          this.imageSource = `${environment.service_base_url}${this.downloadAPI}?fileName=${resp.kycDetails.data.passport_Photo}`
         }
 
-        console.log(this.registrationDetail);
-        console.log(this.personalDetail);
-        console.log(this.states);
+        // console.log(this.registrationDetail);
+        // console.log(this.personalDetail);
+        // console.log(this.states);
+        // console.log(this.kycDetails);
 
-        const state: any[] = this.states.filter((x:any) => x.state_ID === this.personalDetail.state_ID);
+        const state: any[] = this.states.filter((x: any) => x.state_ID === this.personalDetail.state_ID);
         this.personalDetail.state_Name = state && state[0].state_Name || null;
       },
       error: (err) => {
@@ -61,20 +71,20 @@ export class MyProfileComponent implements OnInit {
     if (e.index === 1) {
       forkJoin({
         bankMaster: this._authService.getBankMaster(),
-        bankDetails:  this._authService.getUserBankDetail(this.currentUser.user.user_ID)
+        bankDetails: this._authService.getUserBankDetail(this.currentUser.user.user_ID)
       })
-      .subscribe({
+        .subscribe({
           next: (resp: any) => {
             if (resp.bankMaster.status === 'Success' && resp.bankMaster.code === 200
-            && resp.bankDetails.status === 'Success' && resp.bankDetails.code === 200
+              && resp.bankDetails.status === 'Success' && resp.bankDetails.code === 200
             ) {
               this.bankDetails = resp.bankDetails.data || {};
               this.banks = resp.bankMaster.data;
             }
             console.log(this.bankDetails);
             console.log(this.banks);
-            if(Object.keys(this.bankDetails).length > 0) {
-              const bank:any[] = this.banks.filter((x:any) => x.id === this.bankDetails.bank_ID);
+            if (Object.keys(this.bankDetails).length > 0) {
+              const bank: any[] = this.banks.filter((x: any) => x.id === this.bankDetails.bank_ID);
               this.bankDetails.bank_Name = bank && bank[0].bank_Name || null;
             }
 
@@ -84,20 +94,20 @@ export class MyProfileComponent implements OnInit {
             console.error(err);
           },
         });
-    } else if(e.index === 2) {
-        this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
-          next: (resp:any) => {
-            console.log(resp)
-            if(resp.status === 'Success' && resp.code === 200){
-              this.kycDetails = resp.data;
-            }
-          }, error: (error) => {
-            console.log('Error while fetching Kyc detaiils');
-            console.log(error)
-          }
-        })
+    } else if (e.index === 2) {
+      // this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
+      //   next: (resp: any) => {
+      //     console.log(resp)
+      //     if (resp.status === 'Success' && resp.code === 200) {
+      //       this.kycDetails = resp.data;
+      //     }
+      //   }, error: (error) => {
+      //     console.log('Error while fetching Kyc detaiils');
+      //     console.log(error)
+      //   }
+      // })
     }
   }
 
-  getUserBankDetails() {}
+  getUserBankDetails() { }
 }

@@ -35,6 +35,7 @@
 
   @media (max-width: $small) {
     flex-direction: column;
+
     .form__field {
       margin: 0;
     }
@@ -56,6 +57,7 @@
   box-shadow: 2px 2px 5px #ccc;
   margin: 0.5rem 0;
   padding: 0.5rem;
+
   .document__name {
     width: 30%;
     margin: 0;
@@ -65,10 +67,16 @@
     color: $primary-blue;
     opacity: 0.8;
   }
+
+  .document__name.full__width {
+    width: 100%;
+  }
+
   .document__field {
     width: 40%;
     margin: 0 1rem;
   }
+
   .document__upload {
     width: 30%;
     display: flex;
@@ -81,10 +89,12 @@
       outline: none;
       border-radius: 2px;
       cursor: pointer;
+
       &:hover {
         box-shadow: 4px 4px 8px #ddd;
       }
     }
+
     button:not(:last-child) {
       margin-right: 0.5rem;
     }
@@ -120,15 +130,15 @@
 
   }
 
-//   @media (max-width: $small) {
-//     flex-direction: column;
-//     .form__field {
-//       margin: 0;
-//     }
-//   }
+  //   @media (max-width: $small) {
+  //     flex-direction: column;
+  //     .form__field {
+  //       margin: 0;
+  //     }
+  //   }
 }
 
-@media (max-width: $medium){
+@media (max-width: $medium) {
   ::ng-deep .mat-step-header .mat-step-label {
     display: none;
   }
@@ -138,15 +148,17 @@
   display: none;
   text-align: center;
   font-weight: 500;
+
   @media (max-width: $medium) {
-      display: block;
+    display: block;
   }
 }
 
 
 .cta__container {
   margin: 1rem;
-  button{
+
+  button {
     width: 100%;
   }
 }
@@ -192,12 +204,8 @@
   text-overflow: ellipsis;
 }
 
-// Corn flakes - 15Kg 
-// Bread crumbs - 15Kg
-// Green Peas - 12Kg 110
-// Badam Sarbat - 7ta 
-// ------------------------
-// Sweet Corn - 25Kg
-// Baby Corn - 25Kg
-// Paneer    - 30Kg
-// Mashroom - 30Kg
+.passport__info {
+  font-size: 0.7rem;
+  color: $pink;
+  font-style: italic;
+}
