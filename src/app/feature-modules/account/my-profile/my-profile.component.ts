@@ -44,6 +44,7 @@ export class MyProfileComponent implements OnInit {
           this.states = resp.stateMaster.data;
           this.kycDetails = resp.kycDetails.data;
           this.imageSource = `${environment.service_base_url}${this.downloadAPI}?fileName=${resp.kycDetails.data.passport_Photo}`
+          // this.getUserProfilePic(resp.kycDetails.data.passport_Photo)
         }
 
         // console.log(this.registrationDetail);
@@ -109,5 +110,12 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
-  getUserBankDetails() { }
+
+  // getUserProfilePic(fileName:string){
+  //   this._authService.getPic(fileName).subscribe({
+  //     next: (resp: any) => {
+  //       console.log(resp)
+  //     }
+  //   })
+  // }
 }

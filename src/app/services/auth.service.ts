@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private _http: HttpClient) { }
 
   userDetails: any = {};
-
+  profilePicUpdate$: Subject<void> = new Subject();
   // {userid: 'admin', password: 'admin'}
   private URL_VALIDATE_USER: string = '/api/User/ValidateUser';
   login(usercred: any): Observable<any> {
@@ -214,5 +214,15 @@ export class AuthService {
       "tpin": pin
     })
   }
+
+
+  private URL_DOWNLOAD = `/api/User/Download`;
+  getPic(fileName: string) {
+    return this._http.get(`${environment.service_base_url}${this.URL_DOWNLOAD}?fileName=${fileName}`, {
+      responseType: 'blob',
+      observe:'response'
+    })
+  }
 }
+
 

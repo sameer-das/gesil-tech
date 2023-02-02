@@ -570,6 +570,10 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
             message: 'Details saved successfully!'
           });
 
+          if(kycDetails.passport_Photo) {
+            this._authService.profilePicUpdate$.next();
+          }
+
           // To re update 
           this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
             next: (resp: any) => {
