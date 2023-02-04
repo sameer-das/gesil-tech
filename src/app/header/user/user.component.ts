@@ -47,4 +47,9 @@ export class UserComponent implements OnInit {
       }
     })
   }
+
+  onError(e:Event) {
+    const el = <HTMLImageElement>e.target;
+    el.src = 'assets/avatar/avatar.jpg';
+  }
 }

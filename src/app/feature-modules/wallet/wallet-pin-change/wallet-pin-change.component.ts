@@ -20,6 +20,7 @@ export class WalletPinChangeComponent implements OnInit {
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
 
   pinChangeFormGroup: FormGroup = new FormGroup({
+    old: new FormControl('', [Validators.required, Validators.minLength(4)]),
     new: new FormControl('', [Validators.required, Validators.minLength(4)]),
     confirm: new FormControl('', [Validators.required, Validators.minLength(4)]),
   })
@@ -30,6 +31,7 @@ export class WalletPinChangeComponent implements OnInit {
     // console.log(control)
     if (control?.invalid) {
       if (control.hasError('required')) {
+        if (field === 'old') return 'Please enter your old wallet PIN!';
         if (field === 'new') return 'Please enter your new wallet PIN!';
         if (field === 'confirm') return 'Please confirm your new wallet PIN!!';
       }
@@ -58,35 +60,32 @@ export class WalletPinChangeComponent implements OnInit {
   }
 
   openPinDialog() {
-    const dialogRef = this._matDialog.open(PinPopupComponent, { disableClose: true });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Pin Dialog closed ${result}`);
-      if (result) {
-        this._walletService.updateWalletPin(this.currentUser.user.user_ID, this.pinChangeFormGroup.value.new).subscribe({
-          next: (resp: any) => {
-            if (resp.status === "Success" && resp.code === 200 && resp.data) {
-              this._popupService.openAlert({
-                header: 'Success',
-                message: 'Your wallet PIN has been updated successfully!'
-              })
-              this.pinChangeFormGroup.reset();
-            } else {
-              this._popupService.openAlert({
-                header: 'Fail',
-                message: 'Error while changing your wallet PIN, Please contact Support.'
-              })
-            }
-          }, error: (error: any) => {
-            console.log(`error while updating pin`);
-            console.log(error);
-            this._popupService.openAlert({
-              header: 'Fail',
-              message: 'Error while changing your wallet PIN, Please contact Support.'
-            })
-          }
+
+    this._walletService.updateWalletPin(this.currentUser.user.user_ID, this.pinChangeFormGroup.value.new, this.pinChangeFormGroup.value.old).subscribe({
+      next: (resp: any) => {
+        if (resp.status === "Success" && resp.code === 200 && resp.data) {
+          this._popupService.openAlert({
+            header: 'Success',
+            message: 'Your wallet PIN has been updated successfully!'
+          })
+          this.pinChangeFormGroup.reset();
+        } else {
+          this._popupService.openAlert({
+            header: 'Fail',
+            message: 'Error while changing your wallet PIN, Please contact Support.'
+          })
+        }
+      }, error: (error: any) => {
+        console.log(`error while updating pin`);
+        console.log(error);
+        this._popupService.openAlert({
+          header: 'Fail',
+          message: 'Error while changing your wallet PIN, Please contact Support.'
         })
       }
-    });
+    })
   }
+
+
 
 }

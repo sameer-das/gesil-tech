@@ -1,0 +1,15 @@
+<h5 mat-dialog-title>
+    Post your reply here.
+</h5>
+
+<mat-dialog-content>
+    <textarea class="reply_area" [(ngModel)]="reply">
+
+    </textarea>
+</mat-dialog-content>
+
+<mat-dialog-content align="end">
+
+<button mat-button color="warn" mat-dialog-close>Close</button>
+<button mat-button color="primary" (click)="postReply()">Post</button>
+</mat-dialog-content>

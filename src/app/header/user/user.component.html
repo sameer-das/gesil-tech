@@ -1,5 +1,5 @@
 <div class="user-wrapper">
-    <img [src]="imageSource" class="user-icon" [matMenuTriggerFor]="userMenu">
+    <img [src]="imageSource" class="user-icon" [matMenuTriggerFor]="userMenu" (error)="onError($event)">
   
     <mat-menu #userMenu="matMenu" xPosition="before">
       <div class="user-menu-title">

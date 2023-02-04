@@ -59,6 +59,14 @@ const routes: Routes = [
           ).then((m) => m.BbpsServicesModule),
         canLoad: [AuthGuardService],
       },
+      {
+        path: 'support',
+        loadChildren: () =>
+          import(
+            './feature-modules/support/support.module'
+          ).then((m) => m.SupportModule),
+        canLoad: [AuthGuardService],
+      },
     ],
   },
   {
@@ -78,4 +86,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

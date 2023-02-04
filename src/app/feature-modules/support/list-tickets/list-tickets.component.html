@@ -1,0 +1,37 @@
+<h2 class="page_header">My Support Tickets</h2>
+
+<mat-expansion-panel *ngFor="let ticket of tickets; let i = index">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ticket.subject}}
+        </mat-panel-title>
+        <mat-panel-description>
+            {{ticket.status}}
+        </mat-panel-description>
+        <!-- <mat-panel-description>
+            Created: {{ticket.createdOn | date:'short'}}
+        </mat-panel-description>
+        <mat-panel-description>
+            Replied: {{ticket.repliedOn | date:'short'}}
+        </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <div class="user_desc_container">
+        <h6 class="user_desc_header">Issue Description</h6>
+        <p class="user_desc">{{ticket.description}}</p>
+    </div>
+
+
+    <div class="admin_reply_contianer">
+        <h6 class="admin_reply_header">Reply from Admin</h6>
+        <p class="admin_reply">{{ticket.replyByAdmin}}</p>
+    </div>
+
+    <div class="date_holder">
+        <p><strong>Created : </strong> {{ticket.createdOn | date:'short'}}</p>
+        <p><strong>Replied : </strong> {{ticket.repliedOn | date:'short'}}</p>
+    </div>
+
+    <!-- <mat-action-row>
+        <button mat-button color="primary" (click)="openReplyDialog()">Reply</button>
+    </mat-action-row> -->
+</mat-expansion-panel>

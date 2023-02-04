@@ -5,7 +5,7 @@
 <!-- <button mat-raised-button (click)="openPopup()">Click</button> -->
 <div class="main__section">
   <div class="menu__cards">      
-    <mat-card class="menu__card" *ngFor="let category of currentUser.menuCategories">
+    <mat-card class="menu__card" *ngFor="let category of menu_categories.menuCategories">
       <h3 class="card__title">{{category.services_Name}}</h3>
       <ul class="menu">
         <li *ngFor="let service of category.services">

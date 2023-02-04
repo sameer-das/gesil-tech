@@ -1,0 +1,74 @@
+@import '../../../styles/constants.scss';
+
+
+
+.container {
+    // border: 1px solid red;
+    height: 70vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    section, div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    section {
+        margin-top: 1rem;
+    }
+}
+
+h2.header__text {
+    font-size: 1.5rem;
+    color: $dark-grey;
+    font-weight: $fw-bold;
+
+    margin: 0;
+}
+
+p.info {
+    margin-top: 1rem;
+    opacity: 0.8;
+
+    span {
+        opacity: 1;
+        font-weight: bold;
+    }
+}
+
+input.otp_field {
+    height: 3rem;
+    letter-spacing: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    outline: none;
+    border: 2px solid $gradient1;
+}
+
+input[type="password"].pin_field {
+    height: 2rem;
+    letter-spacing: 0.75rem;
+    text-align: center;
+    font-size: 1.5rem;
+    outline: none;
+    border: 2px solid $gradient1;
+    margin-bottom: 0.8rem;
+}
+
+input::-ms-clear, input::-ms-reveal {
+    display: none !important;
+}
+
+p.otp_info {
+    color: $blue;
+    margin-top: 1rem;
+
+}
+
+button.validateotp {
+    margin-top: 1rem;
+}

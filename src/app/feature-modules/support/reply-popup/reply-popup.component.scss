@@ -1,0 +1,9 @@
+@import '../../../styles/constants.scss';
+.reply_area {
+    width: 100%;
+    height: 100px;
+
+    font-family: inherit;
+    resize: none;
+    padding: 0.5rem;
+}

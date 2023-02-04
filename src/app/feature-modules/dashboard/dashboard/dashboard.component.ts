@@ -10,6 +10,8 @@ import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component'
 export class DashboardComponent {
   constructor(public dialog: MatDialog) {}
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  menu_categories: any = JSON.parse(localStorage.getItem('menu_categories') || '{}');
+  
   public ngOnInit(): void {}
   assetPath: string = 'assets/icons/';
   openDialog(name?: string) {

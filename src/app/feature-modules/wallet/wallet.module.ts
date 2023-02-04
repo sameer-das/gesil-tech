@@ -7,6 +7,7 @@ import { WalletService } from './wallet.service';
 import { InitiatePaymentComponent } from './initiate-payment/initiate-payment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WalletPinChangeComponent } from './wallet-pin-change/wallet-pin-change.component';
+import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 
 
 
@@ -14,7 +15,8 @@ import { WalletPinChangeComponent } from './wallet-pin-change/wallet-pin-change.
   declarations: [
     WalletComponent,
     InitiatePaymentComponent,
-    WalletPinChangeComponent
+    WalletPinChangeComponent,
+    ForgotPinComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { WalletPinChangeComponent } from './wallet-pin-change/wallet-pin-change.
       { path: '', component: WalletComponent },
       { path: 'initiate', component: InitiatePaymentComponent },
       { path: 'pinchange', component: WalletPinChangeComponent },
+      { path: 'forgotpin', component: ForgotPinComponent},
     ])
   ],
   providers: [WalletService]

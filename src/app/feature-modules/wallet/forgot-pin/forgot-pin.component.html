@@ -1,0 +1,36 @@
+<div class="container">
+    <h2 class="header__text">Request for a new wallet PIN</h2>
+    <section *ngIf="!otpValidated">
+
+        <div *ngIf="!otpSent">
+            <p class="info">Hello <span>{{currentUser.personalDetail.user_FName}}</span>, Click the 'Generate OTP' button to
+                generate OTP. The OTP will be sent to your registered mobile number.</p>
+            <button class="btn primary" (click)="generateOtpAndSend()">Generate OTP</button>
+        </div>
+    
+        <div *ngIf="otpSent">
+    
+            <p class="otp_info">Please enter the OTP received on your registered mobile number to proceed.</p>
+            <input type="password" maxlength="4" class="otp_field" [(ngModel)]="otp">
+            <button class="btn primary validateotp" [disabled]="otp.length < 4 || isValidating"
+                (click)="validateOtp()">Validate</button>
+        </div>
+
+
+    </section>
+
+
+
+    <section *ngIf="otpValidated">
+        <label for="pin001">Enter new PIN</label>
+        <input type="password" class="pin_field" maxlength="4" [(ngModel)]="pin" id="pin001">
+        <label for="pin002">Confirm PIN</label>
+        <input type="password" class="pin_field" maxlength="4" [(ngModel)]="cpin" id="pin002">
+
+        <button class="btn primary" [disabled]="pin.length !== 4 || cpin.length !== 4" (click)="generateNewPin()">Submit </button>
+    </section>
+
+
+
+
+</div>

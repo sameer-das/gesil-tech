@@ -52,7 +52,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
 
-    if(this.locationTypes.length === 0)
+    if (this.locationTypes.length === 0)
       this.getUserLocationType();
     this._authService
       .getUserRegistrationDetails(this.currentUser.user.user_ID)
@@ -362,7 +362,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     const userRegData = {
       user_ID: this.currentUser.user.user_ID,
       user_Type_ID: this.currentUser.user.user_Type_ID,
-      location_Type: this.userRegistrationFormGroup.value.locationType+"",
+      location_Type: this.userRegistrationFormGroup.value.locationType + "",
       state_ID: this.userRegistrationFormGroup.value.state,
       mobile_Number: this.userRegistrationFormGroup.value.mobile,
       user_EmailID: this.userRegistrationFormGroup.value.email,
@@ -387,7 +387,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
             message: 'User registration details updated successfully!',
             header: 'Success',
           });
+
           this.populateUserRegistrationForm(this.userRegDetails);
+          this.refreshUserDetailsInLocalStorage();
         }
       },
       error: (err) => {
@@ -430,6 +432,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
           this.populateUserPersonalDetailForm(this.userPersonalDetail);
           this.populateDistricts(this.userPersonalDetail.state_ID);
+          this.refreshUserDetailsInLocalStorage();
           // if (this.blocks.length == 0) this.populateBlocks();
 
           const state = this.states.filter(
@@ -506,6 +509,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
           if (Object.keys(this.userBankDetails).length > 0) {
             this.userBankDetails = resp.data;
             this.populateUserBankDetailForm(this.userBankDetails);
+            this.refreshUserDetailsInLocalStorage();
           }
 
           this._popupService.openAlert({
@@ -570,7 +574,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
             message: 'Details saved successfully!'
           });
 
-          if(kycDetails.passport_Photo) {
+          if (kycDetails.passport_Photo) {
             this._authService.profilePicUpdate$.next();
           }
 
@@ -581,8 +585,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
               if (resp.status === 'Success' && resp.code === 200) {
                 this.kycDetails = resp.data;
                 this.populateKycDetailsFormGroup(this.kycDetails);
+                this.refreshUserDetailsInLocalStorage();
               }
-  
+
             }, error: (error: any) => {
               console.log('error fetching kyc details')
               console.log(error);
@@ -752,7 +757,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     center_outdoor: '',
   };
 
-  file_names:any = {
+  file_names: any = {
     adhar_front: '',
     adhar_back: '',
     pan: '',
@@ -829,13 +834,31 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   getUserLocationType() {
     this._authService.getUserLocationType().subscribe({
       next: (resp: any) => {
-        if(resp.status === 'Success' && resp.code === 200) {
+        if (resp.status === 'Success' && resp.code === 200) {
           this.locationTypes = resp.data;
         }
-      }, error: (err:any) => {
+      }, error: (err: any) => {
         console.log('error getting user location Type');
         console.log(err);
       }
     })
+  }
+
+
+
+
+  refreshUserDetailsInLocalStorage() {
+    this._authService.getUserInfos(this.currentUser.user.user_ID).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        if (resp.status === 'Success' && resp.code === 200) {
+          localStorage.setItem('auth', JSON.stringify({ ...resp.data }));
+        }
+      },
+      error: (err) => {
+        console.log('Error while fetching user infos in refreshUserDetailsInLocalStorage');
+        console.error(err);
+      },
+    });
   }
 }

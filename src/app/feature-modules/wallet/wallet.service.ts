@@ -21,12 +21,19 @@ export class WalletService {
     }
 
     private readonly URL_UPDATE_WALLET_PIN = `${environment.service_base_url}/api/User/UpdateUserTPin`;
-    updateWalletPin(userID: number, pin: string) {
+    updateWalletPin(userID: number, pin: string, oldpin: string) {
         return this._http.post(`${this.URL_UPDATE_WALLET_PIN}`, {
             "userId": userID,
-            "tpin": pin
+            "tpin": pin,
+            "otp": oldpin
         })
     }
+
+    private readonly URL_GENERATE_OTP_FOR_PIN_CHANGE = `${environment.service_base_url}/api/User/PostUserTPin`;
+    generateOtp(userId:string){
+        return this._http.post(`${this.URL_GENERATE_OTP_FOR_PIN_CHANGE}?userId=${userId}`,{})
+    }
+
 
 
 }

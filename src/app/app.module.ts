@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './login/forgot-password-dialog/forgot-p
 import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sidebar2.component';
 import { LoaderComponent } from './loader/loader.component';
 import { PinPopupComponent } from './popups/pin-popup/pin-popup.component';
+import { ImageFallbackDirective } from './image-fallback.directive';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -41,6 +42,7 @@ import { PinPopupComponent } from './popups/pin-popup/pin-popup.component';
     HaveSubmenuDirective,
     LoaderComponent,
     PinPopupComponent,
+    ImageFallbackDirective,
 
     // DashboardComponent,
     // QuickMenuDialog

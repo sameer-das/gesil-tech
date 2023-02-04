@@ -2,15 +2,24 @@
     <h3>Change your wallet PIN</h3>
     <div class="form_container">
         <form [formGroup]="pinChangeFormGroup" (submit)="onSubmit()">
-    
-              <mat-form-field class="form__field" appearance="standard">
-                <mat-label>New wallet pin</mat-label>
-                <input matInput type="password" maxlength="4" formControlName="new">
-                <!-- <mat-icon class="info__icon" matTooltipClas="mat__tooltip"
-                              matTooltip="If you are a e-Sathi provide your admin ref code. If you are a retailer provide your e-Sathi ref code.">
-                              info</mat-icon> -->
-                <mat-error *ngIf="getPinChangeFormGroupErrorMessage('new')">{{getPinChangeFormGroupErrorMessage('new')}}</mat-error>
-              </mat-form-field>
+          
+          <mat-form-field class="form__field" appearance="standard">
+            <mat-label>Old wallet pin</mat-label>
+            <input matInput type="password" maxlength="4" formControlName="old">
+            <!-- <mat-icon class="info__icon" matTooltipClas="mat__tooltip"
+                          matTooltip="If you are a e-Sathi provide your admin ref code. If you are a retailer provide your e-Sathi ref code.">
+                          info</mat-icon> -->
+            <mat-error *ngIf="getPinChangeFormGroupErrorMessage('old')">{{getPinChangeFormGroupErrorMessage('old')}}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form__field" appearance="standard">
+            <mat-label>New wallet pin</mat-label>
+            <input matInput type="password" maxlength="4" formControlName="new">
+            <!-- <mat-icon class="info__icon" matTooltipClas="mat__tooltip"
+                          matTooltip="If you are a e-Sathi provide your admin ref code. If you are a retailer provide your e-Sathi ref code.">
+                          info</mat-icon> -->
+            <mat-error *ngIf="getPinChangeFormGroupErrorMessage('new')">{{getPinChangeFormGroupErrorMessage('new')}}</mat-error>
+          </mat-form-field>
     
               <mat-form-field class="form__field" appearance="standard">
                 <mat-label>Confirm new pin</mat-label>

@@ -58,13 +58,13 @@ export class LoginComponent implements OnInit {
         console.log(result);
         if (result.status === 'Success' && result.data && result?.data?.userDetais && result?.data?.userDetais?.user_ID) {
           this._authService.userDetails = result.data;
-
           this._authService.getUserInfos(result?.data?.userDetais?.user_ID).subscribe({
             next: (resp: any) => {
               console.log(resp);
               if (resp.status === 'Success' && resp.code === 200) {
-                localStorage.setItem('auth', JSON.stringify({...resp.data, menuCategories: this.getFormattedServices(result.data)}));
+                localStorage.setItem('auth', JSON.stringify({...resp.data}));
                 localStorage.setItem('auth_token', 'xxxxxxxxxxxxxxxx');
+                localStorage.setItem('menu_categories' , JSON.stringify({menuCategories: this.getFormattedServices(result.data)}));
                 this._router.navigate(['dashboard']);
               } else {
                 this._popupService.openAlert({
