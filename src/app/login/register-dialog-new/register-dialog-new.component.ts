@@ -9,6 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoaderService } from 'src/app/services/loader.service';
 // import * as moment from 'moment';
 
 @Component({
@@ -20,7 +21,8 @@ export class RegisterDialogNewComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<RegisterDialogNewComponent>,
     private _authService: AuthService,
-    private _popupService: PopupService
+    private _popupService: PopupService,
+    private _loaderService: LoaderService
   ) {
     this._dialogRef.disableClose = true;
   }
@@ -66,7 +68,7 @@ export class RegisterDialogNewComponent implements OnInit {
     if (this.states.length === 0) {
       this.populateStates(1);
     }
-    if(this.locationTypes.length === 0)
+    if (this.locationTypes.length === 0)
       this.getUserLocationType();
     // if (this.blocks.length === 0) {
     //   this.populateBlocks();
@@ -88,7 +90,7 @@ export class RegisterDialogNewComponent implements OnInit {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200 && resp.data === 'S') {
           this.showRefForm = false;
-        } else if(resp.status === 'Success' && resp.code === 200 && resp.data === 'F'){
+        } else if (resp.status === 'Success' && resp.code === 200 && resp.data === 'F') {
           this._popupService.openAlert({
             header: 'Alert',
             message: 'The reference number you have entered is invalid. Please use Admin reference code i.e. 555401005338 '
@@ -97,12 +99,18 @@ export class RegisterDialogNewComponent implements OnInit {
           this.buttonLable = 'Verify and Proceed';
         } else {
           console.log(`Error while calling check ref id URL`);
-        console.error(resp);
+          console.error(resp);
         }
       },
       error: (err) => {
         console.log(`Error while calling check ref id URL`);
         console.error(err);
+        this._popupService.openAlert({
+          header: 'Fail',
+          message: 'Error while checking the reference number. Please try after sometime.'
+        });
+        this.disabled = false;
+        this.buttonLable = 'Verify and Proceed';
       },
     });
   }
@@ -165,11 +173,11 @@ export class RegisterDialogNewComponent implements OnInit {
   onRegistrationFormSubmit() {
     console.log(this.registrationFormGroup.value);
     if (this.registrationFormGroup.invalid) return;
-
+    
     const userRegData = {
       user_ID: 0,
       user_Type_ID: +this.registrationFormGroup.value.userType,
-      location_Type: this.registrationFormGroup.value.locationType,
+      location_Type: this.registrationFormGroup.value.locationType+"",
       state_ID: +this.registrationFormGroup.value.state,
       mobile_Number: this.registrationFormGroup.value.mobile,
       user_EmailID: this.registrationFormGroup.value.email,
@@ -188,13 +196,14 @@ export class RegisterDialogNewComponent implements OnInit {
     };
     console.dir(userRegData);
 
+    this._loaderService.showLoader();
     this._authService
       .saveUserRegistrationDetails(userRegData)
       .subscribe((resp: any) => {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200) {
-
-          if(JSON.parse(resp.data)[0]?.Result?.includes('already registered')) {
+          this._loaderService.hideLoader();
+          if (JSON.parse(resp.data)[0]?.Result?.includes('already registered')) {
             this._popupService.openAlert({
               header: 'Fail',
               message: 'Provided Email ID or mobile number is already registered with us!',
@@ -207,9 +216,10 @@ export class RegisterDialogNewComponent implements OnInit {
             message: 'Thank you for registering with us! Login credentials has been sent to your registered Email ID and Mobile Number!',
           });
           this.closeRegDialog();
-          
+
         } else {
           console.log(resp);
+          this._loaderService.hideLoader();
           this._popupService.openAlert({
             header: 'Fail',
             message: 'Error while saving user registration details!',
@@ -265,10 +275,10 @@ export class RegisterDialogNewComponent implements OnInit {
   getUserLocationType() {
     this._authService.getUserLocationType().subscribe({
       next: (resp: any) => {
-        if(resp.status === 'Success' && resp.code === 200) {
+        if (resp.status === 'Success' && resp.code === 200) {
           this.locationTypes = resp.data;
         }
-      }, error: (err:any) => {
+      }, error: (err: any) => {
         console.log('error getting user location Type');
         console.log(err);
       }

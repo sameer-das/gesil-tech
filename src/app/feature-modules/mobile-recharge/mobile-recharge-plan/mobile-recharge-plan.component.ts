@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { PopupService } from 'src/app/popups/popup.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
+import { LoaderService } from 'src/app/services/loader.service';
 @Component({
   selector: 'app-mobile-recharge-plan',
   templateUrl: './mobile-recharge-plan.component.html',
@@ -12,7 +13,8 @@ import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component'
 })
 export class MobileRechargePlanComponent implements OnInit {
   constructor(private _route: ActivatedRoute, private _router: Router, private _matDialog:MatDialog,
-    private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService) { }
+    private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService,
+    private _loaderService: LoaderService) { }
   rechargePlans: any[] = [];
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   ngOnInit(): void {
@@ -126,9 +128,11 @@ export class MobileRechargePlanComponent implements OnInit {
       "categoryId": 1,
       "userId": this.currentUser.user.user_EmailID
     };
-    console.log(rechargePayload)
+    console.log(rechargePayload);
+    this._loaderService.showLoader();
     this._mobileRechargeService.prepaidRecharge(rechargePayload).subscribe({
       next: (resp: any) => {
+        this._loaderService.hideLoader();
         console.log(resp);
         let message;
         if(resp.data.includes('status')) {
@@ -145,6 +149,8 @@ export class MobileRechargePlanComponent implements OnInit {
         this._router.navigate(['mobile-recharge']);
       },
       error: (err: any) => {
+        this._loaderService.hideLoader();
+        console.log(`error while calling eGSKMobileRecharge`)
         console.log(err)
       }
     })

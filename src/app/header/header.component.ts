@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -32,7 +33,7 @@ export class HeaderComponent  implements OnInit{
     },
   ]);
 
-  constructor() {}
+  constructor(private _router:Router) {}
   ngOnInit(): void {
     this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
     this.email_id = this.currentUser.user.user_EmailID;
@@ -51,7 +52,6 @@ export class HeaderComponent  implements OnInit{
   email_id!: string;
   login_code!: string;
 
- 
 }
 
 interface Email {
@@ -64,3 +64,5 @@ interface User {
   name: string;
   lastName: string;
 }
+
+

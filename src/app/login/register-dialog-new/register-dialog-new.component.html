@@ -25,7 +25,7 @@
       <div class="form__row cta__container">
         <button type="submit" class="btn primary" [disabled]="disabled">{{buttonLable}}
           <mat-icon *ngIf="disabled"><mat-spinner color="warn" diameter="20">
-          </mat-spinner></mat-icon>
+            </mat-spinner></mat-icon>
         </button>
         <!-- <a (click)="closeRegDialog()">Cancel</a> -->
       </div>
@@ -38,8 +38,11 @@
         <mat-form-field class="form__field" appearance="standard">
           <mat-label>Choose User Type</mat-label>
           <mat-select formControlName="userType">
-            <mat-option value="1">e-Sathi</mat-option>
-            <mat-option value="2">End User</mat-option>
+            <mat-option value="1">End User</mat-option>
+            <mat-option value="2">e-Sathi</mat-option>
+            <!-- <mat-option value="3">Distributor</mat-option>
+              <mat-option value="4">Master Distributor</mat-option>
+            <mat-option value="5">Admin</mat-option> -->
           </mat-select>
         </mat-form-field>
         <mat-form-field class="form__field" appearance="standard">
@@ -87,7 +90,8 @@
           <input matInput [matDatepicker]="picker" formControlName="dob" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="getUserRegistrationFormErrorMessage('dob')">{{getUserRegistrationFormErrorMessage('dob')}}</mat-error>
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('dob')">{{getUserRegistrationFormErrorMessage('dob')}}</mat-error>
         </mat-form-field>
 
         <mat-form-field class="form__field" appearance="standard">
@@ -97,7 +101,8 @@
             <mat-option value="Female">Female</mat-option>
             <mat-option value="Others">Others</mat-option>
           </mat-select>
-          <mat-error *ngIf="getUserRegistrationFormErrorMessage('gender')">{{getUserRegistrationFormErrorMessage('gender')}}</mat-error>
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('gender')">{{getUserRegistrationFormErrorMessage('gender')}}</mat-error>
         </mat-form-field>
       </div>
       <div class="form__row">
@@ -143,7 +148,8 @@
         <mat-form-field class="form__field" appearance="standard">
           <mat-label>Enter GP/Ward</mat-label>
           <input matInput type="text" formControlName="gp">
-          <mat-error *ngIf="getUserRegistrationFormErrorMessage('gp')">{{getUserRegistrationFormErrorMessage('gp')}}</mat-error>
+          <mat-error
+            *ngIf="getUserRegistrationFormErrorMessage('gp')">{{getUserRegistrationFormErrorMessage('gp')}}</mat-error>
         </mat-form-field>
         <div class="form__field">
           <button type="submit" class="btn primary cta">Register</button>
