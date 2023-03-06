@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader.service';
+import { TransactionDetailPopupComponent } from '../transaction-detail-popup/transaction-detail-popup.component';
 import { WalletService } from '../wallet.service';
 
 @Component({
@@ -10,7 +12,10 @@ import { WalletService } from '../wallet.service';
 })
 export class WalletComponent implements OnInit {
 
-  constructor(private _walletService: WalletService, private _router: Router, private _loaderService: LoaderService) { }
+  constructor(private _walletService: WalletService, 
+    private _router: Router, 
+    private _loaderService: LoaderService,
+    private _matDialog: MatDialog) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   currentBalance: string = 'XXXXXX'
   ngOnInit(): void {
@@ -54,6 +59,11 @@ export class WalletComponent implements OnInit {
         console.log(error)
       }
     })
+  }
+
+  openTransactionDetailPopup(trans: any) {
+    // console.log(trans)
+    this._matDialog.open(TransactionDetailPopupComponent, {data: trans})
   }
 
 }

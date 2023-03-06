@@ -71,3 +71,28 @@ p.header__subtext {
 // .spinner::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
 //     stroke: #000000;
 // }
+
+
+.breadcrumb_container {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+
+  li{
+    position: relative;
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      background-color: #ddd;
+      padding: 0.25rem 0.5rem;
+      color: #000;
+    }
+  }
+
+  li:not(:last-child)::after {
+    content: '>';
+    position: absolute;
+    right: -14px;
+    font-size: 1.5rem;
+  }
+}

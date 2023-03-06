@@ -8,6 +8,7 @@ import { InitiatePaymentComponent } from './initiate-payment/initiate-payment.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WalletPinChangeComponent } from './wallet-pin-change/wallet-pin-change.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
+import { TransactionDetailPopupComponent } from './transaction-detail-popup/transaction-detail-popup.component';
 
 
 
@@ -16,7 +17,8 @@ import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
     WalletComponent,
     InitiatePaymentComponent,
     WalletPinChangeComponent,
-    ForgotPinComponent
+    ForgotPinComponent,
+    TransactionDetailPopupComponent
   ],
   imports: [
     CommonModule,

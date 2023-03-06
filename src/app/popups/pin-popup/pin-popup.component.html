@@ -1,13 +1,16 @@
-
 <h3 mat-dialog-title>Please enter your secure pin to proceed.</h3>
-<mat-dialog-content>
-    <div class="input__container">
-        <input type="password" maxlength="4" [(ngModel)]="pin" (keyup)="validatePin()" [disabled]="disabled">
-    </div>
-    <p *ngIf="message" [ngClass]="{error_message: !disabled, info_message: disabled}">{{message}}</p>
+<form (submit)="validatePin()">
+    <mat-dialog-content>
+        <div class="input__container">
+            <input type="password" maxlength="4" [(ngModel)]="pin" name="model" [disabled]="disabled">
+        </div>
+        <p *ngIf="message" [ngClass]="{error_message: !disabled, info_message: disabled}">{{message}}</p>
 
-</mat-dialog-content>
+    </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-    <button mat-raised-button color="accent" (click)="closeDialog()">Cancel</button>
-  </mat-dialog-actions>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="pin.length !== 4" type="submit">Submit</button>
+        <button mat-raised-button color="accent" (click)="closeDialog()">Cancel</button>
+    </mat-dialog-actions>
+
+</form>

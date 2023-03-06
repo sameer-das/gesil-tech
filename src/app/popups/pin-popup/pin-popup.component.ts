@@ -12,7 +12,7 @@ export class PinPopupComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<PinPopupComponent>, private _authService: AuthService) { }
 
 
-  pin!: string;
+  pin: string = '';
   disabled: boolean = false;
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   message!: string;
@@ -26,7 +26,7 @@ export class PinPopupComponent implements OnInit {
 
   validatePin() {
     if (this.pin && this.pin.length === 4) {
-      console.log(this.pin);
+      // console.log(this.pin);
       this.disabled = true;
       this.message = 'Validating ...'
       this._authService.validateTPin(this.currentUser.user.user_ID, String(this.pin)).subscribe({

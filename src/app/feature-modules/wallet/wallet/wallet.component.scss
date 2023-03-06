@@ -137,5 +137,12 @@
       border: 1px solid #ddd;
       padding: 8px;
     }
+
+    tr {
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: #ccc;
+    }
   }
 }
