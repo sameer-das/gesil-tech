@@ -15,7 +15,6 @@
     color: $blue-white;
     margin: 0;
     padding: 0.5rem;
-    text-shadow: 5px 5px 10px rgba(0,0,0,0.6);
   }
 
   li {
@@ -27,23 +26,21 @@
       color: $blue-white;
       display: block;
       font-size: 1rem;
-      padding: 0.8rem 0.9rem;
+      padding: 0.4rem 0.9rem;
       line-height: 1.5rem;
       &:hover, &.active {
         background: $purple;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to bottom right, $gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         transition: 0.3s ease;
-        font-weight: bold;  
-        font-size: 1.05rem;
-        text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+
       }
 
 
       mat-icon {
         position: relative;
         margin-right: 0.6rem;
-        top: 4px;
+        top: 8px;
       }
 
       mat-icon.carret {
@@ -57,13 +54,11 @@
     a.activelink {
       background: $purple;  /* fallback for old browsers */
       background: -webkit-linear-gradient(to bottom right, $gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      font-weight: bold;  
-      text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+      background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
     }
 
     ul.sub_menu {
-      background: linear-gradient(to bottom right, $gradient1, $gradient2);
+      background: linear-gradient(to bottom right, #081940, #142858);
       // display: none;
       overflow: hidden;
       max-height: 0;
@@ -75,7 +70,7 @@
       li {
         a.sub_menu_link {
           display: block;
-          padding: 0.7rem 0 0.7rem 3.5rem;
+          padding: 0.7rem 0 0.5rem 0.5rem;
           text-decoration: none;
           font-size: 0.8rem;
           color: $blue-white;
@@ -87,7 +82,6 @@
             background: -webkit-linear-gradient(to bottom,$gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to bottom,$gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             font-weight: bold;
-            font-size: 0.85rem;
             border-left: 6px solid $blue-white;
           }
         }
@@ -96,3 +90,7 @@
   }
 }
 
+
+.nav-hr-border {
+  border: 0.5px solid #17367b;    
+}

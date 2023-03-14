@@ -111,10 +111,10 @@
       padding: 0.5rem 0;
       border: none;
       transition: all 0.3s;
+      background-color: $gradient1;
 
       @media (min-width: $small) {
         max-width: 110px;
-        border: 1px solid #eee;
         border-radius: 0.5rem;
       }
 
@@ -129,10 +129,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          border: 2px solid #eee;
-          width: 50%;
           aspect-ratio: 1;
-          border-radius: 50%;
           transition: all 0.3s;
 
           img {
@@ -148,6 +145,7 @@
           font-size: 0.8rem;
           text-align: center;
           font-weight: 500;
+          color: $white;
         }
       }
 
@@ -156,7 +154,7 @@
           border-color: $gradient1;
         }
 
-        box-shadow: 5px 5px 15px $gradient2;
+        box-shadow: 5px 5px 15px $light-grey;
       }
     }
   }

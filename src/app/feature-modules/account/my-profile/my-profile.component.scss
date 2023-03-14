@@ -2,16 +2,17 @@
 h4 {
   font-weight: 400;
 }
-
 .profile {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: revert;
+  justify-content: center;
+  justify-items: center;
   &__image__container {
     img {
-      width: 150px;
-      height: 150px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
+      margin-right: 20px
     //   object-fit: cover;
     }
   }
@@ -53,6 +54,8 @@ h4 {
 
     &__header p {
         font-weight: 500;
+        text-align: right;
+        padding-right: 19px;
     }
     &__details p {
         opacity: 0.9;

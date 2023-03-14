@@ -7,10 +7,11 @@ $large: 992px;
 $normal: 1024px;
 $extra-large: 1200px;
 $xxl: 1440px;
+$aqua: #cbf1ff;
 
 // colors
-$gradient1: hsl(199, 98%, 50%);
-$gradient2: hsl(199, 98%, 40%);
+$gradient1: #0e2b6c;
+$gradient2: #0e2b6c;
 // $gradient2: #31837b;
 
 
@@ -94,11 +95,11 @@ $text-black: rgba(0, 0, 0, 0.87);
   padding: 0.7rem 1rem;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 1.05rem!important;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
   &:hover {
-    box-shadow: 5px 5px 10px $dark-grey;
+    box-shadow: 5px 5px 10px $light-grey;
   }
   &.primary {
     background: $gradient1;
@@ -117,7 +118,9 @@ $text-black: rgba(0, 0, 0, 0.87);
 }
 
 .mat-toolbar.mat-primary {
-  background: $shadow-white; /* fallback for old browsers */
+  //background: $shadow-white; /* fallback for old browsers */
+  background: #ffffff;
+  box-shadow: 2px 2px 3px #aaa6a675;
 }
 
 

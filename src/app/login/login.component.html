@@ -1,14 +1,21 @@
 <div class="auth-page">
+      <div class="logo">
+      <div class="logo-wrapper">
+        <!-- <img class="logo-img" src="./assets/logo/gsk_logo_80px.png" alt="logo"> -->
+        <h6 class="logo-title">Welcome</h6>
+        <p class="reg__message">Register and start your journey with us.</p>
+      </div>
+    </div>
     <div class="content-block">
       <div class="content-wrapper">
         <div class="login__form">
           <div class="login__logo">
-            <img src="./assets/logo/gsk_logo_80px.png" alt="logo">
+            <img src="./assets/logo/esk_logo.png" alt="logo">
           </div>
-          <h2>Login to e-Sathi</h2>
+          <!-- <h2>Login to e-Sathi</h2> -->
 
           <form [formGroup]="loginForm" (submit)="onLogin()">
-            <mat-form-field class="form__input">
+            <mat-form-field class="form__input user-id-input">
               <input matInput placeholder="User Id" type="text" formControlName="userid">
               <mat-error *ngIf="getLoginFormErrorMessage('userid')">{{getLoginFormErrorMessage('userid')}}</mat-error>
             </mat-form-field>
@@ -31,8 +38,8 @@
                   <label><input type="checkbox">Rememeber me</label>
               </div> -->
               <div class="form__input">
-                <button type="submit" [disabled]="loginForm.invalid || disabled">
-                  <span ><mat-icon *ngIf="!disabled">lock</mat-icon> {{buttonText}} </span> 
+                <button type="submit" class="btn btn-primary p-relative" [disabled]="loginForm.invalid || disabled">
+                  <span class="login-btn-label-wrapper"><mat-icon *ngIf="!disabled">lock</mat-icon> <span> {{buttonText}} </span></span> 
                   <mat-icon *ngIf="disabled" class="spinner"><mat-spinner diameter="20"></mat-spinner></mat-icon>
                 </button>
                
@@ -40,7 +47,7 @@
               </div>
               <div class="remember flex flex_jc_sb">
                 <label><input type="checkbox">Rememeber me</label>
-                <a class="forgot__password__link" (click)="openForgotPasswordDialog()">Forgot Password</a>
+                <a class="forgot__password__link" (click)="openForgotPasswordDialog()">Forgot Password ?</a>
             </div>
               <div class="create__account">
                   <p>Don't have an account?</p>
@@ -92,12 +99,6 @@
         <!-- <p class="footer-title">Copyright © 2022 Gskindia App. All rights reserved.<a href="https://flatlogic.com">Flatlogic</a>, LLC. All rights reserved.</p> -->
       </div>
     </div>
-    <div class="logo">
-      <div class="logo-wrapper">
-        <img class="logo-img" src="./assets/logo/gsk_logo_80px.png" alt="logo">
-        <h6 class="logo-title">Welcome</h6>
-        <p class="reg__message">Register and start your journey with us.</p>
-      </div>
-    </div>
+
   </div>
   

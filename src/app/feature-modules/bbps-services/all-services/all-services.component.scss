@@ -2,21 +2,36 @@
 .container {
     display: flex;
     justify-content: center;
+    @media (max-width: $small) {
+       flex-wrap: wrap;
+      }
 
     .panel_left {
-        padding: 1rem;
         width: 50%;
-
         display: flex;
         align-items: center;
         flex-direction: column;
         gap: 1rem;
-        // border: 1px solid;
+        background: #fff;
+        padding: 2rem;
+        margin: 1rem;
+        box-shadow: 1px 4px 7px -3px #d0d0d0;
+
+        @media (max-width: $small) {
+            flex-basis: 100%;
+           }
+
     }
 
     .panel_right {
         width: 50%;
-        padding: 1rem;
+        background: #fff;
+        padding: 2rem;
+        margin: 1rem;
+        box-shadow: 1px 4px 7px -3px #d0d0d0;
+        @media (max-width: $small) {
+            flex-basis: 100%;
+           }
     }
 
     .bill_body {
@@ -30,6 +45,7 @@
         .header {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 1rem;
             &__left,&__right {
                 width: 50%;
             }
@@ -50,7 +66,7 @@
         }
 
         .amount__options {
-            margin-top: 3rem;
+            margin-top: 1rem;
             .amount__option {
                 display: flex;
                 justify-content: space-between;
@@ -69,7 +85,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
-            margin-top: 4rem;
+            margin-top: 1rem;
 
             div {
                 width: 50%;
@@ -100,11 +116,17 @@
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-
+    align-items: center;
+    @media (max-width: $small) {
+        padding: 0.5rem;
+       }
     h2 {
         margin: 0;
         font-size: 1.4rem;
         font-weight: 500;
+        @media (max-width: $small) {
+            font-size: 1rem;
+           }
     }
 
     .form__field {
@@ -126,4 +148,12 @@
     }
 }
 
+.service-biller-back {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
+    button {
+        margin-right: 1rem;
+    }
+}

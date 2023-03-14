@@ -1,10 +1,10 @@
 @import "../../styles/constants.scss";
 .dialog__title {
-  color: #536dfe;
+  color: $gradient1;
   .mat__dialog__close__btn {
     float: right;
     transition: 0.2s ease-in-out;
-    cursor: pointer;
+    cursor: $gradient1;
     vertical-align: middle;
     &:hover {
       color: #ff4500;
@@ -90,7 +90,7 @@ form.inactive {
   font-size: 0.8rem;
   margin-top: 1rem;
   margin-bottom: 0;
-  color:#1589FF;
+  color:dark-grey;
 }
 
 

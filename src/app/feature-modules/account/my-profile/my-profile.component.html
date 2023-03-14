@@ -1,13 +1,16 @@
 <h4>My Profile</h4>
-<div class="profile">
-    <span class="profile__image__container">
-        <img [src]="imageSource" alt="Profile Image" (error)="onError($event)">
-    </span>
 
+<div class="profile">
+    <div class="profile__image__container">
+        <img [src]="imageSource" alt="Profile Image" (error)="onError($event)">
+    </div>
+<div>
     <p class="profile__name">{{personalDetail.user_FName}} {{personalDetail.user_LName}}</p>
     <p class="profile__email">{{registrationDetail.user_EmailID}}</p>
-    <!-- <p class="profile__lastupdate">Last updated on: 2021-10-23 13:58:29</p> -->
 </div>
+</div>
+    <!-- <p class="profile__lastupdate">Last updated on: 2021-10-23 13:58:29</p> -->
+
 
 <mat-tab-group class="tabs" dynamicHeight mat-align-tabs="center" (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Personal Information"> 

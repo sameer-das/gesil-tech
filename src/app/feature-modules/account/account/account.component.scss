@@ -5,12 +5,17 @@ h3{
 }
 .container {
   display: flex;
+  @media (max-width: $small) {
+   flex-direction: column;
+  }
 }
 
 .content {
   flex: 1;
-  border-left: 1px solid $gray-06;
+  // /border-left: 1px solid rgba(110, 110, 110, 0.6);
   padding: 0.5rem;
+  background: #fff;
+  padding: 2rem;
 
 }
 
@@ -18,7 +23,7 @@ h3{
   width: 15%;
 
   @media (max-width: $small) {
-    width: 30%;
+    width:100%;
   }
 
   ul {
