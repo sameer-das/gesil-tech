@@ -13,7 +13,7 @@ export class DashboardComponent {
   menu_categories: any = JSON.parse(localStorage.getItem('menu_categories') || '{}');
   
   public ngOnInit(): void {}
-  assetPath: string = 'assets/icons/';
+  assetPath: string = 'assets/icons/newicons/';
   openDialog(name?: string) {
     console.log('Open dialog called')
     // if(name?.toLowerCase() === 'mobile recharge'){
