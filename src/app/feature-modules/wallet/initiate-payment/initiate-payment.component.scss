@@ -19,10 +19,10 @@ p.header__subtext {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
 
   form {
-    width: 40%;
+    width: 100%;
     // border: 1px solid;
 
     @media (max-width: $small) {
@@ -71,3 +71,53 @@ p.header__subtext {
 // .spinner::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
 //     stroke: #000000;
 // }
+
+
+.wallet-recharge-wrapper {
+  display: flex;
+  width: 50vw;
+  align-items: center;
+  justify-content: center;
+  background: #bbf4aa;
+  border-radius: 1rem;
+  padding: 4rem;
+  @media (max-width: $small) {
+   flex-direction: column-reverse;
+   padding: 1rem;
+   width: 100%;
+    }
+    
+  @media (max-width: $extra-large) {
+    width: 65vw;
+    }
+    @media (max-width: $large) {
+      width: 85vw;
+      }
+      @media (max-width: $medium) {
+        width: 100vw;
+        }
+  .wallet-recharge-vector {
+    width: 50vw;
+    position: relative;
+    img {
+      width: 16rem;
+      position: absolute;
+      top: -6rem;
+      left: -3rem;
+      @media (max-width: $small) {
+        width: 12rem;
+        top: 2rem;
+        left: 0rem;
+        }
+    }
+  }
+  .wallet-recharge-window {
+    width: 70vw;
+  }
+}
+.wallet-root-wrapper {
+  display: flex;
+  justify-content: center;
+
+}
+

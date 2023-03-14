@@ -1,23 +1,45 @@
-<h2 class="header__text">Prepaid mobile recharge</h2>
-<p class="header__subtext">Recharge your number for validity, talktime or data</p>
-<div class="form__container">
-    <form #mobileForm="ngForm" autocomplete="off" (submit)="onFormSubmit()">
-        <label for="mobile_no">Mobile number</label>
-        <div class="input__container">
-            <input (input)="onInput(mobileForm)" type="text" id="mobile_no" 
-            name="mobile_no" [(ngModel)]="mobileNo" maxlength="10"
-            pattern="^((\\+91-?)|0)?[0-9]{10}$"
-            placeholder="Please enter your mobile number">
-            <mat-spinner *ngIf="isFetching" color="warn" diameter="25"></mat-spinner>
-            <p class="info" [ngClass]="{'error': isInputInvalid}">{{inputInvalidMessage}}</p>
-            <div class="spinner">
-
+<div class="mob-root-wrapper">
+    <div class="mob-recharge-wrapper">
+        <div class="mob-recharge-vector">
+            <img src="../../../../assets/mob-recharge-vector.png" alt="mob-recharge-vector">
+        </div>
+        <div class="mob-recharge-window">
+            <h2 class="header__text">Prepaid mobile recharge</h2>
+            <p class="header__subtext">Recharge your number for validity, talktime or data</p>
+            <div class="form__container">
+                <form #mobileForm="ngForm" autocomplete="off" (submit)="onFormSubmit()">
+                    <label for="mobile_no">Mobile number</label>
+                    <div class="input__container">
+                        <input (input)="onInput(mobileForm)" type="text" id="mobile_no" 
+                        name="mobile_no" [(ngModel)]="mobileNo" maxlength="10"
+                        pattern="^((\\+91-?)|0)?[0-9]{10}$"
+                        placeholder="Please enter your mobile number">
+                        <mat-spinner *ngIf="isFetching" color="warn" diameter="25"></mat-spinner>
+                        <p class="info" [ngClass]="{'error': isInputInvalid}">{{inputInvalidMessage}}</p>
+                        <div class="spinner">
+            
+                        </div>
+                    </div>
+                    <div *ngIf="showCta">
+                        <div class="network-detail-wrapper">
+                        <div class="network-name">
+                            <p><mat-icon>network_cell</mat-icon> <span> {{currentOperator}} </span></p>
+                        </div>
+                        <div class="network location">
+                            <p><mat-icon> place</mat-icon> <span>{{currentLocation}} </span></p>
+                        </div>
+                      </div>
+                      <div class="network-img-wrapper">
+                        <img class="network-logo" src="../../../../assets/logo/Airtel-Logo.png" alt="network-name">
+                      </div>
+                      
+                      </div>
+                    <div class="cta__container">
+                        <button *ngIf="showCta" class="btn primary" type="submit">Select your pack</button>
+                    </div>
+            
+                </form>
             </div>
         </div>
-        <p *ngIf="showCta">{{currentOperator}} > {{currentLocation}}</p>
-        <div class="cta__container">
-            <button *ngIf="showCta" class="btn primary" type="submit">Select your pack</button>
-        </div>
-
-    </form>
+    </div>
 </div>

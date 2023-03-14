@@ -1,11 +1,14 @@
-<div>
-    <h2 class="header__text">Recharge Packs</h2>
+<div class="tab-nav-back">
+    <button class="header__title-button" mat-mini-fab  color="primary">
+        <mat-icon class="header__title-button-icon">arrow_back</mat-icon>
+      </button>
+    <h2 class="header__text">Recharge Packs - <span>Airtel</span></h2>
 </div>
 
 <mat-tab-group *ngIf="rechargePlans.length > 0" dynamicHeight>
     <mat-tab *ngFor="let rechargePlan of rechargePlans" [label]="rechargePlan.planName">
         <mat-card *ngFor="let plan of rechargePlan.plans" class="plan__card">
-            <mat-card-title>{{plan.amount}}
+            <mat-card-title>₹ {{plan.amount}}
 
                 <button class="btn primary select_btn" (click)="openPinDialog(plan.amount)">Select</button>
             </mat-card-title>

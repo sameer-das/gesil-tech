@@ -1,7 +1,6 @@
 <div class="container">
-    <h2 class="header__text">Request for a new wallet PIN</h2>
-    <section *ngIf="!otpValidated">
-
+    <section *ngIf="!otpValidated" >
+        <h2 class="header__text">Request for a new wallet PIN</h2>
         <div *ngIf="!otpSent">
             <p class="info">Hello <span>{{currentUser.personalDetail.user_FName}}</span>, Click the 'Generate OTP' button to
                 generate OTP. The OTP will be sent to your registered mobile number.</p>
@@ -18,8 +17,6 @@
 
 
     </section>
-
-
 
     <section *ngIf="otpValidated">
         <label for="pin001">Enter new PIN</label>

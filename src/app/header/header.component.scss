@@ -24,8 +24,9 @@ $header-title-color-dark-theme: #889AFF;
     }
   
     &__title-button {
-      background-color: $header-button-background-color;
-      box-shadow: $header-button-box-shadow;
+      color: $gradient1;
+      box-shadow: none;
+      background: transparent;
   
       &:hover {
         background-color: $header-button-background-color-hover;
@@ -37,7 +38,7 @@ $header-title-color-dark-theme: #889AFF;
     }
   
     &__title-button-icon {
-      color: $header-button-font-color;
+      color: $gradient1;
     }
   
     &__title-text {
@@ -69,7 +70,7 @@ $header-title-color-dark-theme: #889AFF;
       // justify-content: center;
     }
     img {
-      width: 70%;
+      width: 50%;
     }
   
     @media (max-width: $small) {

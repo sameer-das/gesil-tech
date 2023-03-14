@@ -15,6 +15,12 @@
             padding: 1rem;
             // border: 1px solid $gradient2;
             border-radius: 0.5rem;
+            width: 35%;
+            height: 80%;
+            padding: 1rem 1rem 7.7rem 1rem;
+            border-radius: 0;
+            background: #fff;
+            box-shadow: 1px 4px 7px -3px #d0d0d0;
 
             @media (max-width : $small) {
                 width: 100%;

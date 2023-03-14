@@ -16,7 +16,8 @@
   .content-block {
     width: 40%;
     height: 100%;
-    background-color: $white;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, white 0%, #ffffff 42%, #f1f1f1 100%);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -119,10 +120,10 @@
   .logo {
     width: 63%;
     height: 100%;
-    background-color: $primary-blue;
+    background-size: cover;
     display: flex;
     align-items: center;
-
+background-image: url('../../assets/office.jpg');
     @media (max-width: $medium) {
       display: none;
     }
@@ -134,6 +135,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    padding: 4rem 0;
   }
 
   .logo-img {
@@ -149,10 +151,10 @@
   }
 
   .footer-title {
-    margin: 2rem auto;
+    margin: 1rem auto;
     text-align: center;
     color: $primary-blue;
-    font-size: 10px;
+    font-size: 0.7rem;
     opacity: 0.7;
   }
 }
@@ -168,6 +170,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 2rem;
+    
+    img {
+      width: 15rem;
+    }
   }
 
   h2 {
@@ -182,6 +189,7 @@
   .form__input {
     display: block;
     margin-bottom: 1rem;
+    font-size: 1.1rem;
 
     button[type="submit"] {
       background:$primary-blue;
@@ -197,15 +205,8 @@
       text-transform: uppercase;
       letter-spacing: 1px;
 
-      &:hover {
-        background: transparent;
-        color: $primary-blue;
-      }
-
-      mat-icon {
-        position: relative;
-        top: 4px;
-        margin-right: 4px;
+      .mat-icon {
+         margin-right: 9px;
       }
 
       &:disabled {
@@ -228,7 +229,7 @@
   }
 
   .create__account {
-    background-color: #eee;
+    //background-color: #eee;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -283,4 +284,16 @@
   bottom: 0.25rem;
   right: 0;
   cursor: pointer;
+}
+
+.user-id-input {
+  margin-bottom: 1.5rem !important;
+}
+.p-relative{
+position: relative;
+}
+.login-btn-label-wrapper {
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }

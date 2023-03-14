@@ -32,3 +32,16 @@ h2.header__text {
     font-size: 0.9rem;
   }
 }
+.tab-nav-back {
+  display: flex;
+  justify-content: left;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  span{
+    color: $blue;
+  }
+  button {
+    margin-right: 1rem;
+  }
+}

@@ -5,6 +5,26 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 
+  .card_1 {
+    background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+  }
+
+  .card_2 {
+    background-image: linear-gradient(to right, #8360c3, #2ebf91);
+  } 
+  .card_3 {
+    background: #6190E8;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #A7BFE8, #6190E8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+  }
+  .card_4 {
+    background: #20002c;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #cbb4d4, #20002c);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #cbb4d4, #20002c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    
+  }
   @media (max-width: $medium) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -12,11 +32,11 @@
   .card {
     height: 150px;
     // border: 1px solid $grey;
-    border-radius: 4px;
+    border-radius: 0.5rem;
     position: relative;
 
     box-shadow: 10px 10px 20px 0px rgba($color: #000, $alpha: 0.2);
-    background: #fff;
+
     // background: linear-gradient(to  right, #49a09d,#ace0df);
 
     .icon_container {
@@ -26,7 +46,7 @@
 
       mat-icon {
         font-size: 2rem;
-        color: $primary-blue;
+        color: $white;
       }
     }
 
@@ -35,8 +55,7 @@
       text-align: center;
       font-size: 1rem;
       color: #fff;
-      background: #ace0df;
-      background: linear-gradient(to right, $gradient1, $gradient2);
+      font-weight: bold;
       text-transform: uppercase;
       padding: 0.3rem 0;
       position: absolute;
@@ -52,7 +71,7 @@
     p.card_value {
       text-align: center;
       font-size: 1.5rem;
-      color: $primary-blue;
+      color: $white;
 
       a {
         display: block;
@@ -83,18 +102,18 @@
   margin-top: 1rem;
 
   button {
-    width: 60%;
+    width: 25%;
     outline: none;
     border: none;
-    padding: 0.5rem;
-    font-size: 1.2rem;
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
     text-transform: uppercase;
-    background: $gradient1;
-    background: radial-gradient(circle, $gradient2 0%, $gradient1 100%);
+    background: #0e2b6c;
+    background: radial-gradient(circle, #0e2b6c 0%, #0e2b6c 100%);
     border-radius: 2px;
-    // background: linear-gradient(to right, #49a09d, #ace0df);
     color: #fff;
     cursor: pointer;
+    margin-top: 1rem;
 
     &:hover {
       box-shadow: 0px 0px 20px 0px rgba($color: #000, $alpha: 0.5);
@@ -117,9 +136,9 @@
   h3 {
     font-size: 1.2rem;
     text-align: center;
-    color: #666;
+    color: $gradient1;
     margin-bottom: 0.25rem;
-    text-decoration: underline;
+    text-align: left;
   }
   table {
     width: 100%;
@@ -128,8 +147,10 @@
     th {
       padding: 12px 0;
       text-align: left;
-      background-color: $gradient1;
-      color: white;
+      background-color: #d7deed;
+      color: #0e2b6c;
+  
+      
     }
 
     td,

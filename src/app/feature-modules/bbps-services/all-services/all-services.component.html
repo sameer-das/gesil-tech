@@ -7,7 +7,13 @@
           [value]="service.searchValue">{{service.searchValue}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <h2 *ngIf="this.serviceName" class="page__header">Choose your biller to proceed for bill payment!</h2>
+    <div class="service-biller-back">
+      <button class="header__title-button" title="Back to services" mat-mini-fab  color="primary">
+        <mat-icon class="header__title-button-icon">arrow_back</mat-icon>
+      </button>
+      <h2 *ngIf="this.serviceName" class="page__header">Choose your biller to proceed for bill payment!</h2>
+    </div>
+   
 
   </div>
 
@@ -20,7 +26,6 @@
 <hr>
 <div class="container">
   <div class="panel_left">
-
     <mat-form-field class="form__field" appearance="standard">
       <mat-label>Choose Biller</mat-label>
       <mat-select #billerSelectBox>
@@ -34,49 +39,58 @@
   </div>
 
   <div class="panel_right">
+    <div>
+      <p class="text-center">Your Bill details will be shown here</p>
+    </div>
     <div *ngIf="billerResponse" class="bill_body">
       <h2 class="bill__header">Bill Details</h2>
       <div class="header">
         <div class="header__left">
           <h3>Customer Name</h3>
+          <p>Asit Kumar Behera</p>
           <p>{{billerResponse.customerName}}</p>
         </div>
 
         <div class="header__right">
           <h3>Bill No</h3>
+          <p>87097SD9</p>
           <p>{{billerResponse.billNumber}}</p>
         </div>
       </div>
       <div class="header">
         <div class="header__left">
           <h3>Bill Date</h3>
+          <P>2-5-2023</P>
           <p>{{billerResponse.billDate}}</p>
         </div>
 
         <div class="header__right">
           <h3>Bill Period</h3>
+          <p>2-3-2013 to 4-5-2024</p>
           <p>{{billerResponse.billPeriod | uppercase}}</p>
         </div>
       </div>
       <div class="header">
         <div class="header__left">
           <h3>Due Date</h3>
+          <P>2-5-2023</P>
           <p>{{billerResponse.dueDate}}</p>
         </div>
 
         <div class="header__right">
           <h3>Bill Amount</h3>
-          <h3>{{billerResponse.billAmount / 100}}</h3>
+<h3> ₹ 349.00</h3>
+          <h3> ₹ {{billerResponse.billAmount / 100}}</h3>
         </div>
       </div>
-
+  
       <div class="amount__options">
         <div *ngFor="let amountOption of billerResponse?.amountOptions?.option" class="amount__option">
           <h3>{{amountOption.amountName}}</h3>
           <h3>{{amountOption.amountValue / 100}}</h3>
         </div>
       </div>
-
+      <hr>
       <div class="payment_action">
         <!-- <div class="payment_option">
           <mat-form-field class="form__field" appearance="standard">
