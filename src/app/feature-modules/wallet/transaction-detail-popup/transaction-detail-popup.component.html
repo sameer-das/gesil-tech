@@ -1,0 +1,11 @@
+<h5 mat-dialog-title> Transaction Details</h5>
+<ul mat-dialog-content>
+    <table>
+        <tbody>
+            <tr *ngFor="let d of transdata">
+                <td>{{d.key | uppercase}}</td>
+                <td> {{d.val | uppercase}}</td>
+            </tr>
+        </tbody>
+    </table>
+</ul>

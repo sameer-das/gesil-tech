@@ -51,7 +51,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let trans of lastTransaction; let i = index">
+            <!-- (click)="openTransactionDetailPopup(trans)" -->
+            <tr *ngFor="let trans of lastTransaction; let i = index" >
                 <td>{{i + 1}}</td>
                 <!-- <td>{{trans.wallet_transaction_ID}}</td> -->
                 <td>{{trans.wallet_transaction_Date | date:'medium'}}</td>

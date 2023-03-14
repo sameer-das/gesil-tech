@@ -158,5 +158,12 @@ background: linear-gradient(to right, #cbb4d4, #20002c); /* W3C, IE 10+/ Edge, F
       border: 1px solid #ddd;
       padding: 8px;
     }
+
+    tr {
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: #ccc;
+    }
   }
 }
