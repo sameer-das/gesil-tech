@@ -71,6 +71,9 @@ $header-title-color-dark-theme: #889AFF;
     }
     img {
       width: 50%;
+      @media (max-width: $extra-x-small) {
+        width: 90%;
+      }
     }
   
     @media (max-width: $small) {

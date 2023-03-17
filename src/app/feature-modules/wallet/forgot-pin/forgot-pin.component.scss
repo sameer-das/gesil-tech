@@ -15,11 +15,18 @@
         align-items: center;
         flex-direction: column;
             padding: 2rem;
+            @media (max-width: $extra-x-small) {
+                width: 100%;
+                padding: 1rem;
+              }
     }
 
     section {
         margin-top: 1rem;
         background-color: #fff;
+        @media (max-width: $extra-x-small) {
+           width: 100%;
+          }
     }
 }
 
@@ -48,6 +55,9 @@ input.otp_field {
     font-size: 2rem;
     outline: none;
     border: 2px solid $gradient1;
+    @media (max-width: $extra-x-small) {
+        width: 100%;
+      }
 }
 
 input[type="password"].pin_field {

@@ -6,6 +6,9 @@ h2.header__text {
   font-weight: $fw-bold;
   text-align: center;
   margin: 0;
+  @media (max-width: $extra-x-small) {
+    font-size: 1.2rem;
+  }
 }
 p.header__subtext {
   font-size: 0.8rem;
@@ -20,7 +23,9 @@ p.header__subtext {
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
-
+  @media (max-width: $extra-x-small) {
+    margin-top: 0.6rem;
+  }
   form {
     //width: 40%;
     // border: 1px solid;
@@ -111,6 +116,9 @@ p.header__subtext {
   }
   .mob-recharge-window {
     width: 70vw;
+    @media (max-width: $extra-x-small) {
+      width: 100%;
+    }
   }
 }
 .mob-root-wrapper {

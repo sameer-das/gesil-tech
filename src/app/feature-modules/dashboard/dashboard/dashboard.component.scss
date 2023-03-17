@@ -97,7 +97,9 @@
     }
 
     li {
-
+      @media (max-width: $extra-x-small) {
+       width:4.4rem;
+      }
       a,
       a:active,
       a:visited {
@@ -106,7 +108,8 @@
       }
 
       list-style: none;
-      min-width: 4rem;
+      width: 7rem;
+      height  : 7rem;
       cursor: pointer;
       padding: 0.5rem 0;
       border: none;

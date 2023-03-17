@@ -127,11 +127,17 @@
         @media (max-width: $small) {
             font-size: 1rem;
            }
+           @media (max-width: $extra-x-small) {
+            font-size: 0.7rem;
+           }
     }
 
     .form__field {
         width: 50%;
         padding-right: 1rem;
+        @media (max-width: $extra-x-small) {
+            width: 100%;
+          }
         mat-form-field {
             width: 100%;
         }
