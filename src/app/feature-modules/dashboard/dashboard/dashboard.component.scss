@@ -115,6 +115,8 @@
       border: none;
       transition: all 0.3s;
       background-color: $gradient1;
+      width: 7rem;
+      height: 7rem;
 
       @media (min-width: $small) {
         max-width: 110px;

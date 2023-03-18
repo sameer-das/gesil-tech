@@ -16,7 +16,7 @@
   .content-block {
     width: 40%;
     height: 100%;
-    background: rgb(255,255,255);
+    background: rgb(255, 255, 255);
     background: radial-gradient(circle, white 0%, #ffffff 42%, #f1f1f1 100%);
     display: flex;
     align-items: center;
@@ -123,7 +123,8 @@
     background-size: cover;
     display: flex;
     align-items: center;
-background-image: url('../../assets/office.jpg');
+    background-image: url('../../assets/office.jpg');
+
     @media (max-width: $medium) {
       display: none;
     }
@@ -173,7 +174,7 @@ background-image: url('../../assets/office.jpg');
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
-    
+
     img {
       width: 15rem;
     }
@@ -194,7 +195,7 @@ background-image: url('../../assets/office.jpg');
     font-size: 1.1rem;
 
     button[type="submit"] {
-      background:$primary-blue;
+      background: $primary-blue;
       width: 100%;
       outline: none;
       border: none;
@@ -208,7 +209,7 @@ background-image: url('../../assets/office.jpg');
       letter-spacing: 1px;
 
       .mat-icon {
-         margin-right: 9px;
+        margin-right: 9px;
       }
 
       &:disabled {
@@ -241,6 +242,7 @@ background-image: url('../../assets/office.jpg');
     p {
       margin-bottom: 0.5rem;
     }
+
     a {
       text-decoration: none;
       color: $primary-blue;
@@ -254,7 +256,8 @@ background-image: url('../../assets/office.jpg');
       cursor: pointer;
       transition: 0.2s;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background-color: $primary-blue;
         color: #fff;
       }
@@ -291,9 +294,11 @@ background-image: url('../../assets/office.jpg');
 .user-id-input {
   margin-bottom: 1.5rem !important;
 }
-.p-relative{
-position: relative;
+
+.p-relative {
+  position: relative;
 }
+
 .login-btn-label-wrapper {
   align-items: center;
   justify-content: center;
