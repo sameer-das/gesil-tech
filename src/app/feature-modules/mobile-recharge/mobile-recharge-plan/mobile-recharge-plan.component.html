@@ -1,8 +1,8 @@
 <div class="tab-nav-back">
-    <button class="header__title-button" mat-mini-fab  color="primary">
+    <button class="header__title-button" mat-mini-fab  color="primary" (click)="goBackMobileSearchScreen()">
         <mat-icon class="header__title-button-icon">arrow_back</mat-icon>
       </button>
-    <h2 class="header__text">Recharge Packs - <span>Airtel</span></h2>
+    <h2 class="header__text">Showing tariff details for <span>{{mobile_search.currentMobileNumber}}</span> ({{mobile_search.currentOperator}})</h2>
 </div>
 
 <mat-tab-group *ngIf="rechargePlans.length > 0" dynamicHeight>

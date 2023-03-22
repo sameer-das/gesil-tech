@@ -13,18 +13,27 @@ export class MobileNumberSearchComponent implements OnInit {
   constructor(
     private _router: Router,
     private _mobileService: MobileRechargeService,
-    private _popupService:PopupService
-  ) {}
+    private _popupService: PopupService
+  ) { }
   showCta: boolean = false;
   isFetching: boolean = false;
   mobileNo: string = '';
 
   currentLocation: string = '';
   currentOperator: string = '';
+  currentOperatorLogo: string = '';
 
   isInputInvalid: boolean = false;
   inputInvalidMessage: string = `Don't add +91 or 0 before your mobile number!`;
-  ngOnInit(): void {}
+
+  ngOnInit(): void { }
+
+  mobile_operator_to_log: any[] = [
+    { operator: 'airtel', logo: 'Airtel-Logo.png' },
+    { operator: 'jio', logo: 'jio.png' },
+    { operator: 'bsnl', logo: 'bsnl.png' },
+    { operator: 'voda', logo: 'vi.png' },
+  ]
 
   onInput(f: NgForm) {
     if (f.value.mobile_no.length == 10 && f.form.status === 'INVALID') {
@@ -55,6 +64,9 @@ export class MobileNumberSearchComponent implements OnInit {
             this.isFetching = false;
             this.currentLocation = res?.resultDt?.data.currentLocation;
             this.currentOperator = res?.resultDt?.data.currentOperator;
+            const foundOp= this.mobile_operator_to_log.filter((op: any) => op.operator.includes(this.currentOperator.trim().toLowerCase()))
+            this.currentOperatorLogo = foundOp.length > 0 ? `./assets/logo/${foundOp[0].logo}` : '';
+
             sessionStorage.setItem(
               'mobile_search',
               JSON.stringify({

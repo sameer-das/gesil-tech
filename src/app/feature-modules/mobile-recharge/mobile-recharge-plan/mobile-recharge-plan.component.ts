@@ -17,6 +17,7 @@ export class MobileRechargePlanComponent implements OnInit {
     private _loaderService: LoaderService) { }
   rechargePlans: any[] = [];
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  mobile_search: any = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
   ngOnInit(): void {
     this._route.data.subscribe({
       next: (resp: any) => {
@@ -154,5 +155,9 @@ export class MobileRechargePlanComponent implements OnInit {
         console.log(err)
       }
     })
+  }
+
+  goBackMobileSearchScreen() {
+    this._router.navigate(['/mobile-recharge'])
   }
 }
