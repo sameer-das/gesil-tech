@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
 import { PopupService } from '../popups/popup.service';
 import { AuthService } from '../services/auth.service';
 import { LoaderService } from '../services/loader.service';
@@ -27,7 +26,8 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private _popupService: PopupService,
-    private _loaderService: LoaderService
+    private _loaderService: LoaderService,
+    private _renderer: Renderer2
   ) {}
   ngOnInit(): void {}
 
@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
     userid: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
+
+ 
 
   openSignupModal() {
     // console.log('open dialog');
