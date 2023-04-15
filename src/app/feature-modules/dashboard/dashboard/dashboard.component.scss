@@ -387,6 +387,14 @@
     .add__card {
       padding: 1rem;
       margin-top: 1rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      position: fixed;
+      height: 78vh;
+      overflow: scroll;
+      padding-bottom: 5rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
 
       .image__container {
         img {
