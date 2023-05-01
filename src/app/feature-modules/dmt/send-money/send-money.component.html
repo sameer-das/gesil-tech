@@ -1,0 +1,41 @@
+
+<h4>Please enter below details to send money!</h4>
+<div class="root__container">
+    <form [formGroup]="sendMoneyForm" (submit)="onSubmit()">
+
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Choose recipient</mat-label>
+                <mat-select formControlName="recipient">
+                    <mat-option value="1">Recipient 1</mat-option>
+                    <mat-option value="2">Recipient 2</mat-option>
+                    <mat-option value="3">Recipient 3</mat-option>
+                    <mat-option value="4">Recipient 4</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['recipient']?.hasError('required')">Please choose recipient</mat-error>
+
+              </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Choose recipient</mat-label>
+                <mat-select formControlName="transactionType">
+                    <mat-option value="IMPS">IMPS</mat-option>
+                  <mat-option value="NEFT">NEFT</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['transactionType']?.hasError('required')">Please choose transaction type</mat-error>
+              </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter Amount</mat-label>
+                <input matInput type="text" formControlName="amount">
+                <mat-error *ngIf="f['amount']?.hasError('required')">Please enter amount</mat-error>
+                <mat-error *ngIf="f['amount']?.hasError('pattern')">Please enter a valid amount</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row cta__container">
+            <button type="submit" [disabled]="sendMoneyForm.invalid" class="btn primary">Send</button>
+        </div>
+    </form>
+</div>

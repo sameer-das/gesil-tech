@@ -1,0 +1,60 @@
+@import '../../../styles/constants.scss';
+
+.root__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    position: relative;
+    // margin-top: 1rem;
+
+    >form {
+        height: 100%;
+        width: 40%;
+        border: 1px solid #ccc;
+        padding: 1rem;
+        background-color: #fff;
+        border-radius: 0.25rem;
+
+        -webkit-box-shadow: 10px 10px 32px 0px rgba(204, 204, 204, 1);
+        -moz-box-shadow: 10px 10px 32px 0px rgba(204, 204, 204, 1);
+        box-shadow: 10px 10px 32px 0px rgba(204, 204, 204, 1);
+
+        .form__row {
+            >* {
+                width: 100%;
+            }
+
+            &.cta__container {
+                margin-top: 1rem;
+            }
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        &::before {
+            left: 50px;
+            background-color: $gradient1;
+        }
+
+        &::after {
+            background-color: $purple;
+            right: 50px;
+        }
+
+        // left: 50px;
+    }
+
+}
+
+h4 {
+    margin-bottom: 0;
+}

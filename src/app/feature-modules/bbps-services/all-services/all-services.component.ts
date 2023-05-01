@@ -48,6 +48,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
 
   }
+
+
   ngOnDestroy(): void {
     if (this.getBillerdByCategorySubscription)
       this.getBillerdByCategorySubscription.unsubscribe();
@@ -97,6 +99,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
         }
       })
+    } else if (this.serviceName === 'DMT') {
+      // If DMT then send it to DMT route
+      this._router.navigate(['dmtransfer/send'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } });
     } else {
       const searchValue = this.allServices.filter((s: any) => s.path === this.serviceName);
       if (searchValue.length > 0) {
@@ -233,7 +238,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "mac": "01-23-45-67-89-ab"
       },
       "customerInfo": {
-         "customerMobile": "9777117452",
+        "customerMobile": "9777117452",
         "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
         "customerPan": ""
@@ -281,7 +286,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         if (resp.status === 'Success' && resp.code === 200 && resp.data) {
           console.log(resp.data)
           if (+resp.data < (+this.billerResponse.billAmount / 100)) {
-          // if (false) {
+            // if (false) {
             // show less wallet popup
             this._popupService.openAlert({
               header: 'Alert',
@@ -300,7 +305,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
                     console.log(resp);
                     sessionStorage.setItem(`TRANS_${resp.resultDt.txnRefId}`, JSON.stringify({ payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url }))
                     this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {
-                      state: { payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url}
+                      state: { payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url }
                     });
                   })
               }

@@ -67,6 +67,14 @@ const routes: Routes = [
           ).then((m) => m.SupportModule),
         canLoad: [AuthGuardService],
       },
+      {
+        path: 'dmtransfer',
+        loadChildren: () =>
+          import(
+            './feature-modules/dmt/dmt.module'
+          ).then((m) => m.DmtModule),
+        canLoad: [AuthGuardService],
+      },
     ],
   },
   {

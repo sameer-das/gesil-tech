@@ -1,0 +1,35 @@
+
+<h4 >Please enter below details to register!</h4>
+<p class="message">Please register yourself to start sending money. This is one time only.</p>
+<p class="message">An OTP will be sent to provided mobile number and will be required to validate.</p>
+<div class="root__container">
+    <form [formGroup]="addSenderForm" (submit)="onFormSubmit()">
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter your full name</mat-label>
+                <input matInput type="text" formControlName="senderName">
+                <mat-error *ngIf="f['senderName'].errors">Please provide your full name</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput type="text" formControlName="senderMobile">
+                <mat-error *ngIf="f['senderMobile'].errors">Please enter valid mobile number</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Choose Transaction Type</mat-label>
+                <mat-select formControlName="transactionType">
+                    <mat-option value="IMPS">IMPS</mat-option>
+                  <mat-option value="NEFT">NEFT</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['transactionType'].errors">Please choose transaction type</mat-error>
+              </mat-form-field>
+        </div>
+        <div class="form__row cta__container">
+            <button type="submit" [disabled]="addSenderForm.invalid" class="btn primary">Submit</button>
+        </div>
+    </form>
+</div>

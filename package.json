@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=/gskindia/",
+    "build": "ng build --base-href=/esk/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

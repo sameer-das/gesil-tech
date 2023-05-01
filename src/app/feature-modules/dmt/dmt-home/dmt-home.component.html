@@ -1,0 +1,12 @@
+<nav *ngIf="showNav">
+    <ul>
+        <li><a routerLink="send" routerLinkActive="active">Send Money</a></li>
+        <li><a routerLink="addrecipient" routerLinkActive="active">Add Recipient</a></li>
+    </ul>
+    <div class="image_container">
+        <img src="assets/logo/BharatBillPay.png" alt="BBPS Logo" />
+    </div>
+
+</nav>
+
+<router-outlet></router-outlet>

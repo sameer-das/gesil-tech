@@ -1,8 +1,9 @@
 @import "../../../styles/constants.scss";
 
 .card__container {
+  padding: 0 8rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 
   .card_1 {
@@ -27,6 +28,7 @@ background: linear-gradient(to right, #cbb4d4, #20002c); /* W3C, IE 10+/ Edge, F
   }
   @media (max-width: $medium) {
     grid-template-columns: repeat(2, 1fr);
+    padding: 0;
   }
 
   .card {

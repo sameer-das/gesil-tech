@@ -1,0 +1,69 @@
+<h4>Please provide below details to add recipient!</h4>
+<div class="root__container">
+    <form [formGroup]="addRecipientForm" (submit)="onSubmitForm()">
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter recipient full name</mat-label>
+                <input matInput type="text" formControlName="recipientFullName">
+                <mat-error>Please enter recipient's full name</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter recipient mobile number</mat-label>
+                <input matInput type="text" formControlName="recipientMobile">
+                <mat-error *ngIf="f['recipientMobile']?.hasError('required')">Please enter recipient's mobile number</mat-error>
+                <mat-error *ngIf="f['recipientMobile']?.hasError('pattern')">Please enter a valid mobile number</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Choose Transaction Type</mat-label>
+                <mat-select formControlName="transactionType">
+                    <mat-option value="IMPS">IMPS</mat-option>
+                  <mat-option value="NEFT">NEFT</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['transactionType']?.hasError('required')">Please choose transaction type</mat-error>
+              </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Choose recipient's bank</mat-label>
+                <mat-select formControlName="bank">
+                    <mat-option value="IMPS">IMPS</mat-option>
+                  <mat-option value="NEFT">NEFT</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f['bank']?.hasError('required')">Please choose recipient's bank</mat-error>
+
+              </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter recipient's account number</mat-label>
+                <input matInput type="password" formControlName="accountNumber">
+                <mat-error *ngIf="f['accountNumber']?.hasError('required')">Please enter recipient's account number</mat-error>
+                <mat-error *ngIf="f['accountNumber']?.hasError('pattern')">Alphabets and special characters are not allowed!</mat-error>
+
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Confirm recipient's account number</mat-label>
+                <input matInput type="text" formControlName="confirmAccountNumber">
+                <mat-error *ngIf="f['confirmAccountNumber']?.hasError('required')">Please confirm recipient's account number</mat-error>
+                <mat-error *ngIf="f['confirmAccountNumber']?.hasError('pattern')">Alphabets and special characters are not allowed!</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter IFSC</mat-label>
+                <input matInput type="text" formControlName="ifsc">
+                <mat-error *ngIf="f['ifsc']?.hasError('required')">Please enter recipient's IFSC</mat-error>
+                <mat-error *ngIf="f['ifsc']?.hasError('pattern')">Special characters are not allowed!</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row cta__container">
+            <button type="submit" class="btn primary" [disabled]="addRecipientForm.invalid">Submit</button>
+        </div>
+    </form>
+</div>
