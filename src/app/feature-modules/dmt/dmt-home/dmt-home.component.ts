@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DmtService } from '../dmt-service.service';
 
 @Component({
   selector: 'app-dmt-home',
@@ -7,17 +8,43 @@ import { Router } from '@angular/router';
   styleUrls: ['./dmt-home.component.scss']
 })
 export class DmtHomeComponent implements OnInit  {
-  constructor(private router:Router) { }
+  constructor(private router:Router, private _dmtService:DmtService) { }
   routes = [
     {route:'/dmtransfer/send', ind: 0},
     {route:'/dmtransfer/addrecipient', ind: 1},
     {route:'/dmtransfer/addsender', ind: 2},
   ]
+  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   ngOnInit(): void {
     console.log(this.router.url)
     if(this.router.url === '/dmtransfer/addsender')
       this.showNav = false;
+
+    this.getSenderinfo();
   }
   activeIndex: number = 0;
   showNav:boolean = true;
+
+
+
+  getSenderinfo(){
+    const payload = {
+      "requestType": "SenderDetails",
+      // "senderMobileNumber": this.currentUser.user.mobile_Number,
+      "senderMobileNumber": '9920010041',
+      "txnType": "IMPS"
+    }
+    this._dmtService.getSenderInfo(payload).subscribe({
+      next: (resp:any) =>{
+        console.log(resp)
+        if(resp.code===200 && resp.status === 'Success' && (resp.resultDt.senderMobileNumber === 0 || !resp.resultDt.senderName)){
+          this.router.navigate(['dmtransfer/addsender']);
+          this.showNav = false;
+        }
+      }
+    })
+  }
 }
+
+
+

@@ -22,6 +22,7 @@ import { HaveSubmenuDirective, Sidebar2Component } from './layout/sidebar2/sideb
 import { LoaderComponent } from './loader/loader.component';
 import { PinPopupComponent } from './popups/pin-popup/pin-popup.component';
 import { ImageFallbackDirective } from './image-fallback.directive';
+import { OtpPopupComponent } from './popups/otp-popup/otp-popup.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -43,6 +44,7 @@ import { ImageFallbackDirective } from './image-fallback.directive';
     LoaderComponent,
     PinPopupComponent,
     ImageFallbackDirective,
+    OtpPopupComponent,
 
     // DashboardComponent,
     // QuickMenuDialog

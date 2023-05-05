@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DmtService } from '../dmt-service.service';
+import { LoaderService } from 'src/app/services/loader.service';
+import { PopupService } from 'src/app/popups/popup.service';
+import { finalize, first, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
+import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
 
 @Component({
   selector: 'app-add-recipient',
@@ -8,15 +15,22 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 })
 export class AddRecipientComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _dmtService: DmtService,
+    private _loaderService: LoaderService, private _popupService: PopupService,
+    private _modal: MatDialog) { }
+  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   ngOnInit(): void {
+
+
   }
-/**
- * confirmAccountNumber: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')], updateOn: 'blur' }),
-    ifsc: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')] }),
-    amount: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*(\.[0-9]{0,2})?$')] }),
- */
+  openModal() {
+    this._modal.open(OtpPopupComponent, { disableClose: true, data: { title: 'Please enter the OTP received on your mobile!' } })
+  }
+  /**
+   * confirmAccountNumber: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')], updateOn: 'blur' }),
+      ifsc: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9a-zA-Z]+$')] }),
+      amount: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*(\.[0-9]{0,2})?$')] }),
+   */
   addRecipientForm: FormGroup = new FormGroup({
     recipientFullName: new FormControl('', Validators.required),
     recipientMobile: new FormControl('', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]),
@@ -33,6 +47,33 @@ export class AddRecipientComponent implements OnInit {
 
   onSubmitForm(): void {
     console.log(this.addRecipientForm)
-  }
 
+    const payload = {
+      "requestType": "RegRecipient",
+      "senderMobileNumber": this.currentUser.user.mobile_Number,
+      "txnType": this.addRecipientForm.value.transactionType,
+      "recipientName": this.addRecipientForm.value.recipientFullName,
+      "recipientMobileNumber": this.addRecipientForm.value.recipientMobile,
+      "bankCode": this.addRecipientForm.value.bank,
+      "bankAccountNumber": this.addRecipientForm.value.accountNumber,
+      "ifsc": this.addRecipientForm.value.ifsc
+    }
+    this._loaderService.showLoader();
+    this._dmtService.registerRecipient(payload)
+      .pipe(first(),
+        tap(x => console.log(x)),
+        finalize(() => { this._loaderService.hideLoader() }))
+      .subscribe({
+        next: (resp) => {
+          // code goes here
+        },
+        error: (err) => {
+          console.log(err);
+          this._popupService.openAlert({
+            header: 'Fail',
+            message: 'Error while adding recipient!'
+          })
+        }
+      })
+  }
 }

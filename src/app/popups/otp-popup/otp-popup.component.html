@@ -1,0 +1,25 @@
+<div class="container">
+    <h2 class="modal-title">{{data.title}}</h2>
+    <form (submit)="onSubmit()">
+        <div class="inputfield" #inputContainer>
+
+            <input type="number" maxlength="1" class="input" disabled #input/>
+            <input type="number" maxlength="1" class="input" disabled #input/>
+            <input type="number" maxlength="1" class="input" disabled #input/>
+            <input type="number" maxlength="1" class="input" disabled #input/>
+        </div>
+        <mat-dialog-actions>
+            <div class="buttons-container">
+                <div>
+                    <button mat-raised-button color="primary" disabled type="button">Resend OTP</button>
+                </div>
+                <div>
+                    <button mat-raised-button color="primary" #submitButton [disabled]="isButtonDisabled" type="submit">Submit</button>
+                    <button mat-raised-button color="accent" (click)="onClose()">Cancel</button>
+
+                </div>
+
+            </div>
+        </mat-dialog-actions>
+    </form>
+</div>

@@ -7,6 +7,13 @@ export class DmtService {
     constructor(private _httpClient: HttpClient){}
 
     getSenderInfo(payload: any){
-        this._httpClient.post('https://api.esebakendra.com/api/DMT/eSenderDetails', payload)
+       return this._httpClient.post('https://api.esebakendra.com/api/DMT/eSenderDetails', payload)
+    }
+    registerSenderInfo(payload: any){
+       return this._httpClient.post('https://api.esebakendra.com/api/DMT/eSenderRegistration', payload)
+    }
+
+    registerRecipient(payload: any) {
+        return this._httpClient.post('https://api.esebakendra.com/api/DMT/eRegisterRecipient', payload)
     }
 }
