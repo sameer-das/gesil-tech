@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { ServiceCategoryComponent } from './feature-modules/dashboard/service-category/service-category.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -11,6 +12,30 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path:'Utility-Services',
+        component: ServiceCategoryComponent
+      },
+      {
+        path:'Finacial-Services',
+        component: ServiceCategoryComponent
+      },
+      {
+        path:'Insurance-Services',
+        component: ServiceCategoryComponent
+      },
+      {
+        path:'Banking-Services',
+        component: ServiceCategoryComponent
+      },
+      {
+        path:'Goverment-Services',
+        component: ServiceCategoryComponent
+      },
+      {
+        path:'Educational-Services',
+        component: ServiceCategoryComponent
+      },
       {
         path: 'dashboard',
         loadChildren: () =>

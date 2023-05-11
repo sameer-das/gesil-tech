@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DmtService } from '../dmt-service.service';
+import { LoaderService } from 'src/app/services/loader.service';
+import { finalize, first } from 'rxjs';
 
 @Component({
   selector: 'app-dmt-home',
@@ -8,7 +10,7 @@ import { DmtService } from '../dmt-service.service';
   styleUrls: ['./dmt-home.component.scss']
 })
 export class DmtHomeComponent implements OnInit  {
-  constructor(private router:Router, private _dmtService:DmtService) { }
+  constructor(private router:Router, private _dmtService:DmtService, private _loaderService: LoaderService) { }
   routes = [
     {route:'/dmtransfer/send', ind: 0},
     {route:'/dmtransfer/addrecipient', ind: 1},
@@ -20,7 +22,7 @@ export class DmtHomeComponent implements OnInit  {
     if(this.router.url === '/dmtransfer/addsender')
       this.showNav = false;
 
-    this.getSenderinfo();
+    // this.getSenderinfo();
   }
   activeIndex: number = 0;
   showNav:boolean = true;
@@ -30,11 +32,15 @@ export class DmtHomeComponent implements OnInit  {
   getSenderinfo(){
     const payload = {
       "requestType": "SenderDetails",
-      // "senderMobileNumber": this.currentUser.user.mobile_Number,
-      "senderMobileNumber": '9920010041',
+      "senderMobileNumber": this.currentUser.user.mobile_Number,
+      // "senderMobileNumber": '9920010041',
       "txnType": "IMPS"
     }
-    this._dmtService.getSenderInfo(payload).subscribe({
+    
+    this._loaderService.showLoader()
+    this._dmtService.getSenderInfo(payload)
+    .pipe(first(), finalize(() => this._loaderService.hideLoader()))
+    .subscribe({
       next: (resp:any) =>{
         console.log(resp)
         if(resp.code===200 && resp.status === 'Success' && (resp.resultDt.senderMobileNumber === 0 || !resp.resultDt.senderName)){
@@ -44,6 +50,9 @@ export class DmtHomeComponent implements OnInit  {
       }
     })
   }
+
+
+  
 }
 
 

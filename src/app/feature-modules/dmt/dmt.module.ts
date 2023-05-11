@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { DmtService } from './dmt-service.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DmtAuthGuardService } from './dmt-auth-guard.service';
 
 
 
@@ -33,6 +34,6 @@ import { ReactiveFormsModule } from '@angular/forms';
         ]
       }])
   ],
-  providers: [DmtService]
+  providers: [DmtService, DmtAuthGuardService]
 })
 export class DmtModule { }

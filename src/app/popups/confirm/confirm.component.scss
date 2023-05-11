@@ -1,0 +1,43 @@
+@import '../../styles/constants.scss';
+
+.mat-dialog-action {
+    gap: 1rem;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+tr {
+    border-bottom: 1px solid #dddddd;
+
+    &:first-child {
+        border-top: 1px solid #dddddd;
+    }
+
+
+    td {
+        text-align: left;
+        padding: 8px;
+
+        &:first-child {
+            font-weight: bold;
+        }
+    }
+
+    &.total_amount {
+        td {
+            font-weight: bold;
+            background: #ddd;
+            color: $gradient1;
+        }
+    }
+}

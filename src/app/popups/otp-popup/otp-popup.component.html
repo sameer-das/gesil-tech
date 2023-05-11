@@ -7,11 +7,14 @@
             <input type="number" maxlength="1" class="input" disabled #input/>
             <input type="number" maxlength="1" class="input" disabled #input/>
             <input type="number" maxlength="1" class="input" disabled #input/>
+            <input type="number" maxlength="1" class="input" disabled #input/>
+            <input type="number" maxlength="1" class="input" disabled #input/>
         </div>
         <mat-dialog-actions>
             <div class="buttons-container">
                 <div>
-                    <button mat-raised-button color="primary" disabled type="button">Resend OTP</button>
+                    <!-- <span class="resendOtpTextDisabled" *ngIf="resendTime !== 0">Resend Otp in {{resendTime}} sec</span>
+                    <button mat-raised-button color="primary" *ngIf="resendTime === 0" type="button" (click)="onOtpResend()">Resend OTP</button> -->
                 </div>
                 <div>
                     <button mat-raised-button color="primary" #submitButton [disabled]="isButtonDisabled" type="submit">Submit</button>

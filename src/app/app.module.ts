@@ -23,6 +23,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { PinPopupComponent } from './popups/pin-popup/pin-popup.component';
 import { ImageFallbackDirective } from './image-fallback.directive';
 import { OtpPopupComponent } from './popups/otp-popup/otp-popup.component';
+import { ConfirmComponent } from './popups/confirm/confirm.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -45,6 +46,7 @@ import { OtpPopupComponent } from './popups/otp-popup/otp-popup.component';
     PinPopupComponent,
     ImageFallbackDirective,
     OtpPopupComponent,
+    ConfirmComponent,
 
     // DashboardComponent,
     // QuickMenuDialog

@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
 
+
 @Component({
   selector: 'app-add-recipient',
   templateUrl: './add-recipient.component.html',
@@ -19,12 +20,10 @@ export class AddRecipientComponent implements OnInit {
     private _loaderService: LoaderService, private _popupService: PopupService,
     private _modal: MatDialog) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  allBanks: any[] = [];
   ngOnInit(): void {
+    this.getAllDMTBanks();
 
-
-  }
-  openModal() {
-    this._modal.open(OtpPopupComponent, { disableClose: true, data: { title: 'Please enter the OTP received on your mobile!' } })
   }
   /**
    * confirmAccountNumber: new FormControl('', { validators: [Validators.required, Validators.pattern('^[0-9]*$')], updateOn: 'blur' }),
@@ -64,8 +63,31 @@ export class AddRecipientComponent implements OnInit {
         tap(x => console.log(x)),
         finalize(() => { this._loaderService.hideLoader() }))
       .subscribe({
-        next: (resp) => {
+        next: (resp: any) => {
           // code goes here
+          if (resp.status === 'Success' && resp.code === 200) {
+            if (resp.resultDt.responseReason === 'Successful' && resp.resultDt.responseCode == 0) {
+              this._popupService.openAlert({
+                header: 'Success',
+                message: 'Recipient added successfully!'
+              });
+              this.addRecipientForm.reset({
+                recipientFullName: '',
+                recipientMobile: '',
+                transactionType: '',
+                bank: '',
+                accountNumber: '',
+                confirmAccountNumber: '',
+                ifsc: ''
+              });
+              
+            } else {
+              this._popupService.openAlert({
+                header: 'Fail',
+                message: 'Error while adding recipient!'
+              })
+            }
+          }
         },
         error: (err) => {
           console.log(err);
@@ -73,6 +95,22 @@ export class AddRecipientComponent implements OnInit {
             header: 'Fail',
             message: 'Error while adding recipient!'
           })
+        }
+      })
+  }
+
+  getAllDMTBanks() {
+    this._loaderService.showLoader();
+    this._dmtService.getAllBank()
+      .pipe(first(), finalize(() => this._loaderService.hideLoader()))
+      .subscribe({
+        next: (resp: any) => {
+          if (resp.status === "Success" && resp.code === 200) {
+            this.allBanks = resp?.data?.bankList?.bankInfoArray;
+          }
+        }, error: (err) => {
+          console.log('error while fetching bank list');
+          console.log(err);
         }
       })
   }

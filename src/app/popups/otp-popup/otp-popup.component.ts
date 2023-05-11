@@ -13,6 +13,9 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
   inputCount = 0;
   finalInput = "";
   isButtonDisabled: boolean = true;
+  resendTime: number = 10;
+
+  otpLength: number = 6;
   ngAfterViewInit(): void {
     this.inputArray = this.inputs.toArray();
     this.addEventForInputs();
@@ -20,19 +23,23 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
 
+  interval: any;
   ngOnDestroy(): void {
     console.log('on destory')
+
     window.removeEventListener('keyup', () => { });
     this.inputArray.forEach((element, ind) => {
       element.nativeElement.removeEventListener('click', () => { })
     })
+
+    clearInterval(this.interval)
   }
 
   ngOnInit(): void {
     console.log('on init')
 
     window.addEventListener("keyup", (e) => {
-      if (this.inputCount > 3) {
+      if (this.inputCount > (this.otpLength - 1)) {
         this.isButtonDisabled = false;
         if (e.key == "Backspace") {
           this.finalInput = this.finalInput.substring(0, this.finalInput.length - 1);
@@ -43,6 +50,12 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
+
+    this.interval = setInterval(() => {
+      this.resendTime = this.resendTime - 1;
+      if (this.resendTime === 0)
+        clearInterval(this.interval)
+    }, 1000)
 
   }
 
@@ -70,9 +83,19 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit() {
     console.log('submitted', this.finalInput)
-    this._dialogRef.close({ otpAvailable: false, value: this.finalInput })
+    this._dialogRef.close({ otpAvailable: true, value: this.finalInput })
   }
 
+  onOtpResend() {
+    console.log(`otp sent`)
+    this.resendTime = 10;
+
+    this.interval = setInterval(() => {
+      this.resendTime -= 1;
+      if (this.resendTime === 0)
+        clearInterval(this.interval)
+    }, 1000)
+  }
 
   addEventForInputs() {
     this.inputArray.forEach((element) => {
@@ -81,11 +104,11 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
         let { value } = e.target;
 
         if (value.length == 1) {
-          if (this.inputCount < 3)
+          if (this.inputCount < (this.otpLength - 1))
             this.updateInputConfig(this.inputArray[this.inputCount], true);
-          if (this.inputCount <= 3 && e.key != "Backspace") {
+          if (this.inputCount <= (this.otpLength - 1) && e.key != "Backspace") {
             this.finalInput += value;
-            if (this.inputCount < 3) {
+            if (this.inputCount < (this.otpLength - 1)) {
               this.updateInputConfig(this.inputArray[this.inputCount + 1], false);
             }
           }

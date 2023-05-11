@@ -13,8 +13,11 @@ import {
 })
 export class Sidebar2Component implements OnInit {
   constructor() {}
-
-  ngOnInit(): void {}
+  menuCategories: any = {};
+  ngOnInit(): void {
+   this.menuCategories = JSON.parse(localStorage.getItem('menu_categories') || '{}' );
+   console.log(this.menuCategories)
+  }
 
   expand(e: any) {
     console.log(e);

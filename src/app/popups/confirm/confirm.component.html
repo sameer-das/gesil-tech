@@ -1,0 +1,43 @@
+<div class="header">
+    <h4 mat-dialog-title [ngStyle]="style">{{data.header}}</h4>
+</div>
+<div mat-dialog-content>
+    <p class="dialog-message" *ngIf="data.message" [ngClass]="{textCenter: data.showTable}">{{data.message}}</p>
+
+    <table *ngIf="data.showTable && data.tableData">
+        <tbody>
+            <tr>
+                <td>Recipient Name</td>
+                <td>{{data.tableData.recipientName}}</td>
+            </tr>
+            <tr>
+                <td>Recipient Account Number</td>
+                <td>{{data.tableData.bankAccountNumber}}</td>
+            </tr>
+            <tr>
+                <td>Recipient Bank Name</td>
+                <td>{{data.tableData.bankName}}</td>
+            </tr>
+            <tr>
+                <td>Recipient Bank IFSC</td>
+                <td>{{data.tableData.ifsc}}</td>
+            </tr>
+            <tr>
+                <td>Transfer Amount</td>
+                <td>{{data.tableData.amount}}</td>
+            </tr>
+            <tr>
+                <td>Conveyance Fee</td>
+                <td>{{data.tableData.convFee}}</td>
+            </tr>
+            <tr class="total_amount">
+                <td>Total Chargable Amount</td>
+                <td>{{+data.tableData.convFee + +data.tableData.amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div mat-dialog-actions align="end" class="mat-dialog-action">
+    <button *ngIf="data.showCancelButton" class="btn secondary" (click)="close(false)">Cancel</button>
+    <button class="btn primary" (click)="close(true)">OK</button>
+</div>

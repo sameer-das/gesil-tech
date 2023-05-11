@@ -1,5 +1,7 @@
+@import '../../styles/constants.scss';
+
 .container {
-   min-width: 360px;
+   min-width: 480px;
     h2.modal-title {
         font-size: 18px;
         text-align: center;
@@ -37,7 +39,7 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #89888b;
 }
 .input:focus {
-  border: 3px solid #ffb800;
+  border: 3px solid $gradient1;
 }
 
 .buttons-container {
@@ -45,4 +47,14 @@ input[type="number"]::-webkit-inner-spin-button {
     justify-content: space-between;
     min-width: 100%;
     margin-top: 1.5rem;
+
+    div:first-child {
+      display: flex;
+      align-items: center;
+
+      span {
+        color: #89888b;
+        cursor: not-allowed;
+      }
+    }
 }

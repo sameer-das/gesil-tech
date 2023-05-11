@@ -1,7 +1,7 @@
 <h4>Please provide below details to add recipient!</h4>
 <div class="root__container">
-    <!-- <button (click)="openModal()">Open</button> -->
-    <form [formGroup]="addRecipientForm" (submit)="onSubmitForm()">
+
+    <form [formGroup]="addRecipientForm" autocomplete="off" (submit)="onSubmitForm()">
         <div class="form__row">
             <mat-form-field class="form__field" appearance="standard">
                 <mat-label>Enter recipient full name</mat-label>
@@ -31,8 +31,7 @@
             <mat-form-field class="form__field" appearance="standard">
                 <mat-label>Choose recipient's bank</mat-label>
                 <mat-select formControlName="bank">
-                    <mat-option value="IMPS">IMPS</mat-option>
-                  <mat-option value="NEFT">NEFT</mat-option>
+                    <mat-option *ngFor="let bank of allBanks" [value]="bank.bankCode">{{bank.bankName}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="f['bank']?.hasError('required')">Please choose recipient's bank</mat-error>
 

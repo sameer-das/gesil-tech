@@ -8,6 +8,21 @@ true}">
             <mat-icon>design_services</mat-icon>Services
         </a> </li> -->
     <li><a class="main_menu_link" haveSubmenu>
+            <mat-icon>handyman</mat-icon>
+            All Services
+            <mat-icon class="carret">arrow_right</mat-icon>
+        </a>
+        <ul class="sub_menu">
+            <li *ngFor="let cat of menuCategories?.menuCategories">
+                <a class="sub_menu_link" [routerLink]="cat.services_Name.split(' ').join('-')" routerLinkActive="activelink"
+                    [routerLinkActiveOptions]="{exact:true}">{{cat.services_Name}}</a>
+            </li>
+        </ul>
+    </li>
+
+
+
+    <li><a class="main_menu_link" haveSubmenu>
             <mat-icon>account_balance_wallet</mat-icon>
             Wallet
             <mat-icon class="carret">arrow_right</mat-icon>
@@ -53,13 +68,14 @@ true}">
         </a>
 
         <ul class="sub_menu">
-            <li><a class="sub_menu_link" routerLink="support" routerLinkActive="activelink"
-                    [routerLinkActiveOptions]="{exact:
+            <li><a class="sub_menu_link" routerLink="support" routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:
 true}">My Tickets</a></li>
             <li><a class="sub_menu_link" routerLink="support/create" routerLinkActive="activelink"
                     [routerLinkActiveOptions]="{exact:
 true}">Raise Ticket</a></li>
         </ul>
+
+
 
     </li>
 </ul>

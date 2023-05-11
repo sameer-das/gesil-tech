@@ -12,11 +12,12 @@ import {
   DashboardComponent,
   QuickMenuDialog
 } from './dashboard/dashboard.component';
+import { ServiceCategoryComponent } from './service-category/service-category.component';
 
 @NgModule({
   declarations: [DashboardComponent, QuickMenuDialog,
     CarouselComponent, 
-    MobileNumberSearchComponent, MobileRechargePlanComponent],
+    MobileNumberSearchComponent, MobileRechargePlanComponent, ServiceCategoryComponent],
   imports: [
     CommonModule,
     MaterialModule,
