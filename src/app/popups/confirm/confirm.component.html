@@ -2,9 +2,9 @@
     <h4 mat-dialog-title [ngStyle]="style">{{data.header}}</h4>
 </div>
 <div mat-dialog-content>
-    <p class="dialog-message" *ngIf="data.message" [ngClass]="{textCenter: data.showTable}">{{data.message}}</p>
+    <p class="dialog-message" *ngIf="data.message" [ngClass]="{textCenter: data.tableType}">{{data.message}}</p>
 
-    <table *ngIf="data.showTable && data.tableData">
+    <table *ngIf="data.tableType == 'transactionDetail' && data.tableData">
         <tbody>
             <tr>
                 <td>Recipient Name</td>
@@ -24,15 +24,56 @@
             </tr>
             <tr>
                 <td>Transfer Amount</td>
-                <td>{{data.tableData.amount}}</td>
+                <td>{{data.tableData.amount.toFixed(2)}}</td>
             </tr>
             <tr>
                 <td>Conveyance Fee</td>
-                <td>{{data.tableData.convFee}}</td>
+                <td>{{data.tableData.convFee.toFixed(2)}}</td>
             </tr>
             <tr class="total_amount">
                 <td>Total Chargable Amount</td>
-                <td>{{+data.tableData.convFee + +data.tableData.amount}}</td>
+                <td>{{(+data.tableData.convFee + +data.tableData.amount).toFixed(2)}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table *ngIf="data.tableType == 'fundTransferSuccess' && data.tableData">
+        <tbody>
+            <tr>
+                <td>Description</td>
+                <td>{{data.tableData.respDesc}}</td>
+            </tr>
+            <tr>
+                <td>Sender Mobile No.</td>
+                <td>{{data.tableData.senderMobileNo}}</td>
+            </tr>
+            <tr>
+                <td>Unique Reference ID</td>
+                <td>{{data.tableData.uniqueRefId}}</td>
+            </tr>
+            <tr>
+                <td>Bank Transaction ID</td>
+                <td>{{data.tableData.bankTxnId}}</td>
+            </tr>
+            <tr>
+                <td>Reference ID</td>
+                <td>{{data.tableData.refId}}</td>
+            </tr>
+            <tr>
+                <td>Recipient Name</td>
+                <td>{{data.tableData.impsName}}</td>
+            </tr>
+            <tr>
+                <td>Transaction Amount</td>
+                <td>{{+data.tableData.txnAmount / 100}}</td>
+            </tr>
+            <tr>
+                <td>Conveyance Fee</td>
+                <td>{{+data.tableData.custConvFee / 100}}</td>
+            </tr>
+            <tr>
+                <td>Transaction Status</td>
+                <td>{{data.tableData.txnStatus}}</td>
             </tr>
         </tbody>
     </table>

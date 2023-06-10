@@ -101,7 +101,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       })
     } else if (this.serviceName === 'DMT') {
       // If DMT then send it to DMT route
-      this._router.navigate(['dmtransfer/send'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } });
+      this._router.navigate(['dmtransfer/dmttransactions'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } });
     } else {
       const searchValue = this.allServices.filter((s: any) => s.path === this.serviceName);
       if (searchValue.length > 0) {
@@ -216,6 +216,13 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           this.requestID = resp?.resultDt.requestID;
           this.billerResponse = resp?.resultDt.data?.billerResponse;
           this.additionalInfo = resp?.resultDt.data?.additionalInfo;
+
+          if(!this.billerResponse) {
+            this._popupService.openAlert({
+              header: 'Alert',
+              message: 'You dont have any outstanding amount to pay!'
+            })
+          }
         }
       },
       error: (err) => {
@@ -334,5 +341,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   onPaymentModeChange(e: MatSelectChange) {
     console.log(e.value)
     this.paymentMode = e.value;
+  }
+
+  goToDashboard(){
+    this._router.navigate(['dashboard'])
   }
 }

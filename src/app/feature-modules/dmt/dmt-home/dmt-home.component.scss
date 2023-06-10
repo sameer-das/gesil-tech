@@ -33,5 +33,15 @@ nav {
         color: #fff;
       }
     }
+
+    .arrow_back {
+      color: $gradient1;
+      transition: 0.5s;
+      font-size: 24px;
+      &:hover {
+        cursor: pointer;
+        // transform: scale(1.2);
+      }
+    }
   }
 }

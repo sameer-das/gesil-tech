@@ -1,14 +1,13 @@
-<div class="container">
+<div class="container" [style.minWidth]="containerWidth">
     <h2 class="modal-title">{{data.title}}</h2>
     <form (submit)="onSubmit()">
         <div class="inputfield" #inputContainer>
-
-            <input type="number" maxlength="1" class="input" disabled #input/>
-            <input type="number" maxlength="1" class="input" disabled #input/>
-            <input type="number" maxlength="1" class="input" disabled #input/>
-            <input type="number" maxlength="1" class="input" disabled #input/>
-            <input type="number" maxlength="1" class="input" disabled #input/>
-            <input type="number" maxlength="1" class="input" disabled #input/>
+            <input *ngFor="let a of arr" [type]="inputType" maxlength="1" class="input" disabled #input/>
+            <!-- <input type="password" maxlength="1" class="input" disabled #input/>
+            <input type="password" maxlength="1" class="input" disabled #input/>
+            <input type="password" maxlength="1" class="input" disabled #input/>
+            <input type="password" maxlength="1" class="input" disabled #input/>
+            <input type="password" maxlength="1" class="input" disabled #input/> -->
         </div>
         <mat-dialog-actions>
             <div class="buttons-container">

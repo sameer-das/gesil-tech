@@ -11,7 +11,7 @@
             <!-- <mat-icon>people_alt</mat-icon> -->
             <mat-icon>currency_rupee</mat-icon>
         </span>
-        <p class="card_value">XXXX</p>
+        <p class="card_value">{{commissionBalance}}</p>
         <span class="card_title">Commission</span>
     </div>
     <!-- <div class="card card_3">
@@ -42,7 +42,7 @@
         <thead>
             <tr>
                 <th>Serial ID</th>
-                <!-- <th>Transaction ID</th> -->
+                <th>Transaction ID</th>
                 <th>Transaction Date</th>
                 <th>Transaction Amount</th>
                 <th>Transaction Type</th>
@@ -54,7 +54,7 @@
             <!-- (click)="openTransactionDetailPopup(trans)" -->
             <tr *ngFor="let trans of lastTransaction; let i = index" >
                 <td>{{i + 1}}</td>
-                <!-- <td>{{trans.wallet_transaction_ID}}</td> -->
+                <td>{{trans.wallet_transaction_ID | uppercase}}</td>
                 <td>{{trans.wallet_transaction_Date | date:'medium'}}</td>
                 <td>{{trans.wallet_Amount}}</td>
                 <td>{{trans.wallet_transaction_type}}</td>

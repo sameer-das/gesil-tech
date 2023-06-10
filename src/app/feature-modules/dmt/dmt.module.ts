@@ -7,8 +7,9 @@ import { DmtHomeComponent } from './dmt-home/dmt-home.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { DmtService } from './dmt-service.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DmtAuthGuardService } from './dmt-auth-guard.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WalletModule } from '../wallet/wallet.module';
+import { DmtTransactionComponent } from './dmt-transaction/dmt-transaction.component';
 
 
 
@@ -17,23 +18,27 @@ import { DmtAuthGuardService } from './dmt-auth-guard.service';
     AddSenderComponent,
     AddRecipientComponent,
     SendMoneyComponent,
-    DmtHomeComponent
+    DmtHomeComponent,
+    DmtTransactionComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    FormsModule,
+    WalletModule,
     RouterModule.forChild([
       {
         path: '', component: DmtHomeComponent,
         children: [
+          { path: 'dmttransactions', component: DmtTransactionComponent, },
           { path: 'send', component: SendMoneyComponent, },
           { path: 'addrecipient', component: AddRecipientComponent, },
           { path: 'addsender', component: AddSenderComponent, },
-          { path: '', pathMatch: 'full', redirectTo: 'send' },
+          { path: '', pathMatch: 'full', redirectTo: 'dmttransactions' },
         ]
       }])
   ],
-  providers: [DmtService, DmtAuthGuardService]
+  providers: [DmtService]
 })
 export class DmtModule { }

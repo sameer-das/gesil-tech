@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'
+import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -13,9 +15,21 @@ export class DmtService {
 
         return amt * 100;
     }
+    recipentAdd: Subject<boolean> = new Subject();
+    
+    DMT_FUND_TRANSACTION_STATUS: any = {
+        "C": "Success",
+        "P": "Initiated state",
+        "Q": "Pending",
+        "F": "Failed",
+        "R": "Refund",
+        "T": "Refund Pending",
+        "S": "Pending- (Auto Reversal)",
+      }
 
-    convertToRupees(amount: any) {
-        return (amount / 100).toFixed(2);
+
+    convertToRupees(amount: number) {
+        return (amount / 100);
     }
 
     getSenderInfo(payload: any) {
@@ -45,5 +59,10 @@ export class DmtService {
     }
     dmtFundTransfer(payload: any, serviceId: string, categoryId: string, userId: string) {
         return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eFundTransfer?serviceId=${serviceId}&categoryId=${categoryId}&userId=${userId}`, payload);
+    }
+
+    private readonly URL_GET_WALLET_TRANSACTION_HISTORY = `${environment.service_base_url}/api/GSKRecharge/GetTransactions`;
+    getTransactionHistory(emailid: string) {
+        return this._httpClient.post(`${this.URL_GET_WALLET_TRANSACTION_HISTORY}?emailid=${emailid}`, {})
     }
 }

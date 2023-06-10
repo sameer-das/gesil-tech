@@ -15,17 +15,20 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
   isButtonDisabled: boolean = true;
   resendTime: number = 10;
 
-  otpLength: number = 6;
+  otpLength!: number;
+  arr: number[] = [];
+  inputType: string = 'number';
+  containerWidth!: string;
   ngAfterViewInit(): void {
     this.inputArray = this.inputs.toArray();
     this.addEventForInputs();
-    this.startInput()
+    this.startInput();
   }
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
 
   interval: any;
   ngOnDestroy(): void {
-    console.log('on destory')
+    // console.log('on destory')
 
     window.removeEventListener('keyup', () => { });
     this.inputArray.forEach((element, ind) => {
@@ -36,7 +39,12 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('on init')
+    console.log('on init');
+
+    this.otpLength = this.data.otpLength || 6;
+    this.arr = Array.from({length: this.otpLength}, (_, i) => i + 1);
+    this.inputType = this.data.inputType || 'number';
+    this.containerWidth = this.otpLength*80+'px';
 
     window.addEventListener("keyup", (e) => {
       if (this.inputCount > (this.otpLength - 1)) {
@@ -135,4 +143,10 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+}
+
+export interface OtpPopupData {
+  title: string,
+  otpLength?: number,
+  inputType?: string
 }

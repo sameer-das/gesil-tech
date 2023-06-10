@@ -116,9 +116,10 @@ background: linear-gradient(to right, #cbb4d4, #20002c); /* W3C, IE 10+/ Edge, F
     color: #fff;
     cursor: pointer;
     margin-top: 1rem;
+    transition: box-shadow 0.3s ease;
 
     &:hover {
-      box-shadow: 0px 0px 20px 0px rgba($color: #000, $alpha: 0.5);
+      box-shadow: 5px 5px 10px $light-grey;
       // background: #49a09d;
     }
 

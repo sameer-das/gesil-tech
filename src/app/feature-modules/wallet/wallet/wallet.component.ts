@@ -17,7 +17,9 @@ export class WalletComponent implements OnInit {
     private _loaderService: LoaderService,
     private _matDialog: MatDialog) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
-  currentBalance: string = 'XXXXXX'
+  currentBalance: string = 'XXXXXX';
+  commissionBalance: string = 'XXXXXX';
+
   ngOnInit(): void {
     this.getTransHistory();
     this._loaderService.showLoader();
@@ -26,7 +28,9 @@ export class WalletComponent implements OnInit {
         this._loaderService.hideLoader();
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200) {
-          this.currentBalance = resp.data
+          const [walletBalance, commission] = resp.data.split(',');
+          this.currentBalance = walletBalance;
+          this.commissionBalance = commission;
         } else {
           this.currentBalance = 'Error'
         }

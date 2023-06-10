@@ -1,7 +1,7 @@
 @import '../../styles/constants.scss';
 
 .container {
-   min-width: 480px;
+  //  min-width: 320px;
     h2.modal-title {
         font-size: 18px;
         text-align: center;
@@ -34,6 +34,10 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+// to hide the password filed default eye symbol
+input::-ms-reveal { display: none; }
+
 
 .input:disabled {
   color: #89888b;

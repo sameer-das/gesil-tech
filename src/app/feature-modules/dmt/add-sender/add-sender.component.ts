@@ -38,7 +38,7 @@ export class AddSenderComponent implements OnInit {
       "senderMobileNumber": this.currentUser.user.mobile_Number,
       "txnType": this.addSenderForm.value.transactionType,
       "senderName": this.addSenderForm.value.senderName,
-      "senderPin": "751030"
+      "senderPin": this.currentUser.personalDetail.user_Pin
     }
     this._loaderService.showLoader();
     this._dmtService.registerSenderInfo(payload)
@@ -68,8 +68,8 @@ export class AddSenderComponent implements OnInit {
                         "requestType": "VerifySender",
                         "senderMobileNumber": this.currentUser.user.mobile_Number,
                         "txnType": this.addSenderForm.value.transactionType,
-                        "otp": Number(otpData.value),
-                        "additionalRegData": resp.resultDt.additionalRegData
+                        "otp": String(otpData.value),
+                        "additionalRegData": String(resp.resultDt.additionalRegData)
                       }
                       this._loaderService.showLoader()
                       this._dmtService.verifySender(verifySenderPayload)
@@ -82,7 +82,9 @@ export class AddSenderComponent implements OnInit {
                               this._popupService.openAlert({
                                 message: 'Sender Registered Successfully!',
                                 header: 'success'
-                              })
+                              });
+                              this._dmtService.recipentAdd.next(true);
+                              
                             } else {
                               this._popupService.openAlert({
                                 message: 'Sender Registration Failed! Please try again or contact support team.',

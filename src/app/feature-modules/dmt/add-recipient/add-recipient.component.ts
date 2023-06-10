@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DmtService } from '../dmt-service.service';
-import { LoaderService } from 'src/app/services/loader.service';
-import { PopupService } from 'src/app/popups/popup.service';
+import { Router } from '@angular/router';
 import { finalize, first, tap } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
-import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
+import { PopupService } from 'src/app/popups/popup.service';
+import { LoaderService } from 'src/app/services/loader.service';
+import { DmtService } from '../dmt-service.service';
 
 
 @Component({
@@ -17,8 +15,7 @@ import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component'
 export class AddRecipientComponent implements OnInit {
 
   constructor(private _dmtService: DmtService,
-    private _loaderService: LoaderService, private _popupService: PopupService,
-    private _modal: MatDialog) { }
+    private _loaderService: LoaderService, private _popupService: PopupService, private _router:Router) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   allBanks: any[] = [];
   ngOnInit(): void {
@@ -80,6 +77,10 @@ export class AddRecipientComponent implements OnInit {
                 confirmAccountNumber: '',
                 ifsc: ''
               });
+              Object.keys(this.addRecipientForm.controls).forEach(key => {
+                (this.addRecipientForm.get(key) as FormControl).setErrors(null);
+              });
+
               
             } else {
               this._popupService.openAlert({

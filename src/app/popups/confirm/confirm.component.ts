@@ -18,10 +18,11 @@ export class ConfirmComponent implements OnInit {
 
   color: string = this.data.header.toLowerCase().includes('success') ? '#32cd32':
   this.data.header.toLowerCase() === 'fail' ? '#ff4500' :
-  this.data.header.toLowerCase() === 'alert' ? '#0099ff' : '#000';
+  this.data.header.toLowerCase() === 'alert' ? '#0099ff' : '#0e2b6c';
 
   style = {
-    "color": this.color
+    "color": this.color,
+    "fontWeight": 500
   }
 
   ngOnInit(): void {
@@ -37,8 +38,8 @@ export interface ConfirmPopupData {
   header: string,
   message:string,
   showCancelButton?: boolean,
-  showTable?: boolean,
+  tableType?: string,
   tableData?: any,
-  modalWidth?: number
+  modalMinWidth?: number
 }
 

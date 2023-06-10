@@ -29,10 +29,13 @@
                 <input matInput type="text" formControlName="amount">
                 <mat-error *ngIf="f['amount']?.hasError('required')">Please enter amount</mat-error>
                 <mat-error *ngIf="f['amount']?.hasError('pattern')">Please enter a valid amount</mat-error>
+                <mat-error *ngIf="f['amount']?.hasError('invalidAmount')">Minimum amount must be Rs 100</mat-error>
             </mat-form-field>
         </div>
         <div class="form__row cta__container">
             <button type="submit" [disabled]="sendMoneyForm.invalid" class="btn primary">Send</button>
+            <!-- <button type="button"  class="btn primary" (click)="getForm()">Click</button> -->
         </div>
+    
     </form>
 </div>

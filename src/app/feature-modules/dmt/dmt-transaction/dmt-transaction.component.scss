@@ -1,0 +1,66 @@
+@import '../../../styles/constants.scss';
+
+.header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+        font-size: 1.2rem;
+        text-align: center;
+        color: $gradient1;
+        // margin-bottom:1rem;
+        text-align: left;
+    }
+}
+
+.table_container {
+    // margin-top: 2rem;
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+            padding: 12px 0;
+            text-align: left;
+            background-color: #d7deed;
+            color: #0e2b6c;
+
+
+        }
+
+        td,
+        th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        td.transaction-status {
+            font-weight: bold;
+
+            &.success {
+                color: $green;
+            }
+
+            &.fail {
+                display: flex;
+                justify-content: space-between;
+                color: $pink;
+
+                .refund-button {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        // tr {
+        //     cursor: pointer;
+        // }
+
+        tr:hover {
+            background-color: #ccc;
+        }
+    }
+}

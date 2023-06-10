@@ -22,7 +22,7 @@ export class PopupService {
     return this.dialog.open(ConfirmComponent, {
       disableClose: data.showCancelButton,
       maxWidth: 500,
-      minWidth: 300,
+      minWidth: data.modalMinWidth || 400,
       data
     });
   }

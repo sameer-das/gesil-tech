@@ -1,0 +1,51 @@
+<div class="header_container">
+    <h3>All Transactions</h3>
+    
+    <mat-form-field class="form__field" appearance="standard">
+        <mat-label>Filter by Status</mat-label>
+        <mat-select [(ngModel)]="transStatusFilterValue" (selectionChange)="onTransStatusFilterValueChange($event)">
+            <mat-option value="1">All</mat-option>
+            <mat-option value="2">Success</mat-option>
+            <mat-option value="3">Failed</mat-option>
+            <mat-option value="4">Initiated state</mat-option>
+            <mat-option value="5">Pending</mat-option>
+            <mat-option value="6">Refund</mat-option>
+            <mat-option value="7">Refund Pending</mat-option>
+            <mat-option value="8">Pending - Auto Reversal</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div class="table_container">
+    <table>
+        <thead>
+            <tr>
+                <th>Serial ID</th>
+                <th>Transaction ID</th>
+                <th>Transaction Date</th>
+                <th>Transaction Amount</th>
+                <th>Transaction Type</th>
+                <!-- <th>Service</th> -->
+                <th>Transaction Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- (click)="openTransactionDetailPopup(trans)" -->
+            <tr *ngFor="let trans of templateBoundTransactions; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{trans.wallet_transaction_ID | uppercase}}</td>
+                <td>{{trans.wallet_transaction_Date | date:'medium'}}</td>
+                <td>{{trans.wallet_Amount}}</td>
+                <td>{{trans.wallet_transaction_type}}</td>
+                <!-- <td>{{trans.wallet_transaction_recall === 'ManiMulti' ? 'Prepaid Recharge' : trans.wallet_transaction_recall}}</td> -->
+                <td class="transaction-status" [ngClass]="getStatusClass(trans.wallet_transaction_Status)">
+                    {{trans.wallet_transaction_Status === 'TXN_SUCCES' ? 'Success' : 'Fail'}}
+                <mat-icon title="Initiate Refund" 
+                (click)="initiateTransaction(trans)" 
+                class="refund-button" 
+                *ngIf="trans.wallet_transaction_Status === 'TXN_FAIL'">reply</mat-icon>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
