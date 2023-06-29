@@ -163,7 +163,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     { path: 'broadband-postpaid', searchValue: 'Broadband Postpaid', },
     { path: 'lpg-gas', searchValue: 'LPG Gas', },
     { path: 'municipal-services', searchValue: 'Municipal Services', },
-    { path: 'loan-repayment', searchValue: 'Loan Repayment', },
+    { path: 'loan-repayment', searchValue: 'Loan sRepayment', },
     { path: 'life-insurance', searchValue: 'Life Insurance', },
     { path: 'credit-card', searchValue: 'Credit Card', },
     { path: 'municipal-taxes', searchValue: 'Municipal Taxes', },
@@ -292,7 +292,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200 && resp.data) {
           console.log(resp.data)
-          if (+resp.data < (+this.billerResponse.billAmount / 100)) {
+          const [walletBal, commissionBal] = resp.data.split(',');
+          if (+walletBal < (+this.billerResponse.billAmount / 100)) {
             // if (false) {
             // show less wallet popup
             this._popupService.openAlert({

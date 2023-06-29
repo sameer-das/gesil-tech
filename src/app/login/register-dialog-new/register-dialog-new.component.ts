@@ -173,11 +173,11 @@ export class RegisterDialogNewComponent implements OnInit {
   onRegistrationFormSubmit() {
     console.log(this.registrationFormGroup.value);
     if (this.registrationFormGroup.invalid) return;
-    
+
     const userRegData = {
       user_ID: 0,
       user_Type_ID: +this.registrationFormGroup.value.userType,
-      location_Type: this.registrationFormGroup.value.locationType+"",
+      location_Type: this.registrationFormGroup.value.locationType + "",
       state_ID: +this.registrationFormGroup.value.state,
       mobile_Number: this.registrationFormGroup.value.mobile,
       user_EmailID: this.registrationFormGroup.value.email,
@@ -197,6 +197,7 @@ export class RegisterDialogNewComponent implements OnInit {
     console.dir(userRegData);
 
     this._loaderService.showLoader();
+
     this._authService
       .saveUserRegistrationDetails(userRegData)
       .subscribe((resp: any) => {
@@ -226,6 +227,7 @@ export class RegisterDialogNewComponent implements OnInit {
           });
         }
       });
+
   }
 
   populateStates(countryId: number) {

@@ -213,7 +213,8 @@ export class SendMoneyComponent implements OnInit {
           console.log(resp);
           if (resp.status === 'Success' && resp.code === 200 && resp.data) {
             console.log(resp.data)
-            if (+resp.data < +totalInPaisa / 100) {
+            const [walletBal, commissionBal] = resp.data.split(',');
+            if (+walletBal < +totalInPaisa / 100) {
               // if (false) {
               // show less wallet popup
               this._popupService.openAlert({
