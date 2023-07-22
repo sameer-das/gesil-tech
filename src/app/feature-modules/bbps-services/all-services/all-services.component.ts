@@ -163,7 +163,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     { path: 'broadband-postpaid', searchValue: 'Broadband Postpaid', },
     { path: 'lpg-gas', searchValue: 'LPG Gas', },
     { path: 'municipal-services', searchValue: 'Municipal Services', },
-    { path: 'loan-repayment', searchValue: 'Loan sRepayment', },
+    { path: 'loan-repayment', searchValue: 'Loan Repayment', },
     { path: 'life-insurance', searchValue: 'Life Insurance', },
     { path: 'credit-card', searchValue: 'Credit Card', },
     { path: 'municipal-taxes', searchValue: 'Municipal Taxes', },

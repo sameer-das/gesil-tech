@@ -11,7 +11,7 @@
           <a [routerLink]="getRoutePath(service?.route)" [state]="getState(service)" (click)="onTileClick(service)">
             <div class="menu__container">
               <div class="menu__container__img__container">
-                <img class="menu__image" [src]="getImagePath(service.services_Cat_ImagesName)">
+                <img class="menu__image" [ngClass]="{'loanRepayment' : service.services_Cat_Name === 'Loan Repayment'}" [src]="getImagePath(service.services_Cat_ImagesName)">
               </div>
               <p class="menu__title">{{service.services_Cat_Name}}</p>
             </div>

@@ -45,6 +45,7 @@
                 <th>Transaction ID</th>
                 <th>Transaction Date</th>
                 <th>Transaction Amount</th>
+                <th>Commission Amount</th>
                 <th>Transaction Type</th>
                 <th>Service</th>
                 <th>Transaction Status</th>
@@ -57,6 +58,7 @@
                 <td>{{trans.wallet_transaction_ID | uppercase}}</td>
                 <td>{{trans.wallet_transaction_Date | date:'medium'}}</td>
                 <td>{{trans.wallet_Amount}}</td>
+                <td>{{trans.payment_Per_Amount?.toFixed(2)}}</td>
                 <td>{{trans.wallet_transaction_type}}</td>
                 <td>{{trans.wallet_transaction_recall === 'ManiMulti' ? 'Prepaid Recharge' : trans.wallet_transaction_recall}}</td>
                 <td>{{trans.wallet_transaction_Status}}</td>

@@ -43,8 +43,8 @@ export class RegisterDialogNewComponent implements OnInit {
     userType: new FormControl('1'),
     locationType: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
+    firstName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+    lastName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     district: new FormControl('', Validators.required),
     block: new FormControl('', Validators.required),
     mobile: new FormControl('', [
@@ -164,6 +164,8 @@ export class RegisterDialogNewComponent implements OnInit {
         if (field === 'mobile') return 'Please enter a valid mobile number!';
         if (field === 'email') return 'Please enter a valid email id!';
         if (field === 'pin') return 'Please enter a valid PIN!';
+        if (field === 'firstName') return 'First name can contain only characters';
+        if (field === 'lastName') return 'Last name can contain only characters';
       }
     }
 

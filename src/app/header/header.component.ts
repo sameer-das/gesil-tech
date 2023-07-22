@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { HeaderService } from './header.service';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,7 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent  implements OnInit{
+
   @Input() isMenuOpened: boolean = false;
   @Output() isShowSidebar = new EventEmitter<boolean>();
   public user$: Observable<User> = of({
@@ -33,11 +35,17 @@ export class HeaderComponent  implements OnInit{
     },
   ]);
 
-  constructor(private _router:Router) {}
+  constructor(private _router:Router, private _headerService: HeaderService) {}
   ngOnInit(): void {
     this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
     this.email_id = this.currentUser.user.user_EmailID;
     this.login_code = this.currentUser.user.login_Code;
+
+    this._headerService.personalInfoChanged$.subscribe(() => {
+      console.log('Name changed in header')
+      this.currentUser = JSON.parse(localStorage.getItem('auth') || '{}');
+      this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
+    })
   }
 
   public openMenu(): void {

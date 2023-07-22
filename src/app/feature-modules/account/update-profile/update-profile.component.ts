@@ -23,6 +23,7 @@ import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { DocumentPopupComponent } from '../document-popup/document-popup.component';
+import { HeaderService } from 'src/app/header/header.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -36,7 +37,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     private _snackBar: MatSnackBar,
     private _popupService: PopupService,
     private _loaderService: LoaderService,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _headerService: HeaderService
   ) { }
   @Input('states') states: any[] = [];
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
@@ -211,8 +213,8 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     ]),
   });
   personalDetailsFormGroup: FormGroup = this._formBuilder.group({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
+    firstName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+    lastName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     gender: new FormControl('m', Validators.required),
     dob: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
@@ -281,9 +283,9 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     this.personalDetailsFormGroup = this._formBuilder.group({
       firstName: new FormControl(
         personalDetail.user_FName,
-        Validators.required
+        [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]
       ),
-      lastName: new FormControl(personalDetail.user_LName, Validators.required),
+      lastName: new FormControl(personalDetail.user_LName, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       gender: new FormControl(personalDetail.user_Gender, Validators.required),
       dob: new FormControl(personalDetail.user_Dob, Validators.required),
       state: new FormControl(personalDetail.state_ID, Validators.required),
@@ -318,7 +320,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       bank_id: new FormControl(bankDetail.bank_ID, Validators.required),
       accountHolderName: new FormControl(
         bankDetail.userAccount_HolderName,
-        Validators.required
+        [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]
       ),
       accountNumber: new FormControl(
         bankDetail.user_Account_Number,
@@ -432,7 +434,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
           this.populateUserPersonalDetailForm(this.userPersonalDetail);
           this.populateDistricts(this.userPersonalDetail.state_ID);
-          this.refreshUserDetailsInLocalStorage();
+          this.refreshUserDetailsInLocalStorage('personalDetail');
           // if (this.blocks.length == 0) this.populateBlocks();
 
           const state = this.states.filter(
@@ -561,6 +563,15 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       })
       return;
     }
+
+    if( !/^[a-zA-Z0-9]+$/.test(this.kycDetailsFormGroup.value.pan_no) || this.kycDetailsFormGroup.value.pan_no.length !== 10) {
+      this._popupService.openAlert({
+        header: 'Alert',
+        message: 'Invalid PAN! Please enter valid PAN.'
+      })
+      return;
+    }
+
 
 
     this._loaderService.showLoader();
@@ -713,6 +724,10 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
           return 'PIN should be of 6 digits and can contain only numbers!';
         if (field === 'nomineeContact')
           return 'Please enter a valid mobile number!';
+        if (field === 'firstName')
+          return 'First name can contain only characters!';
+        if (field === 'lastName')
+          return 'Last name can contain only characters!';
       }
     }
     return null;
@@ -732,6 +747,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       }
       if (control.hasError('pattern')) {
         if (field === 'accountNumber') return 'Please enter a valid AC number!';
+        if (field === 'accountHolderName') return 'Account holder name can contain only characters!';
       }
     }
     return null;
@@ -847,12 +863,16 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
 
 
-  refreshUserDetailsInLocalStorage() {
+  refreshUserDetailsInLocalStorage(type?:string) {
     this._authService.getUserInfos(this.currentUser.user.user_ID).subscribe({
       next: (resp: any) => {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200) {
           localStorage.setItem('auth', JSON.stringify({ ...resp.data }));
+          if(type === 'personalDetail') {
+            console.log('Refresh for personal change')
+            this._headerService.personalInfoChanged$.next();
+          }
         }
       },
       error: (err) => {
@@ -861,4 +881,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       },
     });
   }
+
+
+
 }
