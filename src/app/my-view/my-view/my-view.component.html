@@ -1,0 +1,35 @@
+<div class="card top_card">
+    <h2 class="balance">₹ 5050.55</h2>
+    <h3 class="balance_label">E-Seba Wallet Balance</h3>
+
+    <h4 class="eseba_name">Name: Sameer Das</h4>
+    <h4 class="eseba_id">ID: 5656565656565</h4>
+</div>
+
+
+
+
+<div class="card line_chart_card">
+    <h2 class="card_title">Statistics of previous week</h2>
+    <div class="line-chart-container">
+        <canvas baseChart [type]="'line'" height="400px" [data]="lineChartData" [options]="lineChartOptions"
+            [legend]="lineChartLegend">
+        </canvas>
+    </div>
+</div>
+
+
+<div class="pie_chart_container">
+    <div class="card">
+        <h2 class="pie-chart-title">Your Credit</h2>
+        <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels"
+            [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+        </canvas>
+    </div>
+    <div class="card">
+        <h2 class="pie-chart-title">Your Debit</h2>
+        <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels"
+            [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+        </canvas>
+    </div>
+</div>

@@ -40,7 +40,9 @@ export class LoginComponent implements OnInit {
 
   openSignupModal() {
     // console.log('open dialog');
-    const dialogRef = this.dialog.open(RegisterDialogNewComponent);
+    const dialogRef = this.dialog.open(RegisterDialogNewComponent, {
+      minWidth: 460
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -68,6 +70,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('auth_token', 'xxxxxxxxxxxxxxxx');
                 localStorage.setItem('menu_categories' , JSON.stringify({menuCategories: this.getFormattedServices(result.data)}));
                 this._router.navigate(['dashboard']);
+                this._router.navigate(['my-view']);
               } else {
                 this._popupService.openAlert({
                   header: 'Fail',

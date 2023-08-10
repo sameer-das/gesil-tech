@@ -28,6 +28,9 @@ export class RegisterDialogNewComponent implements OnInit {
   }
 
   showRefForm: boolean = true;
+  showRegistrationForm: boolean = false;
+  showNoRefMessage: boolean = false;
+
   states: any[] = [];
   districts: any[] = [];
   blocks: any[] = [];
@@ -90,6 +93,7 @@ export class RegisterDialogNewComponent implements OnInit {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200 && resp.data === 'S') {
           this.showRefForm = false;
+          this.showRegistrationForm = true;
         } else if (resp.status === 'Success' && resp.code === 200 && resp.data === 'F') {
           this._popupService.openAlert({
             header: 'Alert',
@@ -174,6 +178,7 @@ export class RegisterDialogNewComponent implements OnInit {
 
   onRegistrationFormSubmit() {
     console.log(this.registrationFormGroup.value);
+    console.log(this.refNoFormGroup.value.refNo);
     if (this.registrationFormGroup.invalid) return;
 
     const userRegData = {
@@ -289,5 +294,26 @@ export class RegisterDialogNewComponent implements OnInit {
     })
   }
 
+  onNoRefCodeClick() {
+    console.log('no ref clicked');
+    
+    this.showRefForm = false;
+    this.showNoRefMessage = true;
+  }
 
+  onNoRefBack() {
+    this.showRefForm = true;
+    this.showNoRefMessage = false;
+    this.showRegistrationForm = false;
+  }
+
+  onNoRefProceed() {
+    this.refNoFormGroup.setValue({
+      'refNo': '555401005338'
+    })
+
+    this.showRefForm = false;
+    this.showNoRefMessage = false;
+    this.showRegistrationForm = true;
+  }
 }

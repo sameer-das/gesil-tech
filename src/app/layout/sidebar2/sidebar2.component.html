@@ -1,21 +1,27 @@
 <ul class="menu">
     <!-- <h2 class="menu_label">Main Navigation</h2> -->
+    <li><a class="main_menu_link" routerLink="/my-view" routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:
+        true}">
+            <mat-icon>donut_large</mat-icon> My View
+        </a></li>
+
     <li><a class="main_menu_link" routerLink="/dashboard" routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:
 true}">
-            <mat-icon>widgets</mat-icon> Dashboard
+            <mat-icon>widgets</mat-icon> All Services
         </a></li>
+
     <!-- <li><a class="main_menu_link">
             <mat-icon>design_services</mat-icon>Services
         </a> </li> -->
     <li><a class="main_menu_link" haveSubmenu>
             <mat-icon>handyman</mat-icon>
-            All Services
+            Categories
             <mat-icon class="carret">arrow_right</mat-icon>
         </a>
         <ul class="sub_menu">
             <li *ngFor="let cat of menuCategories?.menuCategories">
-                <a class="sub_menu_link" [routerLink]="cat.services_Name.split(' ').join('-')" routerLinkActive="activelink"
-                    [routerLinkActiveOptions]="{exact:true}">{{cat.services_Name}}</a>
+                <a class="sub_menu_link" [routerLink]="cat.services_Name.split(' ').join('-')"
+                    routerLinkActive="activelink" [routerLinkActiveOptions]="{exact:true}">{{cat.services_Name}}</a>
             </li>
         </ul>
     </li>

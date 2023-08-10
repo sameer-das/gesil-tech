@@ -45,6 +45,14 @@ const routes: Routes = [
         canLoad: [AuthGuardService],
       },
       {
+        path: 'my-view',
+        loadChildren: () =>
+          import('./my-view/my-view.module').then(
+            (m) => m.MyViewModule
+          ),
+        canLoad: [AuthGuardService],
+      },
+      {
         path: 'wallet',
         loadChildren: () =>
           import('./feature-modules/wallet/wallet.module').then(

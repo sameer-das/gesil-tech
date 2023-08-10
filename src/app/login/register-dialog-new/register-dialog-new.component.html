@@ -18,9 +18,6 @@
         </mat-form-field>
 
       </div>
-      <p class="reference__info">
-        If you dont have a valid reference code, please use "555401005338" as reference code!
-      </p>
 
       <div class="form__row cta__container">
         <button type="submit" class="btn primary" [disabled]="disabled">{{buttonLable}}
@@ -29,11 +26,24 @@
         </button>
         <!-- <a (click)="closeRegDialog()">Cancel</a> -->
       </div>
+
+      <p class="reference__info">
+        If you dont have a valid reference code, please <span class="no_ref_link" (click)="onNoRefCodeClick()">click
+          here</span> !
+      </p>
     </form>
 
+    <div class="no_ref_container" *ngIf="showNoRefMessage">
+      <p class="no_ref_message">Ref ID: 555401005338 will be used and you will be tagged under Admin.</p>
+      <div class="no_ref_ctas">
+        <button class="btn secondary" (click)="onNoRefBack()">Go Back</button>
+        <button class="btn primary" (click)="onNoRefProceed()">Proceed</button>
+      </div>
+    </div>
 
 
-    <form *ngIf="!showRefForm" [formGroup]="registrationFormGroup" (submit)="onRegistrationFormSubmit()">
+
+    <form *ngIf="showRegistrationForm" [formGroup]="registrationFormGroup" (submit)="onRegistrationFormSubmit()">
       <div class="form__row">
         <mat-form-field class="form__field" appearance="standard">
           <mat-label>Choose User Type</mat-label>
