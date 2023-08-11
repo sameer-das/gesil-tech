@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartConfiguration } from 'chart.js';
+import { WalletService } from 'src/app/feature-modules/wallet/wallet.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-my-view',
@@ -8,9 +10,32 @@ import { ChartOptions, ChartConfiguration } from 'chart.js';
 })
 export class MyViewComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _walletService:WalletService, private _loaderService: LoaderService) { }
+  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  currentBalance!: string;
+  commissionBalance!: string;
   ngOnInit(): void {
+
+    this._loaderService.showLoader();
+    this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
+      next: (resp: any) => {
+        this._loaderService.hideLoader();
+        console.log(resp);
+        if (resp.status === 'Success' && resp.code === 200) {
+          const [walletBalance, commission] = resp.data.split(',');
+          this.currentBalance = walletBalance;
+          this.commissionBalance = commission;
+        } else {
+          this.currentBalance = 'Error'
+        }
+
+      },
+      error: (err: any) => {
+        this._loaderService.hideLoader();
+        console.log(err);
+        this.currentBalance = 'Error fetching the balance'
+      }
+    })
   }
 
   // line chart details

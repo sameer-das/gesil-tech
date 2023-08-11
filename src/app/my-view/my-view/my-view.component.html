@@ -1,9 +1,9 @@
 <div class="card top_card">
-    <h2 class="balance">₹ 5050.55</h2>
+    <h2 class="balance">₹ {{currentBalance}}</h2>
     <h3 class="balance_label">E-Seba Wallet Balance</h3>
 
-    <h4 class="eseba_name">Name: Sameer Das</h4>
-    <h4 class="eseba_id">ID: 5656565656565</h4>
+    <h4 class="eseba_name">Name: {{currentUser.personalDetail.user_FName}} {{currentUser.personalDetail.user_LName}}</h4>
+    <h4 class="eseba_id">ID: {{currentUser.user.login_Code}}</h4>
 </div>
 
 

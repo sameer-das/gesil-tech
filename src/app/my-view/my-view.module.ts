@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MyViewComponent } from './my-view/my-view.component';
 import { RouterModule } from '@angular/router';
 import { NgChartsModule } from 'ng2-charts';
+import { WalletService } from '../feature-modules/wallet/wallet.service';
 
 
 @NgModule({
@@ -18,6 +19,6 @@ import { NgChartsModule } from 'ng2-charts';
         component: MyViewComponent,
       },
     ]),
-  ]
+  ], providers:[WalletService]
 })
 export class MyViewModule { }

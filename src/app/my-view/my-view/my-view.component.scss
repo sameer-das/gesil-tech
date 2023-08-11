@@ -10,24 +10,28 @@
 .top_card {
     height: 150px;
     padding-left: 2rem;
+    color: $gradient1;
+    font-weight: 500;
 
     .balance {
         font-size: 1.8rem;
-        font-weight: 500;
-        color: $gradient1;
+        font-weight: inherit;
+        color: inherit;
         margin: 0;
     }
 
     .balance_label {
-        font-size: 1rem;
-        font-weight: 500;
-        color: $gradient1;
+        font-size: 0.9rem;
+        font-weight: inherit;
+        color: inherit;
     }
 
     .eseba_name,
     .eseba_id {
         font-size: 0.8rem;
         margin: 0;
+        font-weight: inherit;
+        color: inherit;
     }
 }
 
