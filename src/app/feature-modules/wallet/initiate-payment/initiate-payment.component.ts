@@ -13,7 +13,7 @@ import { first } from 'rxjs';
 })
 export class InitiatePaymentComponent implements OnInit {
 
-  constructor(private _router: Router, private _walletService: WalletService, 
+  constructor(private _router: Router, private _walletService: WalletService,
     private _loaderService: LoaderService, private _popupService: PopupService) { }
   amount: string = '';
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
@@ -21,9 +21,8 @@ export class InitiatePaymentComponent implements OnInit {
   }
 
   onFormSubmit() {
-    // 
-
-    this.getPaymentTransactionId();
+    // this.getPaymentTransactionId();
+    this.ccAvenuePayment()
   }
 
 
@@ -42,29 +41,36 @@ export class InitiatePaymentComponent implements OnInit {
       "serviceId": 0,
       "categoryId": 0
     })
-    .pipe(first())
-    .subscribe({
-      next: (resp: any) => {
-        console.log(resp);
-        this._loaderService.hideLoader();
-        if (resp.code === 200 && resp.status === 'Success' && resp?.resultDt?.body?.txnToken) {
-          this._router.navigate(['payment'],
-            { queryParams: { orderId, userId, amount, txnToken: resp?.resultDt?.body?.txnToken } })
-        } else {
+      .pipe(first())
+      .subscribe({
+        next: (resp: any) => {
+          console.log(resp);
+          this._loaderService.hideLoader();
+          if (resp.code === 200 && resp.status === 'Success' && resp?.resultDt?.body?.txnToken) {
+            this._router.navigate(['payment'],
+              { queryParams: { orderId, userId, amount, txnToken: resp?.resultDt?.body?.txnToken } })
+          } else {
+            this._popupService.openAlert({
+              header: 'Fail',
+              message: 'Something went wrong while initiating the transaction. Please contact support!',
+            })
+          }
+        },
+        error: (err: any) => {
+          this._loaderService.hideLoader();
+          console.log(err);
           this._popupService.openAlert({
             header: 'Fail',
-            message:'Something went wrong while initiating the transaction. Please contact support!',
+            message: 'Something went wrong while initiating the transaction. Please contact support!',
           })
         }
-      },
-      error: (err: any) => {
-        this._loaderService.hideLoader();
-        console.log(err);
-        this._popupService.openAlert({
-          header: 'Fail',
-          message:'Something went wrong while initiating the transaction. Please contact support!',
-        })
-      }
+      })
+  }
+
+  ccAvenuePayment() {
+    console.log('go to cc avenue initiate page');
+    this._router.navigate(['paymentcc'], {
+      queryParams: { amount: this.amount }
     })
   }
 

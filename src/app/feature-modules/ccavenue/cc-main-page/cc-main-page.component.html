@@ -1,0 +1,21 @@
+<div class="container">
+
+    <div class="wallet_payment_card">
+        <div>
+            <h2>Your Wallet Recharge Details</h2>
+
+            <h5>Order id : {{orderID}}</h5>
+            <h5>Amount (INR) : <span class="amount">{{amount}}</span></h5>
+
+
+        </div>
+        <button class="btn primary" (click)="onProceed()">Confirm and Proceed</button>
+    </div>
+</div>
+
+
+<form #form ngNoForm id="nonseamless" method="post" name="redirect"
+    action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction">
+    <input type="hidden" id="encRequest" name="encRequest" [(ngModel)]="encRequest">
+    <input type="hidden" name="access_code" id="access_code" [(ngModel)]="accessCode">
+</form>

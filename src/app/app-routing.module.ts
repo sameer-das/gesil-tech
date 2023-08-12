@@ -85,6 +85,14 @@ const routes: Routes = [
         canLoad: [AuthGuardService],
       },
       {
+        path: 'paymentcc',
+        loadChildren: () =>
+          import(
+            './feature-modules/ccavenue/ccavenue.module'
+          ).then((m) => m.CcavenueModule),
+        canLoad: [AuthGuardService],
+      },
+      {
         path: 'bbps',
         loadChildren: () =>
           import(

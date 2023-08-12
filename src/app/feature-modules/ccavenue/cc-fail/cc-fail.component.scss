@@ -1,0 +1,26 @@
+@import '../../../styles/constants.scss';
+
+.container {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+
+    table {
+        width: 50%;
+        border-collapse: collapse;
+
+        td,
+        th {
+            border: 1px solid $grey;
+            padding: 8px;
+        }
+
+        td p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
