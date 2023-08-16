@@ -51,11 +51,13 @@ export class CcMainPageComponent implements OnInit {
 
   
   onProceed() {
+    const billingDetails= `&billing_email=${this.currentUser.user.user_EmailID}&billing_tel=${this.currentUser.user.mobile_Number}`
     const request = `merchant_id=2689736&order_id=${this.orderID}&currency=INR&amount=${this.amount}&redirect_url=${this.redirect_url}&cancel_url=${this.redirect_url}&language=EN`;
 
-    console.log(request);
+
+    console.log(request+billingDetails);
     this._loaderService.showLoader();
-    this._ccService.getEncryptedResponse(request).subscribe((resp) => {
+    this._ccService.getEncryptedResponse(request+billingDetails).subscribe((resp) => {
       console.log(resp);
       this.encRequest = resp;
 

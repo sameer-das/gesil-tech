@@ -4,13 +4,13 @@
         <tbody>
             <tr>
                 <td>Order Status</td>
-                <td>{{tableData.order_status}}</td>
+                <td class="success">{{tableData.order_status}}</td>
             </tr>
             <tr>
                 <td>Transaction Status</td>
                 <td>{{tableData.status_message}}</td>
             </tr>
-          
+
             <tr>
                 <td>Transacton Date</td>
                 <td>{{tableData.trans_date}}</td>
@@ -41,15 +41,12 @@
                 <td>{{tableData.tracking_id}}</td>
             </tr>
             <tr>
-                <td>Bill Address</td>
-                <td>
-                    <p>{{tableData.billing_name}}</p>
-                    <p>{{tableData.billing_address}}</p>
-                    <p>{{tableData.billing_email}}</p>
-                    <p>{{tableData.billing_tel}}</p>
-                    <p>{{tableData.billing_city}} | {{tableData.billing_state}} | {{tableData.billing_country}}</p>
-                    <p>{{tableData.billing_zip}}</p>
-                </td>
+                <td>Billing Tel</td>
+                <td>{{tableData.billing_tel}}</td>
+            </tr>
+            <tr>
+                <td>Billing Email</td>
+                <td>{{tableData.billing_email}}</td>
             </tr>
 
         </tbody>
