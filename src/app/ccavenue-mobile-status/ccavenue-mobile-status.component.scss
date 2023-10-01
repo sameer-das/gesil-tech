@@ -1,0 +1,33 @@
+@import '../styles/constants.scss';
+.container {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+
+    table {
+        width: 50%;
+        border-collapse: collapse;
+
+        td,
+        th {
+            border: 1px solid $grey;
+            padding: 8px;
+        }
+
+        td.success {
+            color: $gradient1;
+            font-weight: bold;
+        }
+        td.fail {
+            color: $pink;
+        }
+
+        td p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

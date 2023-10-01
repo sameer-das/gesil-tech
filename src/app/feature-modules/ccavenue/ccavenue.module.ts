@@ -25,6 +25,5 @@ import { CcFailComponent } from './cc-fail/cc-fail.component';
 
     ])
   ],
-  providers:[CCAvenueService]
 })
 export class CcavenueModule { }

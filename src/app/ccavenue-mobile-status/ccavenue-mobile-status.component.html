@@ -1,0 +1,56 @@
+<div class="container">
+
+    <table>
+        <tbody>
+            <tr>
+                <td>Order Status</td>
+                <td class="success">{{tableData.order_status}}</td>
+            </tr>
+            <tr>
+                <td>Transaction Status</td>
+                <td>{{tableData.status_message}}</td>
+            </tr>
+
+            <tr>
+                <td>Transacton Date</td>
+                <td>{{tableData.trans_date}}</td>
+            </tr>
+            <tr>
+                <td>Response Code</td>
+                <td>{{tableData.response_code}}</td>
+            </tr>
+
+            <tr>
+                <td>Order ID</td>
+                <td>{{tableData.OrderInfo.slice(9)}}</td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td>{{tableData.amount}}</td>
+            </tr>
+            <tr>
+                <td>Currency</td>
+                <td>{{tableData.currency}}</td>
+            </tr>
+            <tr>
+                <td>Payment Mode</td>
+                <td>{{tableData.payment_mode}}</td>
+            </tr>
+            <tr>
+                <td>Tracking ID</td>
+                <td>{{tableData.tracking_id}}</td>
+            </tr>
+            <tr>
+                <td>Billing Tel</td>
+                <td>{{tableData.billing_tel}}</td>
+            </tr>
+            <tr>
+                <td>Billing Email</td>
+                <td>{{tableData.billing_email}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <button class="btn primary" (click)="goToWallet()">Go to Wallet</button>
+</div>

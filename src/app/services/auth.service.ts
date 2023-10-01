@@ -131,6 +131,12 @@ export class AuthService {
   }
 
 
+  private URL_GET_PAN_URL: string= '/api/User/ExecutePanService';
+  getPANUrl(user_id: number) {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_PAN_URL}?uId=${user_id}`);
+  }
+
+
 
 
 

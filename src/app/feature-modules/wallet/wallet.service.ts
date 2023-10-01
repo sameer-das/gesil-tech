@@ -34,6 +34,11 @@ export class WalletService {
         return this._http.post(`${this.URL_GENERATE_OTP_FOR_PIN_CHANGE}?userId=${userId}`,{})
     }
 
+    private readonly URL_MYVIEW_CHART = `${environment.service_base_url}/api/User/GetDashboard`;
+    myViewChart(emailid:string){
+        return this._http.post(`${this.URL_MYVIEW_CHART}?email=${emailid}`,{})
+    }
+
 
 
 }

@@ -1,0 +1,12 @@
+<div class="container">
+    <h3>Please wait</h3>
+    <p>{{message}}</p>
+
+    <button *ngIf="showOnError" class="btn secondary" (click)="onGoBack()">Go Back</button>
+</div>
+
+<form #form ngNoForm id="nonseamless" method="post" name="redirect"
+    action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction">
+    <input type="hidden" id="encRequest" name="encRequest" [(ngModel)]="encRequest">
+    <input type="hidden" name="access_code" id="access_code" [(ngModel)]="accessCode">
+</form>

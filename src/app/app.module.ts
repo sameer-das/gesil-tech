@@ -24,6 +24,8 @@ import { PinPopupComponent } from './popups/pin-popup/pin-popup.component';
 import { ImageFallbackDirective } from './image-fallback.directive';
 import { OtpPopupComponent } from './popups/otp-popup/otp-popup.component';
 import { ConfirmComponent } from './popups/confirm/confirm.component';
+import { CcavenueMobileComponent } from './ccavenue-mobile/ccavenue-mobile.component';
+import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue-mobile-status.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -47,6 +49,8 @@ import { ConfirmComponent } from './popups/confirm/confirm.component';
     ImageFallbackDirective,
     OtpPopupComponent,
     ConfirmComponent,
+    CcavenueMobileComponent,
+    CcavenueMobileStatusComponent,
 
     // DashboardComponent,
     // QuickMenuDialog

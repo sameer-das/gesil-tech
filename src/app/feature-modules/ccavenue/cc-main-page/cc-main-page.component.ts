@@ -41,8 +41,6 @@ export class CcMainPageComponent implements OnInit {
         this._router.navigate(['wallet/initiate']);
       }
 
-
-
       this.amount = param.amount;
     })
   }
@@ -64,7 +62,7 @@ export class CcMainPageComponent implements OnInit {
       setTimeout(() => {
         this._loaderService.hideLoader();
         this.form.nativeElement.submit();
-      }, 1000);
+      }, 500);
     }, (err) => {
       console.log('Error while fetching encrypted response from server')
       console.log(err)

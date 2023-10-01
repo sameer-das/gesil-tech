@@ -2,7 +2,8 @@
     <h2 class="balance">₹ {{currentBalance}}</h2>
     <h3 class="balance_label">E-Seba Wallet Balance</h3>
 
-    <h4 class="eseba_name">Name: {{currentUser.personalDetail.user_FName}} {{currentUser.personalDetail.user_LName}}</h4>
+    <h4 class="eseba_name">Name: {{currentUser.personalDetail.user_FName}} {{currentUser.personalDetail.user_LName}}
+    </h4>
     <h4 class="eseba_id">ID: {{currentUser.user.login_Code}}</h4>
 </div>
 
@@ -10,8 +11,8 @@
 
 
 <div class="card line_chart_card">
-    <h2 class="card_title">Statistics of previous week</h2>
-    <div class="line-chart-container">
+    <h2 class="card_title">Statistics (7 days)</h2>
+    <div *ngIf="showLineChart" class="line-chart-container">
         <canvas baseChart [type]="'line'" height="400px" [data]="lineChartData" [options]="lineChartOptions"
             [legend]="lineChartLegend">
         </canvas>
@@ -20,16 +21,63 @@
 
 
 <div class="pie_chart_container">
-    <div class="card">
+    <div *ngIf="loadCreditPieChart" class="card">
         <h2 class="pie-chart-title">Your Credit</h2>
-        <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels"
+        <canvas baseChart [type]="'pie'" [datasets]="credit_pieChartDatasets" [labels]="pieChartLabels"
             [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
         </canvas>
     </div>
-    <div class="card">
+    <div *ngIf="loadDebitPieChart" class="card">
         <h2 class="pie-chart-title">Your Debit</h2>
-        <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels"
+        <canvas baseChart [type]="'pie'" [datasets]="debit_pieChartDatasets" [labels]="pieChartLabels"
             [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
         </canvas>
     </div>
+</div>
+
+<div class="table_container">
+    <div class="credit_table card">
+        <h2>Credit till date</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>No. of Transactions</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of table3; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{d.Type}}</td>
+                    <td>{{d.TransactionCount}}</td>
+                    <td>{{d.Total}}</td>
+                </tr>                
+            </tbody>
+
+        </table>
+    </div>
+    <div class="debit_table card">
+        <h2>Debit till date</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>No. of Transactions</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of table4; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{d.Type}}</td>
+                    <td>{{d.TransactionCount}}</td>
+                    <td>{{d.Total}}</td>
+                </tr>     
+            </tbody>
+        </table>
+    </div>
+
 </div>

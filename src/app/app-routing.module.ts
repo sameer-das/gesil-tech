@@ -4,36 +4,42 @@ import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ServiceCategoryComponent } from './feature-modules/dashboard/service-category/service-category.component';
+import { CcavenueMobileComponent } from './ccavenue-mobile/ccavenue-mobile.component';
+import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue-mobile-status.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // For CC Avenue Mobile integration, dont remove below 2 lines
+  { path: 'ccavenuemobile', component: CcavenueMobileComponent },
+  { path: 'ccavenuemobilestatus', component: CcavenueMobileStatusComponent },
+
   { path: 'login', component: LoginComponent },
   {
     path: '',
     component: LayoutComponent,
     children: [
       {
-        path:'Utility-Services',
+        path: 'Utility-Services',
         component: ServiceCategoryComponent
       },
       {
-        path:'Finacial-Services',
+        path: 'Finacial-Services',
         component: ServiceCategoryComponent
       },
       {
-        path:'Insurance-Services',
+        path: 'Insurance-Services',
         component: ServiceCategoryComponent
       },
       {
-        path:'Banking-Services',
+        path: 'Banking-Services',
         component: ServiceCategoryComponent
       },
       {
-        path:'Goverment-Services',
+        path: 'Goverment-Services',
         component: ServiceCategoryComponent
       },
       {
-        path:'Educational-Services',
+        path: 'Educational-Services',
         component: ServiceCategoryComponent
       },
       {
