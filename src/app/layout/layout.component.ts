@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -6,11 +6,15 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   constructor() { }
+  ngAfterViewInit(): void {
+    this.sidenav.open()
+  }
 
   ngOnInit(): void {
+   
   }
 
   toggleSidebar(e:boolean) {
