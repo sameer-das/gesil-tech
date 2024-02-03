@@ -25,7 +25,8 @@ export class CcMainPageComponent implements OnInit {
   orderID!: string;
 
   encRequest: string = '';
-  accessCode: string = 'AVAT91KG78BY05TAYB';
+  accessCode: string = 'AVDS96KH43AN04SDNA';
+  // accessCode: string = 'AVAT91KG78BY05TAYB';
 
   ngOnInit(): void {
     this.orderID = uuidv4().slice(0, 30);

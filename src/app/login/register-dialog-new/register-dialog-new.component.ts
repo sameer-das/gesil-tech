@@ -38,6 +38,8 @@ export class RegisterDialogNewComponent implements OnInit {
   stateId!: number;
   districtId!: number;
 
+  acceptTnC: boolean = false;
+
   refNoFormGroup: FormGroup = new FormGroup({
     refNo: new FormControl('', Validators.required),
   });

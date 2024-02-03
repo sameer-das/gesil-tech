@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { SharedModule } from 'src/app/dynamic-form/shared.module';
 import { BillPaymentComponent } from './bill-payment/bill-payment.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.component';
 import { TrackComplaintComponent } from './track-complaint/track-complaint.component';
 import { WalletService } from '../wallet/wallet.service';
@@ -24,6 +24,7 @@ import { BbpsService } from './bbps.service';
     CommonModule,
     MaterialModule,
     SharedModule,
+    FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([{
       path: '', component: AllServicesComponent,

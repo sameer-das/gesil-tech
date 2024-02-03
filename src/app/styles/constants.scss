@@ -95,21 +95,25 @@ $text-black: rgba(0, 0, 0, 0.87);
   padding: 0.7rem 1rem;
   border: none;
   outline: none;
-  font-size: 1.05rem!important;
+  font-size: 1.05rem !important;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
+
   &:hover {
     box-shadow: 5px 5px 10px $light-grey;
   }
+
   &.primary {
     background: $gradient1;
     // background: radial-gradient(circle, $gradient1 0%, $gradient2 100%);
     color: $white;
   }
+
   &.secondary {
     background-color: $pink;
     color: $white;
   }
+
   &:disabled {
     background-color: $light-grey;
     cursor: not-allowed;
@@ -126,3 +130,59 @@ $text-black: rgba(0, 0, 0, 0.87);
 
 
 
+.about-page {
+
+  padding: 1rem;
+  margin-bottom: 2rem;
+
+  &-header-container {
+    padding: 0.25rem;
+    background-color: $primary-blue;  
+
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: white;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  &-content-container {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+
+    ul {
+      li {
+        margin-bottom: 0.8rem;
+      }
+
+      &.top-list {
+        margin-left: 2rem;
+
+        @media (max-width:480px) {
+          margin-left: 1rem;
+        }
+      }
+    }
+
+    ol {
+      &.top-list {
+        margin-left: 2rem;
+
+        @media (max-width:480px) {
+          margin-left: 1.5rem;
+        }
+      }
+    }
+  }
+}

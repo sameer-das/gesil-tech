@@ -143,3 +143,18 @@ span.no_ref_link:hover {
     }
   }
 }
+
+
+.register_cta__container {
+  justify-content: center;
+}
+
+.tnc_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  a.tnc_link {
+    margin-left: 0.25rem;
+  }
+}

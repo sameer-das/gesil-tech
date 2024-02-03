@@ -10,6 +10,7 @@ import { PopupService } from 'src/app/popups/popup.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { WalletService } from '../../wallet/wallet.service';
 
+
 @Component({
   selector: 'app-all-services',
   templateUrl: './all-services.component.html',
@@ -21,6 +22,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   serviceCatId!: string;
   serviceId!: string;
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  
+  amountToBePaid:string = '';
+
   constructor(private _bbpsService: BbpsService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -79,6 +83,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   getBillerdByCategorySubscription!: Subscription;
   getBillerInfoSubscription!: Subscription;
+
+  panDetails = this.currentUser.kycDetail.pancard_Number ? `${this.currentUser.kycDetail.pancard_Number} | ${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}` : "";
 
   onServiceChange(e: MatSelectChange) {
     console.log(e)
@@ -195,7 +201,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "customerMobile": "9777117452",
         "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
-        "customerPan": ""
+        "customerPan": this.panDetails
       },
       "billerId": this.billerId,
       "inputParams": {
@@ -216,6 +222,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           this.requestID = resp?.resultDt.requestID;
           this.billerResponse = resp?.resultDt.data?.billerResponse;
           this.additionalInfo = resp?.resultDt.data?.additionalInfo;
+
+          this.amountToBePaid = String(+this.billerResponse?.billAmount / 100)
+
 
           if(!this.billerResponse) {
             this._popupService.openAlert({
@@ -248,7 +257,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "customerMobile": "9777117452",
         "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
-        "customerPan": ""
+        "customerPan": this.panDetails
       },
       "billerId": this.billerId,
       "inputParams": {
@@ -259,7 +268,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       "billerResponse": this.billerResponse,
       "additionalInfo": this.additionalInfo,
       "amountInfo": {
-        "amount": +this.billerResponse.billAmount,
+        "amount": +(+this.amountToBePaid * 100),
         "currency": 356,
         "custConvFee": 0,
         "amountTags": [
@@ -285,6 +294,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
 
     console.log(payBill);
+
     this._loaderService.showLoader();
     this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
       next: (resp: any) => {
@@ -332,8 +342,6 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     })
-
-
 
 
   }

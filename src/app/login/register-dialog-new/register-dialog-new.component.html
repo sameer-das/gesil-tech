@@ -161,10 +161,15 @@
           <mat-error
             *ngIf="getUserRegistrationFormErrorMessage('gp')">{{getUserRegistrationFormErrorMessage('gp')}}</mat-error>
         </mat-form-field>
-        <div class="form__field">
-          <button type="submit" class="btn primary cta">Register</button>
+        <div class="form__field tnc_container">
+          <p>
+            <mat-checkbox (change)="acceptTnC = !acceptTnC" name="checkbox" [ngModel]="acceptTnC" [ngModelOptions]="{standalone: true}">I accept the </mat-checkbox>
+            <a class="tnc_link" href="https://epay.ind.in/terms-and-conditions.html" target="_blank">terms and conditions</a>
+          </p>
         </div>
-        <!-- <a (click)="closeRegDialog()">Cancel</a> -->
+      </div>
+      <div class="form__row register_cta__container">
+        <button [disabled]="registrationFormGroup.invalid || !acceptTnC "  type="submit" class="btn primary cta">Register</button>
       </div>
     </form>
 

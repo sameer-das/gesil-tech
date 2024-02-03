@@ -39,7 +39,8 @@ export class CcavenueMobileComponent implements OnInit {
   }
 
   encRequest: string = '';
-  accessCode: string = 'AVAT91KG78BY05TAYB';
+  accessCode: string = 'AVDS96KH43AN04SDNA';
+  // accessCode: string = 'AVAT91KG78BY05TAYB';
 
   @ViewChild('form') form!: ElementRef;
   onProceed() {

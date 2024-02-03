@@ -42,13 +42,14 @@
         <thead>
             <tr>
                 <th>Serial ID</th>
-                <th>Transaction ID</th>
-                <th>Transaction Date</th>
-                <th>Transaction Amount</th>
+                <th>Txn. ID</th>
+                <th>Txn. Date</th>
+                <th>Txn. Amount</th>
                 <th>Commission Amount</th>
-                <th>Transaction Type</th>
+                <th>Txn. Type</th>
                 <th>Service</th>
-                <th>Transaction Status</th>
+                <th>Txn. Status</th>
+                <th>Txn. Details</th>
             </tr>
         </thead>
         <tbody>
@@ -62,7 +63,7 @@
                 <td>{{trans.wallet_transaction_type}}</td>
                 <td>{{trans.wallet_transaction_recall === 'ManiMulti' ? 'Prepaid Recharge' : trans.wallet_transaction_recall}}</td>
                 <td>{{trans.wallet_transaction_Status}}</td>
-
+                <td>{{getTransDetails(trans) }}</td>
             </tr>
         </tbody>
     </table>
