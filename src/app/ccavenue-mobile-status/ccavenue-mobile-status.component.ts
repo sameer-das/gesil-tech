@@ -19,7 +19,9 @@ export class CcavenueMobileStatusComponent implements OnInit {
 
 
   goToWallet() {
-    (window as any).ReactNativeWebView.postMessage('go_back_to_wallet')
+    // (window as any).ReactNativeWebView.postMessage('go_back_to_wallet') 
+    // console.log('Calling Android -> processHTML');
+    (window as any).Android.processHTML('go_back_to_wallet');
   }
 
 }

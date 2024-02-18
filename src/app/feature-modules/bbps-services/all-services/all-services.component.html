@@ -8,12 +8,13 @@
       </mat-select>
     </mat-form-field>
     <div class="service-biller-back">
-      <button class="header__title-button" title="Go to Dashboard" mat-mini-fab color="primary" (click)="goToDashboard()">
+      <button class="header__title-button" title="Go to Dashboard" mat-mini-fab color="primary"
+        (click)="goToDashboard()">
         <mat-icon class="header__title-button-icon">arrow_back</mat-icon>
       </button>
       <h2 *ngIf="this.serviceName" class="page__header">Choose your biller to proceed for bill payment!</h2>
     </div>
-   
+
 
   </div>
 
@@ -75,7 +76,7 @@
           <h3> ₹ {{billerResponse.billAmount / 100}}</h3>
         </div>
       </div>
-  
+
       <div class="amount__options">
         <div *ngFor="let amountOption of billerResponse?.amountOptions?.option" class="amount__option">
           <h3>{{amountOption.amountName}}</h3>
@@ -85,13 +86,26 @@
 
       <div *ngIf="additionalInfo" class="amount__options">
         <div class="amount__option">
-          <h3>{{additionalInfo?.info[0].infoName}}</h3>
+
+          <ng-container *ngIf="+serviceCatId !== 3 && +serviceId !== 1">
+            <h3>{{additionalInfo?.info[0].infoName}}</h3>
+          </ng-container>
+
           <!-- For Fast tag dont add biillerresponse amount to additionalinfo amount  -->
-          <h3 *ngIf="+serviceCatId === 23 && +serviceId === 4">{{additionalInfo?.info[0].infoValue.split(',').join('')}}</h3>
-          <h3 *ngIf="+serviceCatId !== 23 || +serviceId !== 4">{{+additionalInfo?.info[0].infoValue.split(',').join('') + +(billerResponse.billAmount / 100)}}</h3>
+          <h3 *ngIf="+serviceCatId === 23 && +serviceId === 4">{{additionalInfo?.info[0].infoValue.split(',').join('')}}
+          </h3>
+
+          <ng-container *ngIf="+serviceCatId !== 23 || +serviceId !== 4">
+            <ng-container *ngIf="+serviceCatId !== 3 && +serviceId !== 1">
+              <h3>{{+additionalInfo?.info[0].infoValue.split(',').join('') + +(billerResponse.billAmount / 100)}}</h3>
+            </ng-container>
+          </ng-container>
+
+
+
         </div>
       </div>
-      
+
       <hr>
       <div class="payment_action">
 
