@@ -8,7 +8,9 @@
             </mat-form-field>
             
             <div class="cta__container">
-                <button (click)="onFormSubmit()" class="btn primary cta" [disabled]="disableCta || dynamicForm.status === 'INVALID'" type="button">Fetch Bill</button>
+                <button (click)="onFormSubmit()" 
+                    class="btn primary cta" 
+                    [disabled]="disableCta || dynamicForm.status === 'INVALID'" type="button">{{isBillFetchRequired ? 'Fetch Bill' : 'Proceed'}}</button>
             </div>
     
     </form>

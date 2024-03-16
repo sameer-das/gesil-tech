@@ -36,7 +36,7 @@
 
 
     <app-dynamic-form *ngIf="params && params.length > 0" [params]="params" (formSubmmited)="billFetch($event)"
-      [disableCta]="isBillFetching"></app-dynamic-form>
+      [disableCta]="isBillFetching" [isBillFetchRequired]="isBillFetchRequired"></app-dynamic-form>
   </div>
 
   <div *ngIf="billerResponse" class="panel_right">
@@ -117,7 +117,7 @@
         </div>
 
         <div class="payment_cta_container">
-          <button type="button" class="btn primary payment_cta" (click)="billPay()">Pay Now</button>
+          <button type="button" class="btn primary payment_cta" (click)="billPayWithBillFetch()">Pay Now</button>
         </div>
       </div>
     </div>

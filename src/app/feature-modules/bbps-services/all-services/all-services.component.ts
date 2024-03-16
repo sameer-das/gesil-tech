@@ -9,6 +9,7 @@ import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component'
 import { PopupService } from 'src/app/popups/popup.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { WalletService } from '../../wallet/wallet.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -24,6 +25,10 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   
   amountToBePaid:string = '';
+
+  isBillFetchRequired: boolean = true;
+
+  
 
   constructor(private _bbpsService: BbpsService,
     private _router: Router,
@@ -145,7 +150,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         console.log(billerDetailsResp?.resultDt?.resultDt?.billerInputParams.paramInfo);
         this.params = billerDetailsResp?.resultDt?.resultDt?.billerInputParams.paramInfo;
         this.billerPaymentModes = billerDetailsResp?.resultDt?.resultDt?.billerPaymentModes.split(',');
-
+        this.isBillFetchRequired = billerDetailsResp?.resultDt?.resultDt?.billerFetchRequiremet !== "NOT_SUPPORTED";
+        console.log(this.isBillFetchRequired);
       } else {
         this.params = []
       }
@@ -179,7 +185,14 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
 
   billFetch(e: any) {
+
     console.log(e);
+    if(!this.isBillFetchRequired) {
+      // directly go for payment
+      this.billPayWithoutBillFetch(e);
+      return;
+    }
+
     const input = [];
 
     for (let k in e) {
@@ -244,15 +257,11 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
 
 
-  billPay() {
+  billPayWithBillFetch() {
     const payBill = {
-      "agentId": "CC01BA48AGTU00000001",
+      "agentId": environment.BBPS_AGENT_ID,
       "billerAdhoc": true,
-      "agentDeviceInfo": {
-        "ip": "192.168.2.73",
-        "initChannel": "AGT",
-        "mac": "01-23-45-67-89-ab"
-      },
+      "agentDeviceInfo": environment.BBPS_AGENT_DEVICE_INFO,
       "customerInfo": {
         "customerMobile": "9777117452",
         "customerEmail": "info.gskindiaorg@gmail.com",
@@ -294,7 +303,77 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
 
     console.log(payBill);
+    this.payBill(payBill)
+  }
 
+  billPayWithoutBillFetch (e: any) {
+    // console.log(e);
+    // console.log(this.params)
+    
+    this.amountToBePaid = e['Amount'];
+
+    if(this.billerId != 'SUND00000NAT02') {
+      // delete amount field if not sunTV
+      delete e.Amount;
+    }
+
+    // console.log(e)
+    const input = [];
+
+    for (let k in e) {
+      input.push({
+        "paramName": k,
+        "paramValue": e[k]
+      });
+    }
+
+    this.inputParam = input;
+    const payBill = {
+      "agentId": environment.BBPS_AGENT_ID,
+      "billerAdhoc": true,
+      "agentDeviceInfo": environment.BBPS_AGENT_DEVICE_INFO,
+      "customerInfo": {
+        "customerMobile": "9777117452",
+        "customerEmail": "info.gskindiaorg@gmail.com",
+        "customerAdhaar": "",
+        "customerPan": this.panDetails
+      },
+      "billerId": this.billerId,
+      "inputParams": {
+        "input": [
+          ...this.inputParam
+        ]
+      },
+      "amountInfo": {
+        "amount": +(+this.amountToBePaid * 100),
+        "currency": 356,
+        "custConvFee": 0,
+        "amountTags": []
+      },
+      "paymentMethod": {
+        "paymentMode": 'Wallet',
+        "quickPay": "Y",
+        "splitPay": "N"
+      },
+      "paymentInfo": {
+        "info": [
+          {
+            "infoName": "WalletName",
+            "infoValue": "Paytm"
+          }, {
+            "infoName": "MobileNo",
+            "infoValue": this.currentUser.user.mobile_Number
+          }
+        ]
+      }
+    }
+
+
+    console.log(payBill)
+    this.payBill(payBill)
+  }
+
+  payBill(payBill:any) {
     this._loaderService.showLoader();
     this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
       next: (resp: any) => {
@@ -303,9 +382,14 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         if (resp.status === 'Success' && resp.code === 200 && resp.data) {
           console.log(resp.data)
           const [walletBal, commissionBal] = resp.data.split(',');
-          if (+walletBal < (+this.billerResponse.billAmount / 100)) {
+          if (this.isBillFetchRequired && +walletBal < (+this.billerResponse.billAmount / 100)) {
             // if (false) {
             // show less wallet popup
+            this._popupService.openAlert({
+              header: 'Alert',
+              message: 'You do not have sufficient balance in your wallet! Please recharge to proceed.'
+            });
+          } else if(!this.isBillFetchRequired && +walletBal < +this.amountToBePaid ) {
             this._popupService.openAlert({
               header: 'Alert',
               message: 'You do not have sufficient balance in your wallet! Please recharge to proceed.'
@@ -325,6 +409,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
                     this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {
                       state: { payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url }
                     });
+                  }, (err ) => {
+                    console.log(err)
+                    this._loaderService.hideLoader();
                   })
               }
 
@@ -342,7 +429,6 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     })
-
 
   }
 
