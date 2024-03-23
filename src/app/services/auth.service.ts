@@ -166,8 +166,7 @@ export class AuthService {
   private URL_GET_USER_INFOS = `/api/User/GetUserInfos`;
   getUserInfos(user_id: number) {
     return this._http.get(
-      `${environment.service_base_url}${this.URL_GET_USER_INFOS}?uId=${user_id}`
-    );
+      `${environment.service_base_url}${this.URL_GET_USER_INFOS}?uId=${user_id}`);
   }
 
   private URL_CHECK_REFERENCE_NO = `/api/User/CheckReferenceNumber`;

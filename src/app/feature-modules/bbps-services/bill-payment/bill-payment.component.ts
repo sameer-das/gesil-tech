@@ -18,7 +18,9 @@ export class BillPaymentComponent implements OnInit {
     this._route.params.subscribe((params: any) => {
       console.log(params);
       this.transid = params.transid;
+      console.log(this.transid)
       this.state = this._router.getCurrentNavigation()?.extras?.state || JSON.parse(sessionStorage.getItem(`TRANS_${params.transid}`) || '{}');
+      console.log(this.state)
     })
 
   }

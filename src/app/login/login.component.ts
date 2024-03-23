@@ -62,6 +62,14 @@ export class LoginComponent implements OnInit {
         console.log(result);
         if (result.status === 'Success' && result.data && result?.data?.userDetais && result?.data?.userDetais?.user_ID) {
           this._authService.userDetails = result.data;
+          
+          if(!result.data.tokens?.token) {
+            // no token found
+            return;
+          }
+          // set the token in localstorage
+          localStorage.setItem('jwt', result.data.tokens?.token);
+
           this._authService.getUserInfos(result?.data?.userDetais?.user_ID).subscribe({
             next: (resp: any) => {
               console.log(resp);

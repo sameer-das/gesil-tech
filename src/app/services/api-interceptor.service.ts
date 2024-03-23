@@ -19,7 +19,7 @@ export class APIInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const API_KEY = 'api_key_sameer';
     const colnedRequest = req.clone({
-      setHeaders: { API_KEY },
+      headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('jwt'))
     });
     console.dir(`Interceptor URL : ${colnedRequest.url}`);
 

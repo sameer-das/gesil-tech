@@ -11,6 +11,7 @@ export class BbpsService {
     private readonly URL_POST_GET_BILLER_INFO_BY_BILLER_ID: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillerInfoByBillerID`;
     private readonly URL_POST_FETCH_BILL: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillFetch`;
     private readonly URL_POST_PAY_BILL: string = `${environment.service_base_url}/api/GSKRecharge/eBBPSBillPay`;
+    private readonly URL_GET_PREV_TRANS: string = `${environment.service_base_url}/api/GSKRecharge/GetPreviousTransactions`;
 
     getBillerdByCategory(categorName: string) {
         return this._http.post(`${this.URL_POST_GET_BILLER_BY_CATEGORY}?category=${categorName.toLowerCase()}`, {})
@@ -30,7 +31,11 @@ export class BbpsService {
     }
 
 
-    payBill(requestId: string, payBill: any, serviceCatId: string, serviceId: string, user_EmailID: string) {
+    payBill(requestId: string | null, payBill: any, serviceCatId: string, serviceId: string, user_EmailID: string) {
         return this._http.post(`${this.URL_POST_PAY_BILL}?requestid=${requestId}&serviceId=${serviceId}&categoryId=${serviceCatId}&userId=${user_EmailID}`, payBill)
+    }
+
+    getPreviousTransaction(email:string, serviceCatId: number | string, serviceId:  number | string ) {
+        return this._http.get(`${this.URL_GET_PREV_TRANS}?emailid=${email}&serviceId=${serviceId}&categoryId=${serviceCatId}`);
     }
 }

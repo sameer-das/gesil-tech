@@ -78,7 +78,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   billerResponse: any;
   additionalInfo: any;
-  requestID!: string;
+  requestID: string | null = '';
   inputParam!: any[];
   billerPaymentModes: string[] = [];
   paymentMode: string = '';
@@ -155,7 +155,10 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       } else {
         this.params = []
       }
-    })
+    });
+
+
+    this.getPrevTransactions();
   }
 
 
@@ -370,6 +373,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
 
     console.log(payBill)
+    this.requestID = '';
     this.payBill(payBill)
   }
 
@@ -440,5 +444,62 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   goToDashboard(){
     this._router.navigate(['dashboard'])
+  }
+
+  previousTransactions: any[] = [];
+  getPrevTransactions () {
+    this._bbpsService
+      .getPreviousTransaction(this.currentUser.user.user_EmailID, this.serviceCatId, this.serviceId
+      ).subscribe({
+        next: (resp: any) => {
+          console.log('Prev trans resp');
+          console.log(resp)
+          if(resp.code === 200 && resp.data?.length > 0) {
+            this.previousTransactions = resp.data.map((trans: any) => this.getTransDetails(trans));
+          }
+          console.log(this.previousTransactions);
+     
+        },
+        error: (err) => {
+          console.log('Prev trans error');
+          console.log(err)
+        }
+    })
+  }
+
+
+  getTransDetails(trans: any) {
+    let ret: string = '';
+    if (trans.wallet_transaction_recall === 'ManiMulti') {
+      const json = JSON.parse(trans.wallet_transaction_Logfile)
+      ret = `Mobile No. : ${json.mn}`;
+    }
+    else if (trans.wallet_transaction_recall === 'BBPS') {
+      const x = trans.wallet_transaction_Logfile;
+      const str = x.slice(x.indexOf('<paramName>'), x.lastIndexOf('</paramValue>') + 13);
+      const res = this.getObjFromXml(str);
+      for (let k in res) {
+        ret = ret + `${k} : ${res[k]}`
+      }
+    }
+    return ret
+  }
+
+  getObjFromXml(str: string) {
+    function getParam(paramName: string) {
+      let startIndex = str.indexOf(`<${paramName}>`);
+      let endIndex = str.indexOf(`</${paramName}>`);
+      const key = str.slice(startIndex + paramName.length + 2, endIndex);
+      str = str.slice(endIndex + 2 + paramName.length + 1);
+      return key;
+    }
+    const result: any = {};
+    while (str.length > 0) {
+      let key = getParam('paramName');
+      let val = getParam('paramValue');
+      result[key] = val;
+    }
+
+    return result;
   }
 }

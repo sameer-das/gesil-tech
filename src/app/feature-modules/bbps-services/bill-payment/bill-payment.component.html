@@ -25,31 +25,31 @@
                 <td class="key_name">Transaction Id</td>
                 <td class="value">{{resp.resultDt.txnRefId}}</td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td class="key_name">Customer Name</td>
                 <td class="value">{{paymentDetails.customerInfo.customerEmail}}</td>
             </tr>
             <tr>
                 <td class="key_name">Mobile Number</td>
                 <td class="value">{{paymentDetails.customerInfo.customerMobile}}</td>
-            </tr>
-            <tr>
+            </tr> -->
+            <tr *ngIf="paymentDetails?.billerResponse?.billDate">
                 <td class="key_name">Bill Date</td>
                 <td class="value">{{paymentDetails.billerResponse.billDate}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="paymentDetails?.billerResponse?.dueDate">
                 <td class="key_name">Due Date</td>
                 <td class="value">{{paymentDetails.billerResponse.dueDate}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="paymentDetails?.billerResponse?.billAmount">
                 <td class="key_name">Bill Amount</td>
                 <td class="value">{{paymentDetails.billerResponse.billAmount / 100}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="paymentDetails?.amountInfo?.custConvFee">
                 <td class="key_name">Conveyance Fee</td>
                 <td class="value">{{paymentDetails.amountInfo.custConvFee / 100}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="paymentDetails?.amountInfo?.amount">
                 <td class="key_name">Total Amount</td>
                 <td class="value">{{paymentDetails.amountInfo.amount / 100}}</td>
             </tr>
@@ -57,11 +57,11 @@
                 <td class="key_name">Transaction Date and Time</td>
                 <td class="value">{{now}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="paymentDetails?.agentDeviceInfo?.initChannel">
                 <td class="key_name">Init Channel</td>
                 <td class="value">{{paymentDetails.agentDeviceInfo.initChannel}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="paymentDetails?.paymentMethod?.paymentMode">
                 <td class="key_name">Payment Mode</td>
                 <td class="value">{{paymentDetails.paymentMethod.paymentMode}}</td>
             </tr>
