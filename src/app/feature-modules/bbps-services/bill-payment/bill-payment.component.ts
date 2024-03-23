@@ -11,7 +11,7 @@ export class BillPaymentComponent implements OnInit {
   billerDetails: any;
   resp: any;
   paymentDetails: any;
-  now = new Date().toISOString();
+  now = new Date().toLocaleString();
   transid!: string;
   constructor(private _router: Router, private _route: ActivatedRoute) {
     console.log(this._router.getCurrentNavigation()?.extras.state);
