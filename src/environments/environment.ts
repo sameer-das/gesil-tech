@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  // service_base_url: 'https://api.gesiltech.com',
-  // service_base_url: 'http://142.44.180.114:8000',
+  // service_base_url: 'https://localhost:44306',
   service_base_url: 'https://api.esebakendra.com',
   BBPS_AGENT_ID: 'CC01BA48AGTU00000001',
   BBPS_AGENT_DEVICE_INFO: {
