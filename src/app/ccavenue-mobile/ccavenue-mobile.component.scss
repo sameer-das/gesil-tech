@@ -3,12 +3,18 @@
 .container {
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    padding: 1rem;
+    h1, h3 {
+        font-size: 1.5rem;
+    }
 
-    > * {
-        font-size: 1rem;
-        color: $gradient1;
+    table {
+        margin-bottom: 3rem;
+    }
+    table tbody td, table tbody th {
+        padding: 0.25rem 1rem;
     }
 }

@@ -17,10 +17,16 @@ export class APIInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const API_KEY = 'api_key_sameer';
+    let JWT;
+    // add as mobile device does not have localstorage
+    if (!req.url.includes('eEncryptRequest')) {
+      JWT = localStorage.getItem('jwt');
+    }
+
     const colnedRequest = req.clone({
-      headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('jwt'))
+      headers: req.headers.set('Authorization', 'Bearer ' + JWT)
     });
+
     console.dir(`Interceptor URL : ${colnedRequest.url}`);
 
     return next.handle(colnedRequest).pipe(

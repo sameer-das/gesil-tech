@@ -1,8 +1,36 @@
 <div class="container">
-    <h3>Please wait</h3>
-    <p>{{message}}</p>
+    <ng-container *ngIf="!loading; else loader">
+        <ng-container *ngIf="!showOnError">
+            <h1>Verify Your Details</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{paramData?.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile</th>
+                        <td>{{paramData?.mobile}}</td>
+                    </tr>
+                    <tr>
+                        <th>Amount</th>
+                        <td>{{paramData?.amount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
 
-    <button *ngIf="showOnError" class="btn secondary" (click)="onGoBack()">Go Back</button>
+        <p *ngIf="showOnError">{{message}}</p>
+
+        <button *ngIf="!showOnError" class="btn primary" (click)="onProceed()">Proceed to Pay</button>
+        <button *ngIf="showOnError" class="btn secondary" (click)="onGoBack()">Go Back</button>
+
+    </ng-container>
+
+    <ng-template #loader>
+        <p>Please wait while we verify your details.</p>
+        <p>Please dont press back or cancel.</p>
+    </ng-template>
 </div>
 
 <form #form ngNoForm id="nonseamless" method="post" name="redirect"
