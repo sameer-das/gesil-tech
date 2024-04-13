@@ -1,10 +1,10 @@
-<div class="container">
+<div class="status-container" [ngClass]="{'success': tableData.order_status === 'Success'}">
 
     <table>
         <tbody>
             <tr>
                 <td>Order Status</td>
-                <td class="success">{{tableData.order_status}}</td>
+                <td class="success" >{{tableData.order_status}}</td>
             </tr>
             <tr>
                 <td>Transaction Status</td>
@@ -15,10 +15,10 @@
                 <td>Transacton Date</td>
                 <td>{{tableData.trans_date}}</td>
             </tr>
-            <tr>
-                <td>Response Code</td>
+            <!-- <tr>
+                <td *ngIf="tableData?.response_code">Response Code</td>
                 <td>{{tableData.response_code}}</td>
-            </tr>
+            </tr> -->
 
             <tr>
                 <td>Order ID</td>
@@ -26,12 +26,12 @@
             </tr>
             <tr>
                 <td>Amount</td>
-                <td>{{tableData.amount}}</td>
+                <td>{{tableData.currency}} {{tableData.amount}}</td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>Currency</td>
                 <td>{{tableData.currency}}</td>
-            </tr>
+            </tr> -->
             <tr>
                 <td>Payment Mode</td>
                 <td>{{tableData.payment_mode}}</td>

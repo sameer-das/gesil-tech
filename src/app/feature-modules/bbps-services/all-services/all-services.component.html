@@ -25,21 +25,44 @@
 </div>
 
 <hr>
+
+<h3 class="rt__header" *ngIf="previousTransactions.length > 0">Recent Transactions</h3>
+<div class="last-transactions" *ngIf="previousTransactions.length > 0;">
+  <div *ngFor="let trans of previousTransactions.slice(0,5)" class="last-transactions-card box-shadow" (click)="onRecentTransactionCardClick(trans)">
+    <ng-container *ngIf="showLogoInRecentTransChips">
+      <img [src]="'assets/logo/'+trans?.logo?.logo" alt="trans?.biller?.blr_name" />
+    </ng-container>
+
+    <div class="details">
+        <strong class="amount"><p>Rs. {{trans?.amount}}</p></strong>
+        <p *ngFor="let input of trans?.inputParam"> {{input['paramValue']}}</p>
+    </div>
+
+  </div>
+</div>
+
+
+
 <div class="container">
-  <div class="panel_left">
+  <div class="panel_left box-shadow">
     <mat-form-field class="form__field" appearance="standard">
       <mat-label>Choose Biller</mat-label>
-      <mat-select #billerSelectBox>
+      <mat-select #billerSelectBox [formControl]="billerSelectBoxFC">
         <mat-option *ngFor="let biller of billers" [value]="biller">{{biller.blr_name}}</mat-option>
       </mat-select>
     </mat-form-field>
 
 
-    <app-dynamic-form *ngIf="params && params.length > 0" [params]="params" (formSubmmited)="billFetch($event)"
-      [disableCta]="isBillFetching" [isBillFetchRequired]="isBillFetchRequired"></app-dynamic-form>
+    <app-dynamic-form *ngIf="params && params.length > 0" 
+      [params]="params" 
+      (formSubmmited)="billFetch($event)"
+      [disableCta]="isBillFetching" 
+      [isBillFetchRequired]="isBillFetchRequired" 
+      [prePopulateValue]="prePopulateValue"
+      [prePopulateAmount]="prePopulateAmount"></app-dynamic-form>
   </div>
 
-  <div *ngIf="billerResponse" class="panel_right">
+  <div *ngIf="billerResponse" class="panel_right box-shadow">
     <div *ngIf="billerResponse" class="bill_body">
       <h2 class="bill__header">Bill Details</h2>
       <div class="header">

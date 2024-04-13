@@ -1,10 +1,12 @@
 @import '../../../styles/constants.scss';
+
 .container {
     display: flex;
     justify-content: center;
+
     @media (max-width: $small) {
-       flex-wrap: wrap;
-      }
+        flex-wrap: wrap;
+    }
 
     .panel_left {
         width: 50%;
@@ -12,30 +14,30 @@
         align-items: center;
         flex-direction: column;
         gap: 1rem;
-        background: #fff;
+        // background: #fff;
         padding: 2rem;
         margin: 1rem;
-        box-shadow: 1px 4px 7px -3px #d0d0d0;
 
         @media (max-width: $small) {
             flex-basis: 100%;
-           }
+        }
 
     }
 
     .panel_right {
         width: 50%;
-        background: #fff;
+        // background: #fff;
         padding: 2rem;
         margin: 1rem;
-        box-shadow: 1px 4px 7px -3px #d0d0d0;
+
         @media (max-width: $small) {
             flex-basis: 100%;
-           }
+        }
     }
 
     .bill_body {
-        width: 100%;    
+        width: 100%;
+
         .bill__header {
             font-size: 1.3rem;
             font-weight: 500;
@@ -46,14 +48,17 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 1rem;
-            &__left,&__right {
+
+            &__left,
+            &__right {
                 width: 50%;
             }
 
             &__right {
                 // text-align: right;
             }
-            h3{
+
+            h3 {
                 font-size: 1rem;
                 font-weight: 500;
                 margin: 0;
@@ -67,17 +72,18 @@
 
         .amount__options {
             margin-top: 1rem;
+
             .amount__option {
                 display: flex;
                 justify-content: space-between;
 
-                h3{
+                h3 {
                     font-size: 1rem;
                     font-weight: 500;
                     margin: 0;
                     flex: 1;
                 }
-    
+
             }
         }
 
@@ -94,6 +100,7 @@
 
             div.payment_cta_container {
                 text-align: right;
+
                 button.payment_cta {
                     width: 100%;
                 }
@@ -105,10 +112,11 @@
         display: block;
         width: 100%;
     }
+
     app-dynamic-form {
         width: 100%;
     }
-    
+
 }
 
 
@@ -118,35 +126,43 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     @media (max-width: $small) {
         padding: 0.5rem;
-       }
+    }
+
     h2 {
         margin: 0;
         font-size: 1.4rem;
         font-weight: 500;
+
         @media (max-width: $small) {
             font-size: 1rem;
-           }
-           @media (max-width: $extra-x-small) {
+        }
+
+        @media (max-width: $extra-x-small) {
             font-size: 0.7rem;
-           }
+        }
     }
 
     .form__field {
         width: 50%;
         padding-right: 1rem;
+
         @media (max-width: $extra-x-small) {
             width: 100%;
-          }
+        }
+
         mat-form-field {
             width: 100%;
         }
     }
+
     .image_container {
         width: 75px;
         height: 75px;
         overflow: hidden;
+
         img {
             width: 100%;
             height: 100%;
@@ -163,4 +179,90 @@
     button {
         margin-right: 1rem;
     }
+}
+
+.rt__header {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-left: 1rem;
+}
+
+.last-transactions {
+    padding: 0 1rem;
+    display: flex;
+    // justify-content: center;
+    gap: 0.5rem;
+
+    .last-transactions-card {
+        flex: 1;
+        border-radius: 0.25rem;
+        padding: 0.5rem;
+        max-width: 200px;
+
+        cursor: pointer;
+    
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .details > p{
+            font-size: 0.7rem;
+        }
+
+
+        strong.amount {
+            color: $gradient1;
+            font-size: 1rem;
+        }
+
+        strong.billerid {
+            font-size: 0.8rem;
+        }
+            
+
+        p {
+            padding: 0;
+            margin: 0;
+        }
+
+
+        img {
+            width: 40px;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+    }
+
+    &-loading {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.box-shadow {
+    -webkit-box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 0.25rem;
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    button.cta {
+        width: 100%;
+    }
+}
+.form__field {
+    width: 100%;
+}
+
+h4.recent_trans_blrname {
+    font-size: 0.9rem;
+    font-weight: 500;
 }

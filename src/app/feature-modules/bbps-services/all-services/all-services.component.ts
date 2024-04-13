@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormControlName } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, tap, Subscription } from 'rxjs';
+import { Subject, Subscription, switchMap, tap } from 'rxjs';
 import { BbpsService } from 'src/app/feature-modules/bbps-services/bbps.service';
 import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 import { PopupService } from 'src/app/popups/popup.service';
 import { LoaderService } from 'src/app/services/loader.service';
-import { WalletService } from '../../wallet/wallet.service';
 import { environment } from 'src/environments/environment';
+import { WalletService } from '../../wallet/wallet.service';
 
 
 @Component({
@@ -23,12 +23,14 @@ export class AllServicesComponent implements OnInit, OnDestroy {
   serviceCatId!: string;
   serviceId!: string;
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
-  
-  amountToBePaid:string = '';
+
+  amountToBePaid: string = '';
 
   isBillFetchRequired: boolean = true;
 
-  
+  selectedFromRecentTrans: boolean = false;
+
+  showLogoInRecentTransChips: boolean = false;
 
   constructor(private _bbpsService: BbpsService,
     private _router: Router,
@@ -36,7 +38,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     private _loaderService: LoaderService,
     private _walletService: WalletService,
     private _popupService: PopupService,
-    private _matDialog: MatDialog) {
+    private _matDialog: MatDialog,
+    private _fb: FormBuilder) {
     this._route.params.subscribe((params: any) => {
       console.log(params);
       this.serviceName = params.servicename;
@@ -54,20 +57,30 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     } else {
       this.serviceCatId = current_service_details.services_Cat_ID;
       this.serviceId = current_service_details.services_ID;
+
+      if([2].indexOf(+this.serviceCatId) >= 0) {
+        this.showLogoInRecentTransChips = true;
+      } else {
+        this.showLogoInRecentTransChips = false;
+      }
     }
 
   }
 
-
+  $destroy: Subject<boolean> = new Subject();
   ngOnDestroy(): void {
     if (this.getBillerdByCategorySubscription)
       this.getBillerdByCategorySubscription.unsubscribe();
     if (this.getBillerInfoSubscription)
-      this.getBillerInfoSubscription.unsubscribe()
+      this.getBillerInfoSubscription.unsubscribe();
+
+    this.$destroy.next(true);
+
   }
 
   // @ViewChild('servicesSelectBox', { static: true }) servicesSelectBox!: MatSelect;
-  @ViewChild('billerSelectBox', { static: true }) billerSelectBox!: MatSelect;
+  // @ViewChild('billerSelectBox', { static: true }) billerSelectBox!: MatSelect;
+  billerSelectBoxFC: FormControl = new FormControl()
 
   servicesSelectBox: FormControl = new FormControl();
 
@@ -107,6 +120,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         console.log(resp)
         if (resp.status === 'Success' && resp.code === 200) {
           this.billers = resp.resultDt;
+
           // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
         }
       })
@@ -123,6 +137,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
             console.log(resp)
             if (resp.status === 'Success' && resp.code === 200) {
               this.billers = resp.resultDt;
+              this.getPrevTransactions();
               // this.billers.push({ blr_id: 'OTME00005XXZ43', blr_name: 'OTME' })
             }
           })
@@ -131,34 +146,39 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       }
     }
 
-
-    this.getBillerInfoSubscription = this.billerSelectBox?.selectionChange.pipe(
+// this.billerSelectBoxFC.valueChanges.subscribe({
+//   next: (x) => {
+//     console.log(x)
+//   }
+// })
+    this.getBillerInfoSubscription = this.billerSelectBoxFC.valueChanges.pipe(
       tap(x => {
-        this.billerId = x.value.blr_id;
-        this.biller = x.value;
+        this.billerId = x.blr_id;
+        this.biller = x;
         this.billerResponse = undefined;
         console.log(this.biller);
         this.params = [];
         this._loaderService.showLoader();
       }),
-      switchMap(x => this._bbpsService.getBillerInfo(x.value.blr_id))
+      switchMap(x => this._bbpsService.getBillerInfo(x.blr_id))
     ).subscribe((billerDetailsResp: any) => {
       this._loaderService.hideLoader();
       console.log(billerDetailsResp)
-      if (billerDetailsResp.status === 'Success' && billerDetailsResp.code === 200 && billerDetailsResp?.resultDt?.resultDt?.billerId.length > 0) {
+      if (billerDetailsResp.status === 'Success' && billerDetailsResp.code === 200 && billerDetailsResp?.resultDt?.resultDt?.billerId?.length > 0) {
 
         console.log(billerDetailsResp?.resultDt?.resultDt?.billerInputParams.paramInfo);
         this.params = billerDetailsResp?.resultDt?.resultDt?.billerInputParams.paramInfo;
         this.billerPaymentModes = billerDetailsResp?.resultDt?.resultDt?.billerPaymentModes.split(',');
         this.isBillFetchRequired = billerDetailsResp?.resultDt?.resultDt?.billerFetchRequiremet !== "NOT_SUPPORTED";
         console.log(this.isBillFetchRequired);
+
       } else {
         this.params = []
       }
     });
 
 
-    this.getPrevTransactions();
+
   }
 
 
@@ -189,8 +209,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
 
   billFetch(e: any) {
 
-    console.log(e);
-    if(!this.isBillFetchRequired) {
+    // console.log(e);
+    if (!this.isBillFetchRequired) {
       // directly go for payment
       this.billPayWithoutBillFetch(e);
       return;
@@ -217,7 +237,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "customerMobile": "9777117452",
         "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
-        "customerPan": this.panDetails
+        "customerPan": ""
       },
       "billerId": this.billerId,
       "inputParams": {
@@ -242,7 +262,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
           this.amountToBePaid = String(+this.billerResponse?.billAmount / 100)
 
 
-          if(!this.billerResponse) {
+          if (!this.billerResponse) {
             this._popupService.openAlert({
               header: 'Alert',
               message: 'You dont have any outstanding amount to pay!'
@@ -269,7 +289,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         "customerMobile": "9777117452",
         "customerEmail": "info.gskindiaorg@gmail.com",
         "customerAdhaar": "",
-        "customerPan": this.panDetails
+        "customerPan": ""
       },
       "billerId": this.billerId,
       "inputParams": {
@@ -309,13 +329,13 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     this.payBill(payBill)
   }
 
-  billPayWithoutBillFetch (e: any) {
+  billPayWithoutBillFetch(e: any) {
     // console.log(e);
     // console.log(this.params)
-    
+
     this.amountToBePaid = e['Amount'];
 
-    if(this.billerId != 'SUND00000NAT02') {
+    if (this.billerId != 'SUND00000NAT02') {
       // delete amount field if not sunTV
       delete e.Amount;
     }
@@ -377,7 +397,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     this.payBill(payBill)
   }
 
-  payBill(payBill:any) {
+  payBill(payBill: any) {
     this._loaderService.showLoader();
     this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
       next: (resp: any) => {
@@ -393,7 +413,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
               header: 'Alert',
               message: 'You do not have sufficient balance in your wallet! Please recharge to proceed.'
             });
-          } else if(!this.isBillFetchRequired && +walletBal < +this.amountToBePaid ) {
+          } else if (!this.isBillFetchRequired && +walletBal < +this.amountToBePaid) {
             this._popupService.openAlert({
               header: 'Alert',
               message: 'You do not have sufficient balance in your wallet! Please recharge to proceed.'
@@ -413,10 +433,12 @@ export class AllServicesComponent implements OnInit, OnDestroy {
                     this._router.navigate([`bbps/payment/${resp.resultDt.txnRefId}`], {
                       state: { payBill: payBill, billerDetails: this.biller, resp, currentServiceUrl: this._router.url }
                     });
-                  }, (err ) => {
+                  }, (err) => {
                     console.log(err)
                     this._loaderService.hideLoader();
                   })
+              } else {
+                this._loaderService.hideLoader();
               }
 
             });
@@ -442,29 +464,37 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     this.paymentMode = e.value;
   }
 
-  goToDashboard(){
+  goToDashboard() {
     this._router.navigate(['dashboard'])
   }
 
   previousTransactions: any[] = [];
-  getPrevTransactions () {
+  getPrevTransactions() {
     this._bbpsService
       .getPreviousTransaction(this.currentUser.user.user_EmailID, this.serviceCatId, this.serviceId
       ).subscribe({
         next: (resp: any) => {
           console.log('Prev trans resp');
           console.log(resp)
-          if(resp.code === 200 && resp.data?.length > 0) {
-            this.previousTransactions = resp.data.map((trans: any) => this.getTransDetails(trans));
-          }
+          // if (resp.code === 200 && resp.data?.length > 0) {
+          this.previousTransactions = resp.data.map((trans: any) => {
+            const json = this.getTransDetailsAsJSON(trans);
+            return {
+              data: json,
+              amount: (json?.billPaymentRequest?.amountInfo?.amount / 100).toFixed(2),
+              billerId: json?.billPaymentRequest?.billerId,
+              biller: this.billers.find(curr => curr.blr_id === json?.billPaymentRequest?.billerId),
+              inputParam: this.getInputParams(json?.billPaymentRequest?.inputParams.input),
+              logo: environment.DTH_BILLER_LOGO.find(curr => curr.blr_id === json?.billPaymentRequest?.billerId)
+            }
+          });
           console.log(this.previousTransactions);
-     
         },
         error: (err) => {
           console.log('Prev trans error');
           console.log(err)
         }
-    })
+      })
   }
 
 
@@ -476,30 +506,67 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
     else if (trans.wallet_transaction_recall === 'BBPS') {
       const x = trans.wallet_transaction_Logfile;
+      // Get the Input Params
       const str = x.slice(x.indexOf('<paramName>'), x.lastIndexOf('</paramValue>') + 13);
-      const res = this.getObjFromXml(str);
-      for (let k in res) {
-        ret = ret + `${k} : ${res[k]}`
-      }
+      const res: any = { 'inputs': [this.getInputParams(str)] };
+      // Get the Customer Name
+      res['RespCustomerName'] = this.getValueOfTag(x, 'RespCustomerName');
+      // Get Amount
+      res['Amount'] = this.getValueOfTag(x, 'RespAmount');
+      ret = res;
     }
     return ret
   }
 
-  getObjFromXml(str: string) {
-    function getParam(paramName: string) {
-      let startIndex = str.indexOf(`<${paramName}>`);
-      let endIndex = str.indexOf(`</${paramName}>`);
-      const key = str.slice(startIndex + paramName.length + 2, endIndex);
-      str = str.slice(endIndex + 2 + paramName.length + 1);
-      return key;
+  getTransDetailsAsJSON(trans: any) {
+    const removedSlash = trans['wallet_transaction_request']?.replace(new RegExp('/', 'g'), '');
+    if (removedSlash) {
+      return JSON.parse(removedSlash)
+    } else {
+      return undefined;
     }
-    const result: any = {};
-    while (str.length > 0) {
-      let key = getParam('paramName');
-      let val = getParam('paramValue');
-      result[key] = val;
+  }
+
+
+  getInputParams(str: any) {
+    if (str) {
+      if (Array.isArray(str)) {
+        return str;
+      } else if (typeof str === 'object') {
+        return [str];
+      }
     }
 
-    return result;
+    return [];
   }
+
+
+  getValueOfTag(sourceString: string, tagName: string) {
+    return sourceString.slice(
+      sourceString.indexOf(`<${tagName}>`) + tagName.length + 2,
+      sourceString.indexOf(`</${tagName}>`)
+    )
+  }
+
+  getValueFromKey(obj: any) {
+    return Object.values(obj)[0]
+  }
+
+  recentTransDetails: any;
+  prePopulateValue: any;
+  prePopulateAmount: string = '';
+  onRecentTransactionCardClick(trans: any) {
+    console.log(trans);
+
+    this.recentTransDetails = trans;
+    this.selectedFromRecentTrans = trans;
+    this.billerSelectBoxFC.setValue(trans.biller);
+
+    this.prePopulateValue = trans.inputParam;
+    this.prePopulateAmount = trans.amount
+  }
+
 }
+// BBPS
+// <RespCustomerName>
+// <RespAmount>

@@ -6,18 +6,26 @@ import { PopupService } from 'src/app/popups/popup.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 import { LoaderService } from 'src/app/services/loader.service';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-mobile-recharge-plan',
   templateUrl: './mobile-recharge-plan.component.html',
   styleUrls: ['./mobile-recharge-plan.component.scss'],
 })
 export class MobileRechargePlanComponent implements OnInit {
-  constructor(private _route: ActivatedRoute, private _router: Router, private _matDialog:MatDialog,
+  constructor(private _route: ActivatedRoute, private _router: Router, private _matDialog: MatDialog,
     private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService,
     private _loaderService: LoaderService) { }
   rechargePlans: any[] = [];
+  rawRechargePlans: any[] = []
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   mobile_search: any = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
+
+  searchString: FormControl = new FormControl('');
+  filteredPlan: any[] = [];
+
   ngOnInit(): void {
     this._route.data.subscribe({
       next: (resp: any) => {
@@ -26,18 +34,39 @@ export class MobileRechargePlanComponent implements OnInit {
           const rechargePlans =
             resp?.data?.resultDt?.data?.rechargePlan?.rechargePlansDetails ||
             [];
+          this.rawRechargePlans = resp?.data?.resultDt?.data?.rechargePlan?.rechargePlansDetails ||
+          [];
           console.log(rechargePlans);
           this.rechargePlans = this.sortPlans(rechargePlans);
           console.log(this.rechargePlans)
         } else {
           this._popupService.openAlert({
-            header:'Alert',
-            message:'Problem fetching recharge plans, Please try after sometime!'
+            header: 'Alert',
+            message: 'Problem fetching recharge plans, Please try after sometime!'
           });
           this._router.navigate(['mobile-recharge']);
         }
       },
     });
+
+
+    this.searchString.valueChanges
+      .pipe(startWith(''),
+        debounceTime(500),
+        distinctUntilChanged(),
+        map(x => x.toLowerCase()))
+      .subscribe({
+        next: (val:string) => {
+          console.log(val)
+          if(val) {
+            this.filteredPlan = this.rawRechargePlans.filter((plan) => {
+              return String(plan.amount).toLowerCase().includes(val) || plan.description.toLowerCase().includes(val) || plan.validity.toLowerCase().includes(val)
+            } )
+          } else {
+            this.filteredPlan = [];
+          }
+        }
+      })
   }
 
   sortPlans(rechargePlans: any[]) {
@@ -100,12 +129,12 @@ export class MobileRechargePlanComponent implements OnInit {
   ]
 
   openPinDialog(amount: string) {
-    const dialogRef = this._matDialog.open(PinPopupComponent, {disableClose: true});
+    const dialogRef = this._matDialog.open(PinPopupComponent, { disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Pin Dialog closed ${result}`);
-      if(result)
+      if (result)
         this.onPlanSelect(amount);
-      });
+    });
   }
 
 
@@ -114,14 +143,14 @@ export class MobileRechargePlanComponent implements OnInit {
     console.log(amount);
     console.log(mobile_search.currentOperator);
     console.log(mobile_search.currentMobileNumber);
-    const operatorId = this.operatorList.find(x => x.provider.toLowerCase().trim() === mobile_search.currentOperator.toLowerCase().trim());
+    const operatorId = environment.PREPAID_RECHARGE_OPERATOR.find(x => x.provider.toLowerCase().trim() === mobile_search.currentOperator.toLowerCase().trim());
     console.log(operatorId);
 
     const rechargePayload = {
       "apiToken": "",
-      "mn": mobile_search.currentMobileNumber+'',
+      "mn": mobile_search.currentMobileNumber + '',
       "op": operatorId?.op + '',
-      "amt": amount+'',
+      "amt": amount + '',
       "reqid": uuidv4(),
       "field1": "",
       "field2": "",
@@ -136,14 +165,14 @@ export class MobileRechargePlanComponent implements OnInit {
         this._loaderService.hideLoader();
         console.log(resp);
         let message;
-        if(resp.data.includes('status')) {
+        if (resp.data.includes('status')) {
           const data = JSON.parse(resp.data);
           message = data.remark;
         } else {
           message = resp.data;
         }
         this._popupService.openAlert({
-          header:'Alert',
+          header: 'Alert',
           message: message
         })
         // route to first page

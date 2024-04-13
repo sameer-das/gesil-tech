@@ -1,45 +1,67 @@
-<div class="mob-root-wrapper">
-    <div class="mob-recharge-wrapper">
-        <div class="mob-recharge-vector">
-            <img src="./assets/mob-recharge-vector.png" alt="mob-recharge-vector">
-        </div>
-        <div class="mob-recharge-window">
-            <h2 class="header__text">Prepaid mobile recharge</h2>
-            <p class="header__subtext">Recharge your number for validity, talktime or data</p>
-            <div class="form__container">
-                <form #mobileForm="ngForm" autocomplete="off" (submit)="onFormSubmit()">
-                    <label for="mobile_no">Mobile number</label>
-                    <div class="input__container">
-                        <input (input)="onInput(mobileForm)" type="text" id="mobile_no" 
-                        name="mobile_no" [(ngModel)]="mobileNo" maxlength="10"
-                        pattern="^((\\+91-?)|0)?[0-9]{10}$"
-                        placeholder="Please enter your mobile number">
-                        <mat-spinner *ngIf="isFetching" color="warn" diameter="25"></mat-spinner>
-                        <p class="info" [ngClass]="{'error': isInputInvalid}">{{inputInvalidMessage}}</p>
-                        <div class="spinner">
-            
-                        </div>
-                    </div>
-                    <div *ngIf="showCta">
-                        <div class="network-detail-wrapper">
-                        <div class="network-name">
-                            <p><mat-icon>network_cell</mat-icon> <span> {{currentOperator}} </span></p>
-                        </div>
-                        <div class="network location">
-                            <p><mat-icon> place</mat-icon> <span>{{currentLocation}} </span></p>
-                        </div>
-                      </div>
-                      <div class="network-img-wrapper">
-                        <img class="network-logo" [src]="currentOperatorLogo" alt="network-name">
-                      </div>
-                      
-                      </div>
-                    <div class="cta__container">
-                        <button *ngIf="showCta" class="btn primary" type="submit">Select your pack</button>
-                    </div>
-            
-                </form>
+<div>
+    <h1 class="recent_recharge_title" *ngIf="previousTransactions.length > 0;">Your Recent Recharges</h1>
+    <div class="last-transactions" *ngIf="previousTransactions.length > 0;">
+        <div *ngFor="let trans of previousTransactions.slice(0,5)" class="last-transactions-card box-shadow"
+            (click)="onRecentTransactionCardClick(trans)">
+            <ng-container *ngIf="trans.operatorLogo; else icon">
+            <img [src]="trans.operatorLogo" [alt]="trans.operatorName" />
+          </ng-container>   
+          <ng-template #icon>
+            <mat-icon class="smartphone_icon">smartphone</mat-icon>
+          </ng-template>
+            <div class="details">
+                <strong class="amount">
+                    <p>Rs. {{trans?.amt}}</p>
+                </strong>
+                <p> {{trans.mn}}</p>
             </div>
+
         </div>
     </div>
 </div>
+
+<div class="mob-root-wrapper">   
+        <div class="mob-recharge-wrapper">
+            <div class="mob-recharge-vector">
+                <img src="./assets/mob-recharge-vector.png" alt="mob-recharge-vector">
+            </div>
+            <div class="mob-recharge-window">
+                <h2 class="header__text">Prepaid mobile recharge</h2>
+                <p class="header__subtext">Recharge your number for validity, talktime or data</p>
+                <div class="form__container">
+                    <form #mobileForm="ngForm" autocomplete="off" (submit)="onFormSubmit()">
+                        <label for="mobile_no">Mobile number</label>
+                        <div class="input__container">
+                            <span class="plus91">+91</span>
+                            <input [formControl]="mobileNo" type="text" id="mobile_no" name="mobile_no"
+                                
+                                placeholder="Please enter your mobile number">
+                            <mat-spinner *ngIf="isFetching" color="warn" diameter="25"></mat-spinner>
+                            <p class="info">Please enter your 10 digit mobile number.</p>
+                            <div class="spinner">
+    
+                            </div>
+                        </div>
+                        <div *ngIf="showCta">
+                            <div class="network-detail-wrapper">
+                                <div class="network-name">
+                                    <p><mat-icon>network_cell</mat-icon> <span> {{currentOperator}} </span></p>
+                                </div>
+                                <div class="network location">
+                                    <p><mat-icon> place</mat-icon> <span>{{currentLocation}} </span></p>
+                                </div>
+                            </div>
+                            <div class="network-img-wrapper">
+                                <img class="network-logo" [src]="currentOperatorLogo" alt="network-name">
+                            </div>
+    
+                        </div>
+                        <div class="cta__container">
+                            <button *ngIf="showCta" class="btn primary" type="submit">Select your pack</button>
+                        </div>
+    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

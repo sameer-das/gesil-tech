@@ -1,13 +1,13 @@
 @import '../../../styles/constants.scss';
 
-.container {
-    min-height: 70vh;
+.status-container {
+    min-height: calc(100vh - 160px);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2rem;
-
+    background-color: rgb(218, 108, 93);
     table {
         width: 50%;
         border-collapse: collapse;
@@ -19,7 +19,7 @@
         }
 
         td.success {
-            color: $green;
+            font-size: 1.5rem;
         }
 
         td p {
@@ -27,4 +27,8 @@
             padding: 0;
         }
     }
+}
+
+.status-container.success {
+    background-color: lightgreen;
 }

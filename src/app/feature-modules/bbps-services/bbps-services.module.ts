@@ -32,7 +32,7 @@ import { BbpsService } from './bbps.service';
     { path: 'payment/:transid', component: BillPaymentComponent, },
     { path: 'service/:servicename', component: AllServicesComponent, },
     { path: 'raise-complaint', component: RaiseComplaintComponent, },
-    { path: 'track-complaint', component: TrackComplaintComponent, }
+    { path: 'track-complaint', component: TrackComplaintComponent, },
     ])
   ],
   providers: [BbpsService, WalletService]

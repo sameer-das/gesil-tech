@@ -2,17 +2,24 @@
     <button class="header__title-button" mat-mini-fab  color="primary" (click)="goBackMobileSearchScreen()">
         <mat-icon class="header__title-button-icon">arrow_back</mat-icon>
       </button>
-    <h2 class="header__text">Showing tariff details for <span>{{mobile_search.currentMobileNumber}}</span> ({{mobile_search.currentOperator}})</h2>
+    <h2 class="header__text">Best packs for <span>{{mobile_search.currentMobileNumber}}</span> ({{mobile_search.currentOperator}})</h2>
 </div>
 
-<mat-tab-group *ngIf="rechargePlans.length > 0" dynamicHeight>
+<div class="search_container">
+    <input class="search" type="search" placeholder="Search plan or validity" [formControl]="searchString">
+</div>
+
+<mat-tab-group *ngIf="rechargePlans.length > 0 && filteredPlan.length === 0" dynamicHeight>
     <mat-tab *ngFor="let rechargePlan of rechargePlans" [label]="rechargePlan.planName">
         <mat-card *ngFor="let plan of rechargePlan.plans" class="plan__card">
-            <mat-card-title>₹ {{plan.amount}}
+            <mat-card-title>
+                <div class="card__title">
+                    <p>₹ {{plan.amount}}</p>
+                    <button class="btn primary select_btn" (click)="openPinDialog(plan.amount)">Select</button>
+                </div>
 
-                <button class="btn primary select_btn" (click)="openPinDialog(plan.amount)">Select</button>
             </mat-card-title>
-            <mat-card-subtitle>Talktime : {{plan.talktime}}</mat-card-subtitle>
+            <mat-card-subtitle>Talktime : {{plan.talktime}} | Validity : {{plan.validity}}</mat-card-subtitle>
             <mat-card-content>
                 <h6 class="plan__card__description__heading">Description</h6>
                 <p class="plan__card__description__content">{{plan.description}}</p>
@@ -21,3 +28,21 @@
 
     </mat-tab>
 </mat-tab-group>
+
+
+<div *ngIf=" filteredPlan.length > 0">
+    <mat-card *ngFor="let plan of filteredPlan" class="plan__card">
+        <mat-card-title>
+            <div class="card__title">
+                <p>₹ {{plan.amount}}</p>
+                <button class="btn primary select_btn" (click)="openPinDialog(plan.amount)">Select</button>
+            </div>
+
+        </mat-card-title>
+        <mat-card-subtitle>Talktime : {{plan.talktime}} | Validity : {{plan.validity}}</mat-card-subtitle>
+        <mat-card-content>
+            <h6 class="plan__card__description__heading">Description</h6>
+            <p class="plan__card__description__content">{{plan.description}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>

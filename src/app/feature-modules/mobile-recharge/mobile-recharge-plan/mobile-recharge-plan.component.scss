@@ -14,9 +14,23 @@ h2.header__text {
 
   mat-card-title {
     color: $primary-blue;
+
+    div.card__title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      p {
+        padding: 0;
+        margin: 0;
+      }
+    }
   }
+
+  
   &__description__heading {
     font-size: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   &__description__content {
@@ -43,5 +57,23 @@ h2.header__text {
   }
   button {
     margin-right: 1rem;
+  }
+}
+
+
+.search_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  input[type="search"] {
+    width: 300px;
+    border: 2px solid $gradient1;
+    outline: none;
+    font-size: 1rem;
+    color: $gradient1;
+    padding: 0.5rem 0.5rem;
+    background: transparent;
+    border-radius: 1.25rem;
   }
 }

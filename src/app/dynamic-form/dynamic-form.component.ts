@@ -14,6 +14,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input('params') params!: any[];
   @Input('disableCta') disableCta!: boolean;
   @Input('isBillFetchRequired') isBillFetchRequired!: boolean;
+  @Input('prePopulateValue') prePopulateValue!: any;
+  @Input('prePopulateAmount') prePopulateAmount!: string;
+  
   dynamicForm!: FormGroup;
   @Output() formSubmmited = new EventEmitter();
 
@@ -26,12 +29,24 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
   
   ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes)
   }
 
   createForm(){
     const obj:any = {};
     this.params.forEach((curr:any) => {
-      obj[curr.paramName] = curr.isOptional ? new FormControl('') : new FormControl('',[Validators.required]);
+      console.log(curr);
+      console.log(this.prePopulateValue);
+      let valueToBePatched = '';
+      if(this.prePopulateValue) {
+        const found = this.prePopulateValue.find((elem: any) => elem.paramName === curr.paramName.replace(new RegExp('/', 'g'), ''));
+        if(found) {
+          valueToBePatched = found.paramValue;
+        } else {
+          valueToBePatched = ''
+        }
+      }
+      obj[curr.paramName] = curr.isOptional ? new FormControl(valueToBePatched) : new FormControl(valueToBePatched,[Validators.required]);
     })
 
     if(!this.isBillFetchRequired) {
@@ -41,10 +56,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const isAmountFieldAlreadyPresent = this.params.findIndex(curr => curr.paramName === 'Amount') >= 0;
       // console.log(isAmountFieldAlreadyPresent)
       if(!isAmountFieldAlreadyPresent) {
-        obj['Amount'] = new FormControl('',[Validators.required]);
+        obj['Amount'] = new FormControl(this.prePopulateAmount ? this.prePopulateAmount : '',[Validators.required]);
       }
     }
     this.dynamicForm = this._fb.group(obj);
+
   }
 
   
@@ -57,7 +73,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   
   onFormSubmit(){
     if(this.dynamicForm.status === 'VALID') {
-      // console.log(this.dynamicForm.value)
       this.formSubmmited.emit(this.dynamicForm.value);
     }
 

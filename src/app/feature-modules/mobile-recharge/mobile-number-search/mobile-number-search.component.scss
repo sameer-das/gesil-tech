@@ -6,10 +6,12 @@ h2.header__text {
   font-weight: $fw-bold;
   text-align: center;
   margin: 0;
+
   @media (max-width: $extra-x-small) {
     font-size: 1.2rem;
   }
 }
+
 p.header__subtext {
   font-size: 0.8rem;
   color: $dark-grey;
@@ -23,9 +25,11 @@ p.header__subtext {
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
+
   @media (max-width: $extra-x-small) {
     margin-top: 0.6rem;
   }
+
   form {
     //width: 40%;
     // border: 1px solid;
@@ -33,17 +37,29 @@ p.header__subtext {
     @media (max-width: $small) {
       width: 90%;
     }
+
     .input__container {
       position: relative;
+
       mat-spinner {
         position: absolute;
         bottom: 24px;
         right: 8px;
       }
+
+      span.plus91 {
+        position: absolute;
+        font-size: 1rem;
+        top: 10px;
+        left: 6px;
+        font-style: italic;
+      }
     }
+
     label {
       font-weight: $fw-normal;
     }
+
     input[type="text"] {
       width: 100%;
       height: 2.5rem;
@@ -51,7 +67,12 @@ p.header__subtext {
       outline: none;
       border: 2px solid $primary-blue;
       border-radius: 4px;
-      padding-left: 0.25rem;
+      padding-left: 2.25rem;
+
+    }
+
+    input[type="text"].ng-invalid.ng-dirty {
+      border-color: orangered;
     }
 
     p.info {
@@ -59,6 +80,7 @@ p.header__subtext {
       color: #1589ff;
       padding-top: 0.25rem;
     }
+
     p.info.error {
       color: orangered;
     }
@@ -83,73 +105,161 @@ p.header__subtext {
   justify-content: center;
   background: $aqua;
   border-radius: 1rem;
-  padding: 4rem;
+  padding: 2rem;
+
   @media (max-width: $small) {
-   flex-direction: column-reverse;
-   padding: 1rem;
-   width: 100%;
-    }
-    
+    flex-direction: column-reverse;
+    padding: 1rem;
+    width: 100%;
+  }
+
   @media (max-width: $extra-large) {
     width: 65vw;
-    }
-    @media (max-width: $large) {
-      width: 85vw;
-      }
-      @media (max-width: $medium) {
-        width: 100vw;
-        }
+  }
+
+  @media (max-width: $large) {
+    width: 85vw;
+  }
+
+  @media (max-width: $medium) {
+    width: 100vw;
+  }
+
   .mob-recharge-vector {
     width: 50vw;
     position: relative;
+
     img {
-      width: 16rem;
+      width: 12rem;
       position: absolute;
       top: -9rem;
       left: -3rem;
+
       @media (max-width: $small) {
         width: 12rem;
         top: 2rem;
         left: 0rem;
-        }
+      }
     }
   }
+
   .mob-recharge-window {
     width: 70vw;
+
     @media (max-width: $extra-x-small) {
       width: 100%;
     }
   }
 }
+
 .mob-root-wrapper {
   display: flex;
   justify-content: center;
+  // flex-direction: column;
 
+  
+}
+
+h1.recent_recharge_title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .network-detail-wrapper {
   display: flex;
-    align-items: center;
-    justify-content: center;
-div{
-  p{
-    display: flex;
-    padding-left: 19px;
-    justify-content: center;
-    align-items: center;
+  align-items: center;
+  justify-content: center;
+
+  div {
+    p {
+      display: flex;
+      padding-left: 19px;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+}
+
+.network-logo {
+  width: 6rem;
+}
+
+.network-img-wrapper {
+  display: flex;
+  justify-content: center;
+
+  span {
+    color: $gradient1;
   }
 }
 
-} 
-.network-logo {
-    width: 6rem;
+
+.last-transactions {
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  display: flex;
+  // justify-content: center;
+  gap: 0.5rem;
+
+  .last-transactions-card {
+      flex: 1;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      max-width: 200px;
+
+      cursor: pointer;
+  
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .details > p{
+          font-size: 0.7rem;
+      }
+
+
+      strong.amount {
+          color: $gradient1;
+          font-size: 1rem;
+      }
+
+      strong.billerid {
+          font-size: 0.8rem;
+      }
+          
+
+      p {
+          padding: 0;
+          margin: 0;
+      }
+
+
+      img {
+          width: 40px;
+          aspect-ratio: 1;
+          object-fit: cover;
+      }
   }
-  .network-img-wrapper {
-    display: flex;
-    justify-content: center;
-    
-    span{
-      color: $gradient1;
-    }
+
+  &-loading {
+      justify-content: center;
+      align-items: center;
   }
- 
+}
+
+
+.box-shadow {
+  -webkit-box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 0.25rem;
+}
+
+
+.smartphone_icon {
+  color: $gradient1;
+  font-size: 2rem;
+  height: 2rem;
+}

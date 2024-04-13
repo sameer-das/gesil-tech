@@ -30,5 +30,10 @@ export class MobileRechargeService {
   prepaidRecharge(recharge: any) {
     return this._http.post(`${environment.service_base_url}/api/GSKRecharge/eGSKMobileRecharge`, recharge);
   }
+
+
+  getRecentPrepaidRechargeTransactions (userEmail:string, serviceId: number, serviceCatId: number) {
+    return this._http.get(`${environment.service_base_url}/api/GSKRecharge/GetPreviousTransactions?emailid=${userEmail}&serviceId=${serviceId}&categoryId=${serviceCatId}`);
+  }
   
 }
