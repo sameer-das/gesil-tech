@@ -79,6 +79,6 @@
     </table>
 </div>
 <div mat-dialog-actions align="end" class="mat-dialog-action">
-    <button *ngIf="data.showCancelButton" class="btn secondary" (click)="close(false)">Cancel</button>
-    <button class="btn primary" (click)="close(true)">OK</button>
+    <button *ngIf="data.showCancelButton" class="btn secondary" (click)="close(false)">{{data.cancelButtonLabel || 'Cancel'}}</button>
+    <button class="btn primary" (click)="close(true)">{{data.okButtonLabel || 'Ok'}}</button>
 </div>

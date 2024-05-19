@@ -90,3 +90,12 @@ body {
 .text-center {
   text-align: center;
 }
+
+
+.mat-stepper-horizontal, .mat-stepper-vertical { 
+  background-color: transparent;
+}
+
+.mat-expansion-panel { 
+  background: transparent;
+}

@@ -1,4 +1,4 @@
-<h4>My Profile</h4>
+<!-- <h4>My Profile</h4> -->
 
 <div class="profile">
     <div class="profile__image__container">
@@ -33,7 +33,7 @@
         </div>
     </mat-tab>
     <mat-tab label="Bank Details"> 
-        <div class="info">
+        <div *ngIf="bankDetails; else notFound" class="info">
             <div class="info__header">
                 <p>Bank</p>
                 <p>Account Holder</p>
@@ -41,7 +41,7 @@
                 <p>IFS Code</p>
                 <p>Bank Name</p>
             </div>
-            <div *ngIf="bankDetails" class="info__details">
+            <div  class="info__details">
                 <p>{{bankDetails.bank_Name}}</p>
                 <p>{{bankDetails.userAccount_HolderName}}</p>
                 <p>{{bankDetails.user_Account_Number}}</p>
@@ -49,16 +49,23 @@
                 <p>{{bankDetails.user_BranchName}}</p>
             </div>
         </div>
+        <ng-template #notFound>
+            <div class="mt-4 d-flex justify-content-center">
+                <p>Bank details not found. Please update in Update Profile Tab.</p>
+            </div> 
+        </ng-template>
     </mat-tab>
-    <mat-tab label="PAN & GSTIN"> 
+    <mat-tab label="Adhar, PAN & GSTIN"> 
         <div class="info">
             <div class="info__header">
                 <p>PAN</p>
                 <p>GSTIN</p>
+                <p>ADHAR No.</p>
             </div>
             <div *ngIf="kycDetails" class="info__details">
                 <p>{{kycDetails?.pancard_Number}}</p>
                 <p>{{kycDetails?.gsT_Number}}</p>
+                <p>{{kycDetails?.aadhar_Number}}</p>
             </div>
         </div> </mat-tab>
 </mat-tab-group>

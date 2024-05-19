@@ -1,0 +1,53 @@
+@import '../../../../styles/constants.scss';
+
+.btn-section {
+  button {
+    padding: 0.35rem;
+    font-size: 0.8rem !important;
+    cursor: pointer;
+  }
+
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+}
+
+
+.status_icon {
+  margin-right: 0.5rem;
+}
+
+.tooltip_icon {
+  color: $gradient1;
+}
+
+.verified_icon {
+  color: limegreen;
+}
+
+
+mat-panel-title strong {}
+
+p.otp_info, p.uplaod_adhar_info {
+  font-size: 0.75rem;
+  color: $dark-grey;
+}
+
+
+.image_container {  
+  img {
+    width: 70%;
+    object-fit: cover;
+  }
+}
+

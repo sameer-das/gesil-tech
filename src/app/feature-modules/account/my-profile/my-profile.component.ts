@@ -79,12 +79,12 @@ export class MyProfileComponent implements OnInit {
             if (resp.bankMaster.status === 'Success' && resp.bankMaster.code === 200
               && resp.bankDetails.status === 'Success' && resp.bankDetails.code === 200
             ) {
-              this.bankDetails = resp.bankDetails.data || {};
+              this.bankDetails = resp.bankDetails.data;
               this.banks = resp.bankMaster.data;
             }
             console.log(this.bankDetails);
             console.log(this.banks);
-            if (Object.keys(this.bankDetails).length > 0) {
+            if (this.bankDetails && Object.keys(this.bankDetails).length > 0) {
               const bank: any[] = this.banks.filter((x: any) => x.id === this.bankDetails.bank_ID);
               this.bankDetails.bank_Name = bank && bank[0].bank_Name || null;
             }

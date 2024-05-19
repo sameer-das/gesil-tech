@@ -6,10 +6,10 @@ import { RouterModule } from '@angular/router';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangePinComponent } from './change-pin/change-pin.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { DocumentPopupComponent } from './document-popup/document-popup.component';
-
+import { UpdateKycModule } from './update-profile/update-kyc/update-kyc.module';
 
 
 @NgModule({
@@ -25,9 +25,12 @@ import { DocumentPopupComponent } from './document-popup/document-popup.componen
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    FormsModule,
+    UpdateKycModule,
     RouterModule.forChild([{
       path:'', component: AccountComponent
     }])
-  ]
+  ],
+  exports: []
 })
 export class MyaccountModule { }

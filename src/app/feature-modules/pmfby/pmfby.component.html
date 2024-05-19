@@ -1,0 +1,36 @@
+
+<div class="d-flex align-items-center gap-4">
+    <a routerLink="../dashboard" mat-mini-fab color="primary">
+        <mat-icon>arrow_back</mat-icon>
+    </a>
+  <h2 class="m-0 page__header">Pradhan Mantri Fasal Bima Yojana</h2>
+</div>
+
+<p class="mt-4">Crop Insurance is an integrated IT solution and a web-based ecosystem to speed up service delivery, unify fragmented databases, achieve a single view of data, and eliminate manual processes. Crop Insurance provides insurance services to farmers faster than before.</p>
+
+<p class="mt-2">The Government is endeavouring for the integration of all the stakeholders viz. farmers, insurance companies, financial institutions & Government agencies on single IT platform. This will ensure better administration, coordination & transparency for getting real time information and monitoring.</p>
+
+<div *ngIf="!pmfbyStatus?.code; else showPmfbyStatus" class="offset-md-3 col-md-6">
+    <app-update-kyc [isGesil]="false" (documentUploadedToPmbky)="getPMFBYStatus ()"></app-update-kyc>
+</div>
+
+<ng-template #showPmfbyStatus>
+    <h3 class="status_header">Your Application Status</h3>
+    <div class="d-flex justify-content-center gap-4">
+        <div>
+            <p><strong>Status : {{pmfbyStatus.message}}</strong></p> 
+            <p><strong>POSP ID : </strong>{{pmfbyStatus?.data?.posp_id}}</p>
+            <p><strong>Index ID : </strong>{{pmfbyStatus?.data?.index_id}}</p>
+            <br/>
+            <p><strong>Name : </strong>{{pmfbyStatus?.data?.name}}</p>
+            <p><strong>Mobile : </strong>{{pmfbyStatus?.data?.mobile_no}}</p>
+            <p><strong>Education : </strong>{{pmfbyStatus?.data?.education}}</p>
+            <p><strong>Education Status: </strong>{{pmfbyStatus?.data?.education_status}}</p>
+        </div>
+
+        <div *ngIf="pmfbyStatus?.data?.file_path" class="user_image d-flex justify-content-start">
+            <img [src]="pmfbyStatus?.data?.file_path" alt="User Photo"/>
+        </div>
+    </div>
+</ng-template>
+

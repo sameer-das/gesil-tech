@@ -58,7 +58,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       this.serviceCatId = current_service_details.services_Cat_ID;
       this.serviceId = current_service_details.services_ID;
 
-      if([2].indexOf(+this.serviceCatId) >= 0) {
+      if ([2].indexOf(+this.serviceCatId) >= 0) {
         this.showLogoInRecentTransChips = true;
       } else {
         this.showLogoInRecentTransChips = false;
@@ -127,6 +127,8 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     } else if (this.serviceName === 'DMT') {
       // If DMT then send it to DMT route
       this._router.navigate(['dmtransfer/dmttransactions'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } });
+    } else if (this.serviceName === 'pmfby') {
+      this._router.navigate(['pmfby'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } })
     } else {
       const searchValue = this.allServices.filter((s: any) => s.path === this.serviceName);
       if (searchValue.length > 0) {
@@ -146,11 +148,11 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       }
     }
 
-// this.billerSelectBoxFC.valueChanges.subscribe({
-//   next: (x) => {
-//     console.log(x)
-//   }
-// })
+    // this.billerSelectBoxFC.valueChanges.subscribe({
+    //   next: (x) => {
+    //     console.log(x)
+    //   }
+    // })
     this.getBillerInfoSubscription = this.billerSelectBoxFC.valueChanges.pipe(
       tap(x => {
         this.billerId = x.blr_id;

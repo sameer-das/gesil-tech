@@ -9,14 +9,13 @@
     justify-content: center;
 
     .wallet_payment_card {
-        height: 200px;
+        // height: 200px;
         width: 50%;
-        border: 2px solid $grey;
+        // border: 2px solid $grey;
         padding: 0.5rem;
 
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
 
         h2 {
             font-size: 1.5rem;

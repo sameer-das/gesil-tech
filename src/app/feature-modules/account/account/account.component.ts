@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AccountComponent implements OnInit {
   constructor(private _authService: AuthService) {}
-  currentTab: number = 1;
+  currentTab: number = 0;
   userState: any = JSON.parse(localStorage.getItem('user_state') || '{}');
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   states: any[] = [];
@@ -20,8 +21,9 @@ export class AccountComponent implements OnInit {
     this.getUserState();
   }
 
-  changeTab(tab: number) {
-    this.currentTab = tab;
+  changeTab(tab: MatTabChangeEvent) {
+    console.log(tab.index)
+    this.currentTab = tab.index;
   }
 
 

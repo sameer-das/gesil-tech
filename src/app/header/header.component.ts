@@ -46,6 +46,7 @@ export class HeaderComponent  implements OnInit{
       this.currentUser = JSON.parse(localStorage.getItem('auth') || '{}');
       this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
     })
+
   }
 
   public openMenu(): void {

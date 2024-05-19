@@ -1,0 +1,422 @@
+<mat-accordion multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon *ngIf="!isGesil" class="status_icon" 
+        [style]="{color: (kycDetails.aadhar_Number && !isKycAdharAndVerifiedAdharMismatch ) ? 'limegreen': 'orangered'}">
+        {{(kycDetails.aadhar_Number && !isKycAdharAndVerifiedAdharMismatch ) ? 'done' : 'priority_high' }}
+      </mat-icon>
+        <strong>Adhar Details</strong>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="d-flex flex-column gap-2">
+      <mat-form-field class="w-100" appearance="standard">
+        <mat-label>{{isGesil ? 'Enter Adhar Card Number' : 'Adhar Card Number'}}</mat-label>
+        <input matInput type="text" [formControl]="adharNo" [readonly]="!isGesil">
+        <mat-icon class="tooltip_icon" *ngIf="!isGesil" [matTooltip]="tooltipMessage" matTooltipPosition="above" matSuffix>info</mat-icon>
+        <span *ngIf="isGesil && !showVerifyAdharButton" class="verified_icon d-flex align-items-center" matSuffix>
+          <mat-icon title="Adhar Verified" >check_circle</mat-icon> 
+          <span>Verified</span>
+        </span>
+      </mat-form-field>
+
+      <ng-container *ngIf="isGesil && !showVerifyAdharButton && isKycAdharAndVerifiedAdharMismatch ">
+        <p class="uplaod_adhar_info">Adhar Number is verified. Please upload Front and Back side photo of Adhar Card.</p>
+      </ng-container>
+
+      <ng-container *ngIf="isGesil && !showVerifyAdharButton ">
+        <div class="d-flex align-items-center justify-content-between">
+          <p class="m-0 p-0">Adhar Front Side Photo</p>
+
+          <div class="btn-section d-flex gap-2 align-items-center">            
+            <div class="upload-btn-wrapper">
+              <button class="d-flex align-items-center btn btn-primary" title="Upload file">
+                <mat-icon> upload_file</mat-icon> Select
+              </button>
+              <input type="file" #adhar_front (change)="handleUpload($event,'adhar_front')">
+            </div>
+
+            <div *ngIf="file_names.adhar_front">
+              <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+                (click)="remove_file('adhar_front')">
+                <mat-icon>delete</mat-icon> Remove
+              </button>
+            </div>
+            <button type="button" title="View already uploaded file" *ngIf="kycDetails?.aadhar_FontPhoto"
+              class="d-flex align-items-center btn btn-primary" (click)="showDocument(kycDetails?.aadhar_FontPhoto)">
+              <mat-icon>preview</mat-icon> Preview
+            </button>
+          </div>          
+        </div>
+
+        <div *ngIf="base64_file_data.adhar_front" class="d-flex justify-content-center image_container">
+          <img [src]="base64_file_data.adhar_front"  />
+        </div>
+        <div class="d-flex justify-content-center">
+          <p *ngIf="file_names.adhar_front" class="m-0 p-0">{{file_names.adhar_front}}</p>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="d-flex align-items-center justify-content-between">
+          <p class="m-0 p-0">Adhar Back Side Photo</p>
+          <div class="btn-section d-flex gap-2 align-items-center">
+            <div class="upload-btn-wrapper">
+              <button class="d-flex align-items-center btn btn-primary"><mat-icon>
+                  upload_file</mat-icon>Select</button>
+              <input type="file" #adhar_back (change)="handleUpload($event,'adhar_back')">
+            </div>
+            <div *ngIf="file_names.adhar_back">
+              <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+                *ngIf="file_names.adhar_back"
+                (click)="remove_file('adhar_back')"><mat-icon>delete</mat-icon>Remove</button>
+
+            </div>
+            <button type="button" title="View already uploaded file" *ngIf="kycDetails?.aadhar_BackPhoto"
+              class="d-flex align-items-center btn btn-primary"
+              (click)="showDocument(kycDetails?.aadhar_BackPhoto)"><mat-icon>preview</mat-icon>Preview</button>
+          </div>
+        </div>
+        <div *ngIf="base64_file_data.adhar_back" class="d-flex justify-content-center image_container">
+          <img [src]="base64_file_data.adhar_back"  />
+        </div>
+        <div class="d-flex justify-content-center">
+          <p *ngIf="file_names.adhar_back" class="m-0 p-0">{{file_names.adhar_back}}</p>
+        </div>
+
+        <div class="mt-4">
+          <button type="button" *ngIf="isAdharAlreadyVerified" class="btn btn-primary" (click)="updateKyc('adhar')">Update
+            Adhar</button>
+        </div>
+      </ng-container>
+
+     
+
+      <ng-container *ngIf="isGesil && showVerifyAdharButton">
+        <p class="otp_info" *ngIf="!adhar_client_id">An OTP will be sent to your <strong>Adhar registered (Not E-Seba registered)</strong> mobile number for verification.</p>
+        <button *ngIf="!adhar_client_id" type="button" class="btn btn-primary" [disabled]="adharNo.invalid" (click)="generateOtpForAdharValidate ()">Validate</button>
+        <mat-form-field *ngIf="adhar_client_id"  class="w-100" appearance="standard">
+          <mat-label>Please enter the OTP sent to your registered mobile number.</mat-label>
+          <input matInput type="text" [(ngModel)]="adhar_otp" minlength="6" maxlength="6">
+        </mat-form-field>
+        <button *ngIf="adhar_client_id" type="button" class="btn btn-primary" [disabled]="!adhar_otp || adhar_otp.length !== 6" (click)="adharOtpSubmit ()">Submit Adhar OTP</button>
+      </ng-container>
+      <!-- {{adhar_verified_response | json}} -->
+    </div>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon *ngIf="!isGesil" class="status_icon" [style]="{color: (kycDetails.pancard_Number && !this.isKycPanAndVerifiedPanMismatch) ? 'limegreen': 'orangered'}">{{ (kycDetails.pancard_Number && !this.isKycPanAndVerifiedPanMismatch)  ? 'done' : 'priority_high' }}</mat-icon>
+        <strong>PAN Details</strong>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="d-flex flex-column gap-2">
+      <mat-form-field class="w-100" appearance="standard">
+        <mat-label>{{isGesil ? 'Enter PAN' : 'PAN'}}</mat-label>
+        <input matInput type="text" [readonly]="!isGesil" [formControl]="panNo" minlength="10" maxlength="10">
+        <mat-icon class="tooltip_icon" *ngIf="!isGesil" [matTooltip]="tooltipMessage" matTooltipPosition="above" matSuffix>info</mat-icon>
+        <span *ngIf="isGesil && !showVerifyPanButton" class="verified_icon d-flex align-items-center" matSuffix>
+          <mat-icon title="PAN Verified" >check_circle</mat-icon> 
+          <span>Verified</span>
+        </span>
+
+
+      </mat-form-field>
+
+      <ng-container *ngIf="isGesil && !showVerifyPanButton && (!kycDetails.pancard_Number || isKycPanAndVerifiedPanMismatch)">
+        <p class="uplaod_adhar_info">PAN is verified. Please upload photo of PAN Card.</p>
+      </ng-container>
+
+      <ng-container *ngIf="isGesil && !showVerifyPanButton">
+
+        <div class="d-flex align-items-center justify-content-between">
+          <p class="m-0 p-0">PAN Photo</p>
+          <div class="btn-section d-flex gap-2 align-items-center">
+            <!-- <p *ngIf="file_names.pan" class="m-0 p-0">{{file_names.pan}}</p> -->
+            <div class="upload-btn-wrapper">
+              <button class="d-flex align-items-center btn btn-primary"><mat-icon>
+                  upload_file</mat-icon>Select</button>
+              <input type="file" #pan (change)="handleUpload($event,'pan')">
+            </div>
+            <div *ngIf="file_names.pan">
+              <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+                *ngIf="file_names.pan" (click)="remove_file('pan')"><mat-icon>delete</mat-icon>Remove</button>
+  
+            </div>
+            <button type="button" title="View already uploaded file" *ngIf="kycDetails?.pancard_Photo"
+              class="d-flex align-items-center btn btn-primary"
+              (click)="showDocument(kycDetails?.pancard_Photo)"><mat-icon>preview</mat-icon>Preview</button>
+          </div>
+        </div>
+
+        <div *ngIf="base64_file_data.pan" class="d-flex justify-content-center image_container">
+          <img [src]="base64_file_data.pan"  />
+        </div>
+        <div class="d-flex justify-content-center">
+          <p *ngIf="file_names.pan" class="m-0 p-0">{{file_names.pan}}</p>
+        </div>
+  
+        <div class="mt-4">
+          <button class="btn btn-primary" (click)="updateKyc('pan')">Update PAN</button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isGesil && showVerifyPanButton">
+        <button class="btn btn-primary" [disabled]="panNo.invalid" (click)="verifyPan()">Validate</button>
+      </ng-container>
+    </div>
+
+  </mat-expansion-panel>
+
+
+  <ng-container *ngIf="isGesil">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <strong>User Photo</strong>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="d-flex align-items-center justify-content-between">
+        <p class="m-0 p-0">Please upload passport size photo</p>
+        <div class="btn-section d-flex gap-2 align-items-center">
+          <!-- <p *ngIf="file_names.pass_photo" class="m-0 p-0">{{file_names.pass_photo}}</p> -->
+          <div class="upload-btn-wrapper">
+            <button class="d-flex align-items-center btn btn-primary"><mat-icon> upload_file</mat-icon>Select</button>
+            <input type="file" #pass_photo (change)="handleUpload($event,'pass_photo')">
+          </div>
+          <div *ngIf="file_names.pass_photo">
+            <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+              *ngIf="file_names.pass_photo"
+              (click)="remove_file('pass_photo')"><mat-icon>delete</mat-icon>Remove</button>
+
+          </div>
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.passport_Photo"
+            class="d-flex align-items-center btn btn-primary"
+            (click)="showDocument(kycDetails?.passport_Photo)"><mat-icon>preview</mat-icon>Preview</button>
+        </div>        
+      </div>
+
+      <div *ngIf="base64_file_data.pass_photo" class="mt-2 justify-content-center image_container">
+        <img [src]="base64_file_data.pass_photo"  />
+      </div>
+      <div class="d-flex justify-content-center">
+        <p *ngIf="file_names.pass_photo" class="m-0 p-0">{{file_names.pass_photo}}</p>
+      </div>
+
+
+      <div class="mt-4">
+        <button class="btn btn-primary" (click)="updateKyc('userphoto')">Update Photo</button>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <strong>GSTN Details</strong>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-column gap-2">
+
+        <mat-form-field class="w-100" appearance="standard">
+          <mat-label>Enter GSTN</mat-label>
+          <input matInput type="text" [(ngModel)]="gstnNo" minlength="15" maxlength="15">
+        </mat-form-field>
+
+        <div class="d-flex align-items-center justify-content-between">
+          <p class="m-0 p-0">Please upload GST Certificate</p>
+          <div class="btn-section d-flex gap-2 align-items-center">
+            <!-- <p *ngIf="file_names.gst_cert" class="p-0 m-0">{{file_names.gst_cert}}</p> -->
+            <div class="upload-btn-wrapper">
+              <button class="d-flex align-items-center btn btn-primary"><mat-icon>
+                  upload_file</mat-icon>Select</button>
+              <input type="file" #gst_cert (change)="handleUpload($event,'gst_cert')">
+            </div>
+            <div *ngIf="file_names.gst_cert">
+              <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+                *ngIf="file_names.gst_cert" (click)="remove_file('gst_cert')"><mat-icon>delete</mat-icon>Remove</button>
+
+            </div>
+            <button type="button" title="View already uploaded file" *ngIf="kycDetails?.gsT_Photo"
+              class="d-flex align-items-center btn btn-primary"
+              (click)="showDocument(kycDetails?.gsT_Photo)"><mat-icon>preview</mat-icon>Preview</button>
+          </div>
+        </div>
+        
+        <div *ngIf="base64_file_data.gst_cert" class="d-flex justify-content-center image_container">
+          <img [src]="base64_file_data.gst_cert"  />
+        </div>
+        <div class="d-flex justify-content-center">
+          <p *ngIf="file_names.gst_cert" class="m-0 p-0">{{file_names.gst_cert}}</p>
+        </div>
+      </div>
+
+
+      <div class="mt-4">
+        <button class="btn btn-primary" (click)="updateKyc('gstn')">Update Photo</button>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <strong>Center/Store Photo</strong>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="d-flex flex-column gap-2">
+        <div class="d-flex align-items-center justify-content-between">
+          <p class="m-0 p-0">Please upload indoor photo of center/store</p>
+          <div class="btn-section d-flex gap-2 align-items-center">
+            <p *ngIf="file_names.center_indoor" class="m-0 p-0">{{file_names.center_indoor}}</p>
+            <div class="upload-btn-wrapper">
+              <button class="d-flex align-items-center btn btn-primary"><mat-icon> upload_file</mat-icon>Select</button>
+              <input type="file" #center_indoor (change)="handleUpload($event,'center_indoor')">
+            </div>
+            <div *ngIf="file_names.center_indoor">
+              <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+                *ngIf="file_names.center_indoor"
+                (click)="remove_file('center_indoor')"><mat-icon>delete</mat-icon>Remove</button>
+            </div>
+            <!-- <button type="button" title="View already uploaded file" *ngIf="kycDetails?.center_IndoorPhoto"
+              class="d-flex align-items-center btn btn-primary"
+              (click)="showDocument(kycDetails?.center_IndoorPhoto)"><mat-icon>preview</mat-icon>Preview</button> -->
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between">
+          <p class="m-0 p-0">Please upload outdoor photo of center/store</p>
+          <div class="btn-section d-flex gap-2 align-items-center">
+            <p *ngIf="file_names.center_outdoor" class="p-0 m-0">{{file_names.center_outdoor}}</p>
+            <div class="upload-btn-wrapper">
+              <button class="d-flex align-items-center btn btn-primary"><mat-icon> upload_file</mat-icon>Select</button>
+              <input type="file" #center_outdoor (change)="handleUpload($event,'center_outdoor')">
+            </div>
+            <div *ngIf="file_names.center_outdoor">
+              <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+                *ngIf="file_names.center_outdoor"
+                (click)="remove_file('center_outdoor')"><mat-icon>delete</mat-icon>Remove</button>
+
+            </div>
+            <!-- <button type="button" title="View already uploaded file" *ngIf="kycDetails?.center_OutDoorPhoto"
+              class="d-flex align-items-center btn btn-primary"
+              (click)="showDocument(kycDetails?.center_OutDoorPhoto)"><mat-icon>preview</mat-icon>Preview</button> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button class="btn btn-primary" (click)="updateKyc('center')">Update Center/Store Photos</button>
+      </div>
+    </mat-expansion-panel>
+  </ng-container>
+
+  <ng-container *ngIf="!isGesil">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="status_icon" [style]="{color: currentUser.user.mobile_Number ? 'limegreen': 'orangered'}">{{currentUser.user.mobile_Number ? 'done' : 'priority_high' }}</mat-icon>
+          <strong>Mobile Details</strong>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field class="w-100" appearance="standard">
+        <mat-label>Mobile No</mat-label>
+        <input matInput type="text" readonly="" [(ngModel)]="currentUser.user.mobile_Number">
+        <mat-icon class="tooltip_icon" *ngIf="!isGesil" [matTooltip]="tooltipMessage" matTooltipPosition="above" matSuffix>info</mat-icon>
+      </mat-form-field>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="status_icon" [style]="{color: (education && kycDetails.education_Photo) ? 'limegreen': 'orangered'}">{{(education && kycDetails.education_Photo) ? 'done' : 'priority_high' }}</mat-icon>
+          <strong>Education Details</strong>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Please select your highest educational qualification.</p>
+      <mat-radio-group [(ngModel)]="education" class="d-flex flex-column gap-2" aria-label="Select an option" (change)="onChange($event)">
+        <mat-radio-button *ngFor="let opt of education_options" [value]="opt.value">{{opt.label}}</mat-radio-button>
+      </mat-radio-group>
+
+      <div class="d-flex align-items-center justify-content-between mt-4">
+        <p class="m-0 p-0">Upload Education Certificate</p>
+
+        <div class="btn-section d-flex gap-2 align-items-center">
+          <p *ngIf="file_names.education_certificate" class="m-0 p-0">{{file_names.education_certificate}}</p>
+          <div class="upload-btn-wrapper">
+            <button class="d-flex align-items-center btn btn-primary" title="Upload file">
+              <mat-icon> upload_file</mat-icon> Select
+            </button>
+            <input type="file" #education_certificate (change)="handleUpload($event,'education_certificate')">
+          </div>
+
+          <div *ngIf="file_names.education_certificate">
+            <button type="button" title="Remove file" class="d-flex align-items-center btn btn-warning"
+              (click)="remove_file('education_certificate')">
+              <mat-icon>delete</mat-icon> Remove
+            </button>
+          </div>
+
+          <button type="button" title="View already uploaded file" *ngIf="kycDetails?.education_Photo"
+            class="d-flex align-items-center btn btn-primary" (click)="showDocument(kycDetails?.education_Photo)">
+            <mat-icon>preview</mat-icon> Preview
+          </button>
+
+        </div>
+      </div> 
+
+      <div *ngIf="base64_file_data.education_certificate" class="d-flex justify-content-center image_container mt-2">
+        <img [src]="base64_file_data.education_certificate"  />
+      </div>
+      
+      <div class="mt-4">
+        <button type="button" class="btn btn-primary" (click)="updateKyc ('education')">Save Education Details</button>
+      </div>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="status_icon" [style]="{color: bankDetails ? 'limegreen': 'orangered'}">{{bankDetails ? 'done' : 'priority_high' }}</mat-icon>
+          <strong>Bank Details</strong>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <table *ngIf="bankDetails; else notFound" class="table">
+        <tr>
+          <th>Account Holder Name :</th>
+          <td>{{bankDetails?.userAccount_HolderName }}</td>
+        </tr>
+        <tr>
+          <th>Account Number :</th>
+          <td>{{bankDetails?.user_Account_Number }}</td>
+        </tr>
+        <tr>
+          <th>Bank Name :</th>
+          <td>{{bankDetails?.bank_Name }}</td>
+        </tr>
+        <tr>
+          <th>IFSC :</th>
+          <td>{{bankDetails?.user_IFSCCode }}</td>
+        </tr>
+      </table>
+      <ng-template #notFound>
+        Bank Details Not Found
+      </ng-template>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>
+
+<div *ngIf="!isGesil" class="mt-4 d-flex justify-content-end">
+  <button 
+    class="btn btn-primary" 
+    (click)="enrollForPMFBY ()"
+    [disabled]="isKycAdharAndVerifiedAdharMismatch ||
+    isKycPanAndVerifiedPanMismatch ||
+    !currentUser.user.mobile_Number ||
+    !bankDetails?.user_Account_Number ||    
+    !education || !kycDetails.education_Photo">Enroll to PMFBY</button>
+</div>

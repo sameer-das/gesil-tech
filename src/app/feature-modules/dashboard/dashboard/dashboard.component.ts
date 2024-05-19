@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -8,12 +9,25 @@ import { LoaderService } from 'src/app/services/loader.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private _popupService: PopupService, private _loaderService: LoaderService, private _authService: AuthService) { }
+  ngOnDestroy(): void {
+    this.$destroy.next(true)
+  }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   menu_categories: any = JSON.parse(localStorage.getItem('menu_categories') || '{}');
+  $destroy: Subject<boolean> = new Subject();
 
-  public ngOnInit(): void { }
+  esebaNews: string = '';
+  public ngOnInit(): void { 
+    this._authService.getEsebaNews().pipe(takeUntil(this.$destroy)).subscribe({
+      next: (resp:any) => {
+        if(resp.status = "Success" && resp.code === 200) {
+          this.esebaNews = resp.data;
+        }
+      }
+    })
+  }
   assetPath: string = 'assets/icons/newicons/';
   getImagePath(imageName: string) {
     return `${this.assetPath}${imageName}`;

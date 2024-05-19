@@ -122,6 +122,14 @@ const routes: Routes = [
           ).then((m) => m.DmtModule),
         canLoad: [AuthGuardService],
       },
+      {
+        path: 'pmfby',
+        loadChildren: () =>
+          import(
+            './feature-modules/pmfby/pmfby.module'
+          ).then((m) => m.PmfbyModule),
+        canLoad: [AuthGuardService],
+      },
     ],
   },
   {

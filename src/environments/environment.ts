@@ -19,7 +19,6 @@ export const environment = {
     {blr_id: 'AIRT00000NAT87',logo:'airtel-dtoh.png'},
     {blr_id: 'VIDEOCON0NAT01',logo:'dtoh.png'},
     {blr_id: 'SUND00000NATGK',logo:'sundirect.jpeg'},
-    {blr_id: 'TATASKY00NAT01',logo:'tataplay.png'},
   ],
 
   PREPAID_RECHARGE_OPERATOR : [

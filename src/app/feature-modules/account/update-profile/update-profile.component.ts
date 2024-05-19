@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild,
@@ -18,7 +19,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, Subject, finalize, takeUntil } from 'rxjs';
 import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -30,7 +31,7 @@ import { HeaderService } from 'src/app/header/header.service';
   templateUrl: './update-profile.component.html',
   styleUrls: ['./update-profile.component.scss'],
 })
-export class UpdateProfileComponent implements OnInit, OnChanges {
+export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
@@ -42,7 +43,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   ) { }
   @Input('states') states: any[] = [];
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
-  kycDetails: any = {};
+
   relations: any[] = [
     { id: 'father', name: 'Father' },
     { id: 'mother', name: 'Mother' },
@@ -51,7 +52,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     { id: 'daughter', name: 'Dauhgter' },
     { id: 'sibling', name: 'Sibling' },
   ];
-
+  $destroy: Subject<boolean> = new Subject();
   ngOnInit(): void {
 
     if (this.locationTypes.length === 0)
@@ -83,6 +84,10 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       console.log('call populate state');
       this.populateStates(1);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.$destroy.next(true);
   }
 
   onStepChange(e: StepperSelectionEvent) {
@@ -152,43 +157,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
         this.populateUserBankDetailForm(this.userBankDetails);
       }
     } else if (e.selectedIndex === 3) {
-      console.log('fetch kyc details')
-      // if (Object.keys(this.userBankDetails).length === 0) {
-      //   this._authService
-      //     .getUserBankDetail(this.currentUser.user.user_ID)
-      //     .subscribe({
-      //       next: (resp: any) => {
-      //         console.log(resp)
-      //         if (
-      //           resp.status === 'Success' &&
-      //           resp.code === 200 &&
-      //           resp.data &&
-      //           Object.keys(resp.data).length > 0
-      //         ) {
-      //           this.userBankDetails = resp.data;
-      //         }
-      //       },
-      //     });
-      // }
-
-      if (Object.keys(this.kycDetails).length === 0) {
-
-        this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
-          next: (resp: any) => {
-            console.log(resp)
-            if (resp.status === 'Success' && resp.code === 200) {
-              this.kycDetails = resp.data;
-              this.populateKycDetailsFormGroup(this.kycDetails);
-            }
-
-          }, error: (error: any) => {
-            console.log('error fetching kyc details')
-            console.log(error);
-          }
-        })
-      } else {
-        this.populateKycDetailsFormGroup(this.kycDetails);
-      }
+      // console.log('fetch kyc details')
     }
   }
 
@@ -241,12 +210,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     accountNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
   });
 
-  kycDetailsFormGroup: FormGroup = this._formBuilder.group({
-    adhar_no: new FormControl('', [Validators.required]),
-    pan_no: new FormControl('', [Validators.required]),
-    bank_account_no: new FormControl('', [Validators.required]),
-    gstin_no: new FormControl(''),
-  });
 
   userRegDetails: any = {};
   populateUserRegistrationForm(userRegDetails: any) {
@@ -532,105 +495,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
   }
 
 
-  submitKYCDetails() {
-    console.log(this.kycDetailsFormGroup.value);
-    console.log(this.base64_file_data);
-    this.saveKYCDetails();
-  }
 
-  saveKYCDetails() {
-
-
-    const kycDetails = {
-      kyC_ID: this.currentUser.kycDetail.kyC_ID,
-      user_ID: this.currentUser.user.user_ID,
-      aadhar_Number: this.kycDetailsFormGroup.value.adhar_no,
-      aadhar_FontPhoto: this.base64_file_data.adhar_front,
-      aadhar_BackPhoto: this.base64_file_data.adhar_back,
-      pancard_Number: this.kycDetailsFormGroup.value.pan_no,
-      pancard_Photo: this.base64_file_data.pan,
-      passport_Photo: this.base64_file_data.pass_photo,
-      gsT_Number: this.kycDetailsFormGroup.value.gstin_no,
-      gsT_Photo: this.base64_file_data.gst_cert,
-      center_IndoorPhoto: this.base64_file_data.center_indoor,
-      center_OutDoorPhoto: this.base64_file_data.center_outdoor,
-    };
-
-    if (!/^[0-9]*$/.test(this.kycDetailsFormGroup.value.adhar_no) || this.kycDetailsFormGroup.value.adhar_no.length != 12) {
-      this._popupService.openAlert({
-        header: 'Alert',
-        message: 'Invalid adhar number! Please enter valid adhar number'
-      })
-      return;
-    }
-
-    if( !/^[a-zA-Z0-9]+$/.test(this.kycDetailsFormGroup.value.pan_no) || this.kycDetailsFormGroup.value.pan_no.length !== 10) {
-      this._popupService.openAlert({
-        header: 'Alert',
-        message: 'Invalid PAN! Please enter valid PAN.'
-      })
-      return;
-    }
-
-
-
-    this._loaderService.showLoader();
-    this._authService.saveUserKycDetails(kycDetails).subscribe({
-      next: (resp: any) => {
-        this._loaderService.hideLoader();
-        console.log(resp);
-        if (resp.code === 200 && resp.status === 'Success') {
-          this._popupService.openAlert({
-            header: 'Success',
-            message: 'Details saved successfully!'
-          });
-
-          if (kycDetails.passport_Photo) {
-            this._authService.profilePicUpdate$.next();
-          }
-
-          // To re update 
-          this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
-            next: (resp: any) => {
-              console.log(resp)
-              if (resp.status === 'Success' && resp.code === 200) {
-                this.kycDetails = resp.data;
-                this.populateKycDetailsFormGroup(this.kycDetails);
-                this.refreshUserDetailsInLocalStorage();
-              }
-
-            }, error: (error: any) => {
-              console.log('error fetching kyc details')
-              console.log(error);
-            }
-          })
-
-        } else {
-        }
-      },
-      error: (err) => {
-        this._loaderService.hideLoader();
-        this._popupService.openAlert({
-          header: 'Alert',
-          message: 'Error saving the details!'
-        })
-        console.log(`error while saving user kyc details`);
-        console.error(err);
-
-      },
-    });
-  }
-
-
-  populateKycDetailsFormGroup(kycDetails: any) {
-    this.kycDetailsFormGroup =
-      this._formBuilder.group({
-        adhar_no: new FormControl(kycDetails.aadhar_Number, [Validators.required]),
-        pan_no: new FormControl(kycDetails.pancard_Number, [Validators.required]),
-        bank_account_no: new FormControl(this.userBankDetails.user_Account_Number, [Validators.required]),
-        gstin_no: new FormControl(kycDetails.gsT_Number),
-      });
-  }
 
   districts: any[] = [];
   currentChoosenStateId!: number;
@@ -753,99 +618,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
     return null;
   }
 
-  @ViewChild('adhar_front') adhar_front!: ElementRef;
-  @ViewChild('adhar_back') adhar_back!: ElementRef;
-  @ViewChild('pan') pan!: ElementRef;
-  @ViewChild('bank_passbook') bank_passbook!: ElementRef;
-  @ViewChild('pass_photo') pass_photo!: ElementRef;
-  @ViewChild('gst_cert') gst_cert!: ElementRef;
-  @ViewChild('center_indoor') center_indoor!: ElementRef;
-  @ViewChild('center_outdoor') center_outdoor!: ElementRef;
-
-  base64_file_data: any = {
-    adhar_front: '',
-    adhar_back: '',
-    pan: '',
-    bank_passbook: '',
-    pass_photo: '',
-    gst_cert: '',
-    center_indoor: '',
-    center_outdoor: '',
-  };
-
-  file_names: any = {
-    adhar_front: '',
-    adhar_back: '',
-    pan: '',
-    bank_passbook: '',
-    pass_photo: '',
-    gst_cert: '',
-    center_indoor: '',
-    center_outdoor: '',
-  }
-
-  handleUpload(e: Event, name: string) {
-    console.log(name);
-    const target: any = e.target;
-    const file = target?.files[0];
-    if (file && !this.isInvalidFile(file, name)) {
-      this.file_names[name] = file.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.base64_file_data[name] = reader.result;
-      };
-    }
-  }
-
-  isInvalidFile(file: File, name: string): boolean {
-    if (!['image/jpeg', 'image/png'].includes(file.type)) {
-      this._snackBar.open(
-        'Please upload jpeg/png formats only!',
-        'Alert',
-        this.snackBarConfig
-      );
-      this.remove_file(name);
-      return true;
-    }
-    return false;
-  }
-
-  remove_file(name: string) {
-    this.base64_file_data[name] = '';
-    if (name === 'adhar_front') {
-      this.adhar_front.nativeElement.value = '';
-      this.file_names.adhar_front = '';
-    } else if (name === 'adhar_back') {
-      this.adhar_back.nativeElement.value = '';
-      this.file_names.adhar_back = '';
-    } else if (name === 'pan') {
-      this.pan.nativeElement.value = '';
-      this.file_names.pan = '';
-    } else if (name === 'bank_passbook') {
-      this.bank_passbook.nativeElement.value = '';
-      this.file_names.bank_passbook = '';
-    } else if (name === 'pass_photo') {
-      this.pass_photo.nativeElement.value = '';
-      this.file_names.pass_photo = '';
-    } else if (name === 'gst_cert') {
-      this.gst_cert.nativeElement.value = '';
-      this.file_names.gst_cert = '';
-    } else if (name === 'center_indoor') {
-      this.center_indoor.nativeElement.value = '';
-      this.file_names.center_indoor = '';
-    } else if (name === 'center_outdoor') {
-      this.center_outdoor.nativeElement.value = '';
-      this.file_names.center_outdoor = '';
-    }
-  }
-
-
-  showDocument(docName: string) {
-    // console.log(docName)
-    this._matDialog.open(DocumentPopupComponent, { data: docName })
-  }
-
   locationTypes: any[] = [];
   getUserLocationType() {
     this._authService.getUserLocationType().subscribe({
@@ -863,13 +635,13 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
 
 
 
-  refreshUserDetailsInLocalStorage(type?:string) {
+  refreshUserDetailsInLocalStorage(type?: string) {
     this._authService.getUserInfos(this.currentUser.user.user_ID).subscribe({
       next: (resp: any) => {
         console.log(resp);
         if (resp.status === 'Success' && resp.code === 200) {
           localStorage.setItem('auth', JSON.stringify({ ...resp.data }));
-          if(type === 'personalDetail') {
+          if (type === 'personalDetail') {
             console.log('Refresh for personal change')
             this._headerService.personalInfoChanged$.next();
           }
@@ -881,7 +653,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges {
       },
     });
   }
-
 
 
 }

@@ -1,3 +1,12 @@
+<div class="d-flex align-items-center">
+    <button class="header__title-button" title="Go to Dashboard" mat-mini-fab color="primary" (click)="goToDashboard()">
+    <mat-icon class="header__title-button-icon">arrow_back</mat-icon>
+  </button>
+
+  <h2 class="page__header">Prepaid Recharge</h2>
+</div>
+
+
 <div>
     <h1 class="recent_recharge_title" *ngIf="previousTransactions.length > 0;">Your Recent Recharges</h1>
     <div class="last-transactions" *ngIf="previousTransactions.length > 0;">
@@ -37,7 +46,7 @@
                                 
                                 placeholder="Please enter your mobile number">
                             <mat-spinner *ngIf="isFetching" color="warn" diameter="25"></mat-spinner>
-                            <p class="info">Please enter your 10 digit mobile number.</p>
+                            <p class="info">Please enter your 10 digit mobile number. (Don't add 0 or +91)</p>
                             <div class="spinner">
     
                             </div>

@@ -187,6 +187,8 @@
 
 .upload-btn-wrapper button {
   font-size: 0.8rem;
+  // width: 50px;
+  // height: 20px;
 }
 
 .ml05 {
@@ -194,18 +196,31 @@
 }
 
 
-.file_name {
-  position: absolute;
-  left: -3rem;
-
-  width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .passport__info {
   font-size: 0.7rem;
   color: $pink;
   font-style: italic;
+}
+
+
+.btn-section {
+  button {
+    padding: 0.35rem;
+    font-size: 0.8rem !important;
+    cursor: pointer;
+  }
+
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;   
+  }
+  
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+  
 }

@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "^13.3.11",
+    "bootstrap": "^5.3.3",
     "chart.js": "^4.3.3",
     "moment": "^2.29.4",
     "ng2-charts": "^3.1.2",

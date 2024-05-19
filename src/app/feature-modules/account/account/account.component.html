@@ -1,19 +1,51 @@
 <h3>My Account</h3>
-<hr>
-<div class="container">
+<!-- <hr> -->
+<!-- <div class="container">
     <div class="sidemenu">
         <ul>
             <li (click)="changeTab(1)"><mat-icon>account_circle</mat-icon><span>My Profile</span></li>
             <li (click)="changeTab(2)"><mat-icon>update</mat-icon><span>Update Profile</span></li>
             <li (click)="changeTab(3)"><mat-icon>vpn_key</mat-icon><span>Change Password</span></li>
-            <!-- <li (click)="changeTab(3)"><mat-icon>shield</mat-icon><span>Change Wallet PIN</span></li> -->
 
         </ul>
     </div>
-    <div class="content"> 
+    <div class="content">
         <app-my-profile *ngIf="currentTab === 1"></app-my-profile>
         <app-update-profile *ngIf="currentTab === 2" [states]="states"></app-update-profile>
         <app-change-password *ngIf="currentTab === 3"></app-change-password>
-        <!-- <app-change-pin *ngIf="currentTab === 3"></app-change-pin> -->
     </div>
-</div>
+</div> -->
+
+
+<mat-tab-group [dynamicHeight]="true" (selectedTabChange)="changeTab($event)">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">account_circle</mat-icon>
+            My Profile
+        </ng-template>
+        <div class="mt-4">
+            <app-my-profile></app-my-profile>
+        </div>
+
+    </mat-tab>
+    <mat-tab label="Update Profile">
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">update</mat-icon>
+            Update Profile
+        </ng-template>
+        <div class="mt-4">
+            <app-update-profile [states]="states"></app-update-profile>
+        </div>
+
+    </mat-tab>
+    <mat-tab label="Change Password">
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">vpn_key</mat-icon>
+            Change Password
+        </ng-template>
+        <div class="mt-4">
+            <app-change-password></app-change-password>
+        </div>
+
+    </mat-tab>
+</mat-tab-group>

@@ -49,11 +49,11 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
     this.$destory.next(true)
   }
 
-  mobile_operator_to_log: any[] = [
-    { operator: 'airtel', logo: 'Airtel-Logo.png' },
+  mobile_operator_to_logo: any[] = [
+    { operator: 'airtel', logo: 'airtel-logo.jpg' },
     { operator: 'jio', logo: 'jio.png' },
-    { operator: 'bsnl', logo: 'bsnl.png' },
-    { operator: 'voda', logo: 'vi.png' },
+    { operator: 'bsnl', logo: 'bsnl-logo.svg' },
+    { operator: 'voda', logo: 'vi-logo.svg' },
   ]
 
   onInput() {
@@ -79,7 +79,7 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
           this.isFetching = false;
           this.currentLocation = res?.resultDt?.data.currentLocation;
           this.currentOperator = res?.resultDt?.data.currentOperator;
-          const foundOp = this.mobile_operator_to_log.filter((op: any) => op.operator.includes(this.currentOperator.trim().toLowerCase()))
+          const foundOp = this.mobile_operator_to_logo.filter((op: any) => op.operator.includes(this.currentOperator.trim().toLowerCase()))
           this.currentOperatorLogo = foundOp.length > 0 ? `./assets/logo/${foundOp[0].logo}` : '';
 
           sessionStorage.setItem(
@@ -138,7 +138,7 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
               if (req) {
                 operatorDetails = environment.PREPAID_RECHARGE_OPERATOR.find(curr => +curr.op === +req.op)
                 // console.log(operatorDetails);
-                foundOp = this.mobile_operator_to_log.filter((op: any) => op.operator.includes(operatorDetails?.provider?.trim().toLowerCase()))
+                foundOp = this.mobile_operator_to_logo.filter((op: any) => op.operator.includes(operatorDetails?.provider?.trim().toLowerCase()))
                 // this.currentOperatorLogo = foundOp?.length > 0 ? `./assets/logo/${foundOp[0].logo}` : '';
       
               }
@@ -162,4 +162,9 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
     // console.log(this.mobileForm)
 
   }
+
+  goToDashboard() {
+    this._router.navigate(['dashboard'])
+  }
+
 }

@@ -157,7 +157,7 @@ p.header__subtext {
   justify-content: center;
   // flex-direction: column;
 
-  
+
 }
 
 h1.recent_recharge_title {
@@ -204,48 +204,49 @@ h1.recent_recharge_title {
   gap: 0.5rem;
 
   .last-transactions-card {
-      flex: 1;
-      border-radius: 0.25rem;
-      padding: 0.5rem;
-      max-width: 200px;
+    flex: 1;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    max-width: 200px;
 
-      cursor: pointer;
-  
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    cursor: pointer;
 
-      .details > p{
-          font-size: 0.7rem;
-      }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-
-      strong.amount {
-          color: $gradient1;
-          font-size: 1rem;
-      }
-
-      strong.billerid {
-          font-size: 0.8rem;
-      }
-          
-
-      p {
-          padding: 0;
-          margin: 0;
-      }
+    .details>p {
+      font-size: 0.7rem;
+    }
 
 
-      img {
-          width: 40px;
-          aspect-ratio: 1;
-          object-fit: cover;
-      }
+    strong.amount {
+      color: $gradient1;
+      font-size: 1rem;
+    }
+
+    strong.billerid {
+      font-size: 0.8rem;
+    }
+
+
+    p {
+      padding: 0;
+      margin: 0;
+    }
+
+
+    img {
+      width: 40px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      // border-radius: 50%;
+    }
   }
 
   &-loading {
-      justify-content: center;
-      align-items: center;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -262,4 +263,11 @@ h1.recent_recharge_title {
   color: $gradient1;
   font-size: 2rem;
   height: 2rem;
+}
+
+.page__header {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-left: 1rem;
 }

@@ -26,7 +26,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   public close(isOk: boolean) {
@@ -40,6 +40,8 @@ export interface ConfirmPopupData {
   showCancelButton?: boolean,
   tableType?: string,
   tableData?: any,
-  modalMinWidth?: number
+  modalMinWidth?: number,
+  okButtonLabel?: string,
+  cancelButtonLabel?: string
 }
 

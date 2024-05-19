@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { Subject, takeUntil } from 'rxjs';
 import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -17,7 +18,7 @@ import { LoaderService } from 'src/app/services/loader.service';
   templateUrl: './register-dialog-new.component.html',
   styleUrls: ['./register-dialog-new.component.scss'],
 })
-export class RegisterDialogNewComponent implements OnInit {
+export class RegisterDialogNewComponent implements OnInit, OnDestroy {
   constructor(
     private _dialogRef: MatDialogRef<RegisterDialogNewComponent>,
     private _authService: AuthService,
@@ -27,9 +28,16 @@ export class RegisterDialogNewComponent implements OnInit {
     this._dialogRef.disableClose = true;
   }
 
+  ngOnDestroy(): void {
+    this.$destroy.next(true)
+  }
+
+
   showRefForm: boolean = true;
   showRegistrationForm: boolean = false;
   showNoRefMessage: boolean = false;
+
+  private $destroy: Subject<boolean> = new Subject();
 
   states: any[] = [];
   districts: any[] = [];
@@ -45,7 +53,7 @@ export class RegisterDialogNewComponent implements OnInit {
   });
 
   registrationFormGroup: FormGroup = new FormGroup({
-    userType: new FormControl('1'),
+    userType: new FormControl('2'),
     locationType: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
     firstName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
@@ -78,6 +86,19 @@ export class RegisterDialogNewComponent implements OnInit {
     // if (this.blocks.length === 0) {
     //   this.populateBlocks();
     // }
+
+    this.registrationFormGroup.get('userType')?.valueChanges
+      .pipe(takeUntil(this.$destroy))
+      .subscribe({
+        next: (val) => {
+          if(+val === 1) {
+            this._popupService.openAlert({
+              header:'Alert', 
+              message:'Some services are not available for End User. To use all the services, please register as e-Sathi.'
+            })
+          }
+        }
+      })
   }
 
   disabled: boolean = false;
@@ -298,7 +319,7 @@ export class RegisterDialogNewComponent implements OnInit {
 
   onNoRefCodeClick() {
     console.log('no ref clicked');
-    
+
     this.showRefForm = false;
     this.showNoRefMessage = true;
   }

@@ -115,6 +115,7 @@ export class AuthService {
 
   private URL_SAVE_USER_KYC_DETAILS: string = `/api/User/UpdateUserKycDetail`;
   saveUserKycDetails(kycDetials: any) {
+    console.log(kycDetials)
     return this._http.post(
       `${environment.service_base_url}${this.URL_SAVE_USER_KYC_DETAILS}`,
       kycDetials
@@ -137,6 +138,15 @@ export class AuthService {
   }
 
 
+  private URL_GET_ADHAR_DETAILS:string = '/api/User/GetAdharaDetails';
+  getAdharDetails(adhar: any) {
+    return this._http.post(`${environment.service_base_url}${this.URL_GET_ADHAR_DETAILS}`, adhar);
+  }
+
+  private URL_GET_ESEBA_NEWS:string = '/api/User/GetEsebaNews';
+  getEsebaNews() {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_ESEBA_NEWS}`)
+  }
 
 
 
@@ -227,6 +237,51 @@ export class AuthService {
       responseType: 'blob',
       observe:'response'
     })
+  }
+
+
+  private URL_PMFBY_SUBMIT = `/api/POSP/POSPRegistration`;
+  pmfbyRegistration (pmfby:any) {
+    return this._http.post(`${environment.service_base_url}${this.URL_PMFBY_SUBMIT}`, pmfby)
+  }
+
+  private URL_GET_PMFBY_STATUS = `/api/POSP/POSPRegistrationStatusCheck`;
+  getPmfbyStatus (mobileNo:number) {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_PMFBY_STATUS}?mobile_no=${mobileNo}`)
+  }
+
+  private URL_PMFBY_DOC_UPLOAD = `/api/POSP/POSPDocumnetUpload`;
+  pmfbyDocUpload (payload:any) {
+    return this._http.post(`${environment.service_base_url}${this.URL_PMFBY_DOC_UPLOAD}`, payload)
+  }
+
+
+
+
+  private URL_ADHAR_OTP_GENERATE = `/api/User/GenerateOTPForAadharaValidation`;
+  generateOtpForAdharValidate (payload:any) {
+    return this._http.post(`${environment.service_base_url}${this.URL_ADHAR_OTP_GENERATE}`, payload)
+  }
+
+  private URL_ADHAR_OTP_VERIFY = '/api/User/AadharaOTPSubmit?uId=';
+  verifyOtpForAdhar (userId:number, payload:any) {
+    return this._http.post(`${environment.service_base_url}${this.URL_ADHAR_OTP_VERIFY}${userId}`, payload)
+  }
+
+
+  private URL_GET_PAN_DETAILS = '/api/User/GetPanDetails?uId=';
+  verifyPanDetails (userId:number, payload:any) {
+    return this._http.post(`${environment.service_base_url}${this.URL_GET_PAN_DETAILS}${userId}`, payload)
+  }
+
+  private URL_GET_USER_VERIFIED_PAN_DETAILS = `/api/User/GetPanDetail`;
+  getUserVerifiedPanDetail (userId:number) {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_USER_VERIFIED_PAN_DETAILS}?userId=${userId}`)
+  }
+  
+  private URL_GET_USER_VERIFIED_ADHAR_DETAILS = `/api/User/GetAadharaDetail`;
+  getUserVerifiedAdharDetail (userId:number) {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_USER_VERIFIED_ADHAR_DETAILS}?userId=${userId}`)
   }
 }
 

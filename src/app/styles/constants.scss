@@ -92,10 +92,10 @@ $text-black: rgba(0, 0, 0, 0.87);
 
 .btn {
   margin: 0;
-  padding: 0.7rem 1rem;
+  // padding: 0.7rem 1rem;
   border: none;
   outline: none;
-  font-size: 1.05rem !important;
+  // font-size: 1.05rem !important;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
 
@@ -104,6 +104,12 @@ $text-black: rgba(0, 0, 0, 0.87);
   }
 
   &.primary {
+    background: $gradient1;
+    // background: radial-gradient(circle, $gradient1 0%, $gradient2 100%);
+    color: $white;
+  }
+
+  &-primary {
     background: $gradient1;
     // background: radial-gradient(circle, $gradient1 0%, $gradient2 100%);
     color: $white;
@@ -186,3 +192,4 @@ $text-black: rgba(0, 0, 0, 0.87);
     }
   }
 }
+
