@@ -8,16 +8,17 @@ import {
 } from './mobile-plan-resolver.service';
 import { MobileRechargePlanComponent } from './mobile-recharge-plan/mobile-recharge-plan.component';
 import { MobileRechargeService } from './mobile-recharge.service';
+import { KycGuard } from 'src/app/services/kyc.guard';
 
 const routes: Routes = [
-  { path: '', component: MobileNumberSearchComponent },
+  { path: '', component: MobileNumberSearchComponent, canActivate:[KycGuard] },
   {
     path: 'plans',
     component: MobileRechargePlanComponent,
     resolve: {
       data: MobilePlanResolverService,
     },
-    canActivate: [MobilePlanGuard],
+    canActivate: [KycGuard, MobilePlanGuard],
   },
 ];
 

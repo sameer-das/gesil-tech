@@ -32,15 +32,7 @@ export class ServiceCategoryComponent implements OnInit {
 
   notImplemented = ['AEPS','New-Adhar','Print-PVC','PGDCA','DCA','pan']
   getRoutePath(path:string) {
-    if(path === '/Mobile-Recharge')
-      return path.toLowerCase();
-
-      //if not implemented or null go to same url
-    if(this.notImplemented.includes(path?.substring(1)) || !path){
-      return this.router.url;
-    }
-
-    return `../bbps/service${path ? path : '/'}`;
+    return `${path}`;
   }
 
   getState(service:any) {

@@ -10,6 +10,7 @@ import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.compo
 import { TrackComplaintComponent } from './track-complaint/track-complaint.component';
 import { WalletService } from '../wallet/wallet.service';
 import { BbpsService } from './bbps.service';
+import { KycGuard } from 'src/app/services/kyc.guard';
 
 
 
@@ -30,7 +31,7 @@ import { BbpsService } from './bbps.service';
       path: '', component: AllServicesComponent,
     },
     { path: 'payment/:transid', component: BillPaymentComponent, },
-    { path: 'service/:servicename', component: AllServicesComponent, },
+    { path: 'service/:servicename', component: AllServicesComponent, canActivate:[KycGuard] },
     { path: 'raise-complaint', component: RaiseComplaintComponent, },
     { path: 'track-complaint', component: TrackComplaintComponent, },
     ])

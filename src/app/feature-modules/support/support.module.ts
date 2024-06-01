@@ -30,6 +30,5 @@ import { ReplyPopupComponent } from './reply-popup/reply-popup.component';
     { path: 'list', redirectTo: '' }
     ])
   ],
-  providers: [SupportService]
 })
 export class SupportModule { }

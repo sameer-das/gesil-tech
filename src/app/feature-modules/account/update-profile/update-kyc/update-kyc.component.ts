@@ -29,6 +29,7 @@ export class UpdateKycComponent implements OnInit {
     isAdharValidated: boolean = false;
 
     kycDetails: any = {};
+    fatherFullName:string = '';
 
     base64_file_data: any = {
         adhar_front: '',
@@ -81,7 +82,7 @@ export class UpdateKycComponent implements OnInit {
 
     bankDetails: any;
 
-    tooltipMessage = 'To update the details please navigate to Update Profile under Account Menu';
+    tooltipMessage = 'To update the details please navigate to Update Profile tab under Account Menu';
 
     education_options = [
         { label: 'Below Secondary (10th)', value: '<10' },
@@ -627,6 +628,15 @@ export class UpdateKycComponent implements OnInit {
 
 
     enrollForPMFBY() {
+        const checkCharactersOnly = new RegExp('^[a-zA-Z ]*$');
+        if(!checkCharactersOnly.test(this.fatherFullName.trim())) {
+            this._popupService.openAlert({
+                message: `Father's fullname can't contain special characters! Only alphabets are allowed.`,
+                header:'Alert'
+            })
+            return;
+        }
+
         const pmfby = {
             "posp_mobile": this.currentUser.user.mobile_Number,
             "email_id": this.currentUser.user.user_EmailID,
@@ -634,13 +644,13 @@ export class UpdateKycComponent implements OnInit {
             "pan_status": "active",
             "name_as_pan": this.pan_verified_response.full_name,
             "dob_as_pan": this.pan_verified_response.dob,
-            "fathername_as_pan": this.adhar_verified_response.care_of,
+            "fathername_as_pan": this.fatherFullName.trim(),
             "pan_issue_date": this.getPanIssueDateFromDob(this.pan_verified_response.dob),
             "masked_aadhaar_number": this.pan_verified_response.masked_aadhaar,
             "name_as_aadhaar": this.adhar_verified_response.full_name,
             "dob_as_aadhaar": this.adhar_verified_response.dob,
             "gender_as_aadhaar": this.adhar_verified_response.gender,
-            "fathername_as_aadhaar": this.adhar_verified_response.care_of,
+            "fathername_as_aadhaar": this.fatherFullName.trim(),
             "full_address": this.getFullAddressFromAdharResponse(this.adhar_verified_response.address),
             "pincode": this.adhar_verified_response.zip,
             "education": this.education,
@@ -649,26 +659,36 @@ export class UpdateKycComponent implements OnInit {
             "account_holder_name": this.bankDetails.userAccount_HolderName,
             "bank_name": this.bankDetails.bank_Name
         }
+        console.log('========= PMFBY Request =========')
         console.log(pmfby);
         this._loaderService.showLoader();
         this._authService.pmfbyRegistration(pmfby)
             .pipe(finalize(() => this._loaderService.hideLoader()), takeUntil(this.$destroy))
             .subscribe({
                 next: (resp: any) => {
-                    console.log('PMFBY Response =========')
+                    console.log('========= PMFBY Response =========')
                     console.log(resp)
                     if (resp.status === 'Success' && resp.code === 200) {
                         if (resp.data?.code === 101 && resp.data.data?.index_id) {
                             // It's pending status
                             // Call the document upload method
                             this.PMFBYDocUpload(+resp.data.data?.index_id)
-                        } else if (resp.data?.code === 104) {
+                        } else if (resp.data?.code === 104 || resp.data?.code === 102 ) {
                             // Its error status
                             this._popupService.openAlert({
                                 header:'Alert',
                                 message: resp.data?.message
                             })
-                        } else {
+                        } 
+                        // else if (resp.data?.code === 102) {
+                        //     // Its error status
+                        //     this._popupService.openAlert({
+                        //         header:'Alert',
+                        //         message: resp.data?.message
+                        //     })
+                        //     alert(JSON.stringify(pmfby));
+                        // } 
+                        else {
                             // Dont know the status so Call status API to get index_id
                             this._loaderService.showLoader()
                             this._authService.getPmfbyStatus(this.currentUser.user.mobile_Number)

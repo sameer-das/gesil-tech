@@ -126,9 +126,9 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       })
     } else if (this.serviceName === 'DMT') {
       // If DMT then send it to DMT route
-      this._router.navigate(['dmtransfer/dmttransactions'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } });
+      // this._router.navigate(['dmtransfer/dmttransactions'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } });
     } else if (this.serviceName === 'pmfby') {
-      this._router.navigate(['pmfby'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } })
+      // this._router.navigate(['pmfby'], { state: { serviceCatId: this.serviceCatId, serviceId: this.serviceId } })
     } else {
       const searchValue = this.allServices.filter((s: any) => s.path === this.serviceName);
       if (searchValue.length > 0) {

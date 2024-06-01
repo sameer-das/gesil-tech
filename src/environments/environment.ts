@@ -58,7 +58,9 @@ export const environment = {
       "op": 5,
       "provider": "Vodafone"
     }
-  ]
+  ],
+
+  NOT_IMPLEMENTED_MENU : ['/DCA', '/PGDCA', '/pan', '/Print-PVC', '/New-Adhar']
 };
 
 /*

@@ -10,6 +10,7 @@ import { DmtService } from './dmt-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WalletModule } from '../wallet/wallet.module';
 import { DmtTransactionComponent } from './dmt-transaction/dmt-transaction.component';
+import { KycGuard } from 'src/app/services/kyc.guard';
 
 
 
@@ -36,7 +37,8 @@ import { DmtTransactionComponent } from './dmt-transaction/dmt-transaction.compo
           { path: 'addrecipient', component: AddRecipientComponent, },
           { path: 'addsender', component: AddSenderComponent, },
           { path: '', pathMatch: 'full', redirectTo: 'dmttransactions' },
-        ]
+        ],
+        canActivateChild: []
       }])
   ],
   providers: [DmtService]

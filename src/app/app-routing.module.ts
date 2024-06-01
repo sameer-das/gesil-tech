@@ -6,6 +6,9 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { ServiceCategoryComponent } from './feature-modules/dashboard/service-category/service-category.component';
 import { CcavenueMobileComponent } from './ccavenue-mobile/ccavenue-mobile.component';
 import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue-mobile-status.component';
+import { KycGuard } from './services/kyc.guard';
+import { NotImplementedComponent } from './not-implemented/not-implemented.component';
+import { NotImplementedGuard } from './services/not-implemented.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -120,7 +123,7 @@ const routes: Routes = [
           import(
             './feature-modules/dmt/dmt.module'
           ).then((m) => m.DmtModule),
-        canLoad: [AuthGuardService],
+        canLoad: [AuthGuardService, KycGuard],
       },
       {
         path: 'pmfby',
@@ -129,7 +132,12 @@ const routes: Routes = [
             './feature-modules/pmfby/pmfby.module'
           ).then((m) => m.PmfbyModule),
         canLoad: [AuthGuardService],
-      },
+      }, 
+      {
+        path: "**",
+        component: NotImplementedComponent,
+        canActivate: [NotImplementedGuard]
+      }
     ],
   },
   {
@@ -139,10 +147,6 @@ const routes: Routes = [
         (m) => m.ForgotPasswordModule
       ),
   },
-  // {
-  //   path: '**',
-  //   component: LoginComponent
-  // }
 ];
 
 @NgModule({

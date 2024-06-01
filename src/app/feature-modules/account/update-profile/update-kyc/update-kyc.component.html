@@ -317,6 +317,7 @@
   </ng-container>
 
   <ng-container *ngIf="!isGesil">
+    <!-- Mobile -->
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -330,6 +331,22 @@
         <mat-icon class="tooltip_icon" *ngIf="!isGesil" [matTooltip]="tooltipMessage" matTooltipPosition="above" matSuffix>info</mat-icon>
       </mat-form-field>
     </mat-expansion-panel>
+
+  <!-- Father Name -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon class="status_icon" [style]="{color: fatherFullName ? 'limegreen': 'orangered'}">{{fatherFullName ? 'done' : 'priority_high' }}</mat-icon>
+        <strong>Father's Full Name</strong>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field class="w-100" appearance="standard">
+      <mat-label>Please Enter Father's full name as per Adhar</mat-label>
+      <input matInput type="text" [(ngModel)]="fatherFullName">
+    </mat-form-field>
+  </mat-expansion-panel>
+
+  <!-- Education Details -->
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -418,5 +435,7 @@
     isKycPanAndVerifiedPanMismatch ||
     !currentUser.user.mobile_Number ||
     !bankDetails?.user_Account_Number ||    
-    !education || !kycDetails.education_Photo">Enroll to PMFBY</button>
+    !education || 
+    !kycDetails.education_Photo || 
+    !fatherFullName">Enroll to PMFBY</button>
 </div>

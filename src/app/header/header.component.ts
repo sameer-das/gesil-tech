@@ -2,13 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { HeaderService } from './header.service';
+import { AuthService } from '../services/auth.service';
+import { PopupService } from '../popups/popup.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent  implements OnInit{
+export class HeaderComponent implements OnInit {
 
   @Input() isMenuOpened: boolean = false;
   @Output() isShowSidebar = new EventEmitter<boolean>();
@@ -35,7 +37,10 @@ export class HeaderComponent  implements OnInit{
     },
   ]);
 
-  constructor(private _router:Router, private _headerService: HeaderService) {}
+  constructor(private _router: Router,
+    private _headerService: HeaderService,
+    private _authService: AuthService,
+    private _popupService: PopupService) { }
   ngOnInit(): void {
     this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
     this.email_id = this.currentUser.user.user_EmailID;
@@ -47,6 +52,24 @@ export class HeaderComponent  implements OnInit{
       this.full_name = `${this.currentUser.personalDetail.user_FName} ${this.currentUser.personalDetail.user_LName}`;
     })
 
+
+    this._authService.getUserVerifiedAdharDetail(this.currentUser.user.user_ID).subscribe({
+      next: (resp: any) => {
+        if (resp.status === 'Success' && resp.code === 200) {
+          if (resp.data && JSON.parse(resp.data).data.aadhaar_number) {
+            // Adhar is there
+          } else {
+            this.showKycUpdatePopup();
+          }
+        } else {
+          this.showKycUpdatePopup();
+        }
+      }, error: (err) => {
+        console.log('Error fetching adhar details')
+        console.log(err)
+      }
+    })
+
   }
 
   public openMenu(): void {
@@ -54,12 +77,19 @@ export class HeaderComponent  implements OnInit{
     this.isShowSidebar.emit(this.isMenuOpened);
   }
 
-  public signOut(): void {}
+  public signOut(): void { }
 
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   full_name!: string;
   email_id!: string;
   login_code!: string;
+
+  showKycUpdatePopup() {
+    this._popupService.openAlert({
+      header: 'Alert',
+      message: 'Please update your e-KYC to avail our services! To update the e-KYC please navigate to Update Profile tab under Account Menu'
+    })
+  }
 
 }
 

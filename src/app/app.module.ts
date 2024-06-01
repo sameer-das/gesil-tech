@@ -26,6 +26,7 @@ import { OtpPopupComponent } from './popups/otp-popup/otp-popup.component';
 import { ConfirmComponent } from './popups/confirm/confirm.component';
 import { CcavenueMobileComponent } from './ccavenue-mobile/ccavenue-mobile.component';
 import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue-mobile-status.component';
+import { NotImplementedComponent } from './not-implemented/not-implemented.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -51,6 +52,7 @@ import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue
     ConfirmComponent,
     CcavenueMobileComponent,
     CcavenueMobileStatusComponent,
+    NotImplementedComponent,
 
     // DashboardComponent,
     // QuickMenuDialog
