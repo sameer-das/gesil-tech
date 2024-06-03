@@ -1,0 +1,30 @@
+.close_search {
+    cursor: pointer;
+}
+
+th, td {
+    background: transparent;
+}
+
+
+.total_record {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.page__header {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-left: 1rem;
+  }
+
+
+  .nodata_img {
+    height: 400px;
+    img {
+        height: 100%;
+        // width: 100%; 
+        
+    }
+  }

@@ -250,9 +250,9 @@ export class AuthService {
     return this._http.get(`${environment.service_base_url}${this.URL_GET_PMFBY_STATUS}?mobile_no=${mobileNo}`)
   }
 
-  private URL_PMFBY_DOC_UPLOAD = `/api/POSP/POSPDocumnetUpload`;
-  pmfbyDocUpload (payload:any) {
-    return this._http.post(`${environment.service_base_url}${this.URL_PMFBY_DOC_UPLOAD}`, payload)
+  private URL_PMFBY_DOC_UPLOAD = `/api/POSP/POSPDocumnetUpload?userId=`;
+  pmfbyDocUpload (payload:any, userId: number) {
+    return this._http.post(`${environment.service_base_url}${this.URL_PMFBY_DOC_UPLOAD}${userId}`, payload)
   }
 
 
@@ -282,6 +282,11 @@ export class AuthService {
   private URL_GET_USER_VERIFIED_ADHAR_DETAILS = `/api/User/GetAadharaDetail`;
   getUserVerifiedAdharDetail (userId:number) {
     return this._http.get(`${environment.service_base_url}${this.URL_GET_USER_VERIFIED_ADHAR_DETAILS}?userId=${userId}`)
+  }
+
+  private URL_GET_RETAILER_WISE_USERS = `/api/User/GetRetailerWiseUsers?userId=`;
+  getRetailerWiseUsers (userId:number) {
+    return this._http.get(`${environment.service_base_url}${this.URL_GET_RETAILER_WISE_USERS}${userId}`)
   }
 }
 

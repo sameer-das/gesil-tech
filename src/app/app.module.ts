@@ -27,6 +27,7 @@ import { ConfirmComponent } from './popups/confirm/confirm.component';
 import { CcavenueMobileComponent } from './ccavenue-mobile/ccavenue-mobile.component';
 import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue-mobile-status.component';
 import { NotImplementedComponent } from './not-implemented/not-implemented.component';
+import { AdvertisePopupComponentComponent } from './login/advertise-popup-component/advertise-popup-component.component';
 
 // import { DashboardComponent, QuickMenuDialog } from './dashboard/dashboard.component';
 
@@ -53,6 +54,7 @@ import { NotImplementedComponent } from './not-implemented/not-implemented.compo
     CcavenueMobileComponent,
     CcavenueMobileStatusComponent,
     NotImplementedComponent,
+    AdvertisePopupComponentComponent,
 
     // DashboardComponent,
     // QuickMenuDialog

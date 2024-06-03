@@ -33,8 +33,7 @@ export class UserComponent implements OnInit {
   }
 
   public signOutEmit() {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth');
+    localStorage.clear();
     
     this._router.navigate(['login'])
   }

@@ -134,6 +134,14 @@ const routes: Routes = [
         canLoad: [AuthGuardService],
       }, 
       {
+        path: 'myteam',
+        loadChildren: () =>
+          import(
+            './feature-modules/my-team/my-team.module'
+          ).then((m) => m.MyTeamModule),
+        canLoad: [AuthGuardService],
+      }, 
+      {
         path: "**",
         component: NotImplementedComponent,
         canActivate: [NotImplementedGuard]

@@ -4,68 +4,108 @@
     <div class="profile__image__container">
         <img [src]="imageSource" alt="Profile Image" (error)="onError($event)">
     </div>
-<div>
-    <p class="profile__name">{{personalDetail.user_FName}} {{personalDetail.user_LName}}</p>
-    <p class="profile__email">{{registrationDetail.user_EmailID}}</p>
+    <div>
+        <p class="profile__name">{{personalDetail.user_FName}} {{personalDetail.user_LName}}</p>
+        <p class="profile__email">{{registrationDetail.user_EmailID}}</p>
+    </div>
 </div>
-</div>
-    <!-- <p class="profile__lastupdate">Last updated on: 2021-10-23 13:58:29</p> -->
+<!-- <p class="profile__lastupdate">Last updated on: 2021-10-23 13:58:29</p> -->
 
 
 <mat-tab-group class="tabs" dynamicHeight mat-align-tabs="center" (selectedTabChange)="onTabChange($event)">
-    <mat-tab label="Personal Information"> 
-        <div class="info">
-            <div class="info__header">
-                <p>DOB</p>
-                <p>Gender</p>
-                <p>Email</p>
-                <p>Mobile</p>
-                <p>State</p>
-                
-            </div>
-            <div class="info__details">
-                <p>{{personalDetail.user_Dob | date : 'mediumDate'}}</p>
-                <p>{{personalDetail.user_Gender}}</p>
-                <p>{{registrationDetail.user_EmailID}}</p>
-                <p>{{registrationDetail.mobile_Number}}</p>
-                <p>{{personalDetail.state_Name}}</p>
-            </div>
+    <mat-tab label="Personal Information">
+        <div class="d-flex justify-content-center">
+            <table class="table info_table">
+                <thead>
+                </thead>
+                <tbody *ngIf="kycDetails">
+                    <tr>
+                        <th scope="row">DOB</th>
+                        <td>{{personalDetail.user_Dob | date : 'mediumDate'}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Gender</th>
+                        <td>{{personalDetail.user_Gender}}</td>
+                    </tr>
+                  
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{registrationDetail.user_EmailID}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Mobile</th>
+                        <td>{{registrationDetail.mobile_Number}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">State</th>
+                        <td>{{personalDetail.state_Name}}</td>
+                    </tr>                                    
+                </tbody>
+            </table>
         </div>
     </mat-tab>
-    <mat-tab label="Bank Details"> 
-        <div *ngIf="bankDetails; else notFound" class="info">
-            <div class="info__header">
-                <p>Bank</p>
-                <p>Account Holder</p>
-                <p>Account Number</p>
-                <p>IFS Code</p>
-                <p>Bank Name</p>
-            </div>
-            <div  class="info__details">
-                <p>{{bankDetails.bank_Name}}</p>
-                <p>{{bankDetails.userAccount_HolderName}}</p>
-                <p>{{bankDetails.user_Account_Number}}</p>
-                <p>{{bankDetails.user_IFSCCode}}</p>
-                <p>{{bankDetails.user_BranchName}}</p>
-            </div>
+
+
+    <mat-tab label="Bank Details">
+        <div *ngIf="bankDetails; else notFound" class="d-flex justify-content-center">
+            <table class="table info_table">
+                <thead>
+                </thead>
+                <tbody *ngIf="kycDetails">
+                    <tr>
+                        <th scope="row">Bank</th>
+                        <td>{{bankDetails.bank_Name}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Account Holder</th>
+                        <td>{{bankDetails.userAccount_HolderName}}</td>
+                    </tr>
+                  
+                    <tr>
+                        <th scope="row">Account Number</th>
+                        <td>{{bankDetails.user_Account_Number}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">IFS Code</th>
+                        <td>{{bankDetails.user_IFSCCode}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Bank Name</th>
+                        <td>{{bankDetails.user_BranchName}}</td>
+                    </tr>
+                                    
+                </tbody>
+            </table>
         </div>
+
         <ng-template #notFound>
             <div class="mt-4 d-flex justify-content-center">
                 <p>Bank details not found. Please update in Update Profile Tab.</p>
-            </div> 
+            </div>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Adhar, PAN & GSTIN"> 
-        <div class="info">
-            <div class="info__header">
-                <p>PAN</p>
-                <p>GSTIN</p>
-                <p>ADHAR No.</p>
+
+    
+    <mat-tab label="Adhar, PAN & GSTIN">
+            <div class="d-flex justify-content-center">
+                <table class="table info_table">
+                    <thead>
+                    </thead>
+                    <tbody *ngIf="kycDetails">
+                        <tr>
+                            <th scope="row">ADHAR No.</th>
+                            <td>{{kycDetails?.aadhar_Number}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PAN</th>
+                            <td>{{kycDetails?.pancard_Number}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">GSTIN</th>
+                            <td>{{kycDetails?.gsT_Number}}</td>
+                        </tr>                       
+                    </tbody>
+                </table>
             </div>
-            <div *ngIf="kycDetails" class="info__details">
-                <p>{{kycDetails?.pancard_Number}}</p>
-                <p>{{kycDetails?.gsT_Number}}</p>
-                <p>{{kycDetails?.aadhar_Number}}</p>
-            </div>
-        </div> </mat-tab>
+    </mat-tab>
 </mat-tab-group>

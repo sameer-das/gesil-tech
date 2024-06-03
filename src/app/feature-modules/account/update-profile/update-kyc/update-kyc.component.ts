@@ -736,7 +736,7 @@ export class UpdateKycComponent implements OnInit {
         }
         console.log(payload);
         this._loaderService.showLoader();
-        this._authService.pmfbyDocUpload(payload)
+        this._authService.pmfbyDocUpload(payload, this.currentUser.user.user_ID)
             .pipe(finalize(() => this._loaderService.hideLoader()), takeUntil(this.$destroy))
             .subscribe({
                 next: (resp: any) => {

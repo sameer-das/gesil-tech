@@ -29,11 +29,8 @@
       padding: 0.4rem 0.9rem;
       line-height: 1.5rem;
       &:hover, &.active {
-        background: $purple;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to bottom right, $gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: #405177; 
         transition: 0.3s ease;
-
       }
 
 
@@ -52,9 +49,7 @@
     }
 
     a.activelink {
-      background: $purple;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to bottom right, $gradient1, $gradient2);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to bottom right, $gradient1, $gradient2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+      background: #405177;  
     }
 
     ul.sub_menu {

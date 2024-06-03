@@ -11,16 +11,13 @@ export class KycGuard implements CanActivate, CanActivateChild {
 
   constructor(private _authService: AuthService, private _popupService:PopupService, private _router: Router) {
 
-  }
-
-  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
-
+  }  
 
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    console.log(this.currentUser.user.user_ID)
+    // console.log(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID)
     return new Promise((resolve, reject) => {
-      this._authService.getUserVerifiedAdharDetail(this.currentUser.user.user_ID).subscribe({
+      this._authService.getUserVerifiedAdharDetail(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID).subscribe({
         next: (resp:any) => {
           if(resp.status === 'Success' && resp.code === 200) {
             if(resp.data && JSON.parse(resp.data).data.aadhaar_number) {
@@ -48,9 +45,9 @@ export class KycGuard implements CanActivate, CanActivateChild {
 
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    console.log(this.currentUser.user.user_ID)
+    // console.log(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID)
     return new Promise((resolve, reject) => {
-      this._authService.getUserVerifiedAdharDetail(this.currentUser.user.user_ID).subscribe({
+      this._authService.getUserVerifiedAdharDetail(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID).subscribe({
         next: (resp:any) => {
           if(resp.status === 'Success' && resp.code === 200) {
             if(resp.data && JSON.parse(resp.data).data.aadhaar_number) {
@@ -77,8 +74,9 @@ export class KycGuard implements CanActivate, CanActivateChild {
   
 
   canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    // console.log(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID)
     return new Promise((resolve, reject) => {
-      this._authService.getUserVerifiedAdharDetail(this.currentUser.user.user_ID).subscribe({
+      this._authService.getUserVerifiedAdharDetail(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID).subscribe({
         next: (resp:any) => {
           if(resp.status === 'Success' && resp.code === 200) {
             if(resp.data && JSON.parse(resp.data).data.aadhaar_number) {

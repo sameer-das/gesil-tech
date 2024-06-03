@@ -1,0 +1,44 @@
+<h2 class="page__header">My Team</h2>
+<div *ngIf="reportDataAll.length > 0; else nodata">
+    <div class="row">
+        <mat-form-field class="col-6" appearance="standard">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" [formControl]="search">
+            <mat-icon *ngIf="search.value" class="close_search" matSuffix (click)="close_search ()">close</mat-icon>
+            <mat-icon *ngIf="!search.value" class="close_search" matSuffix>search</mat-icon>
+          </mat-form-field>
+          <div class="col-6 d-flex align-items-end justify-content-end">
+              <p class="total_record">Total {{reportDataFiltered.length}} records</p>
+          </div>
+
+    </div>
+
+    <table class="table info_table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Login Code</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Dist</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+        <tbody class="table">
+            <tr *ngFor="let data of reportDataFiltered; let i = index">
+                <th scope="row">{{i + 1}}</th>
+                <td>{{data.userName}}</td>
+                <td>{{data.login_Code }}</td>
+                <td>{{data.mobile_Number }}</td>
+                <td>{{data.district_Name}}</td>
+                <td>{{data.payment_Per_Amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #nodata>
+    <div class="nodata d-flex justify-content-center">
+       <p>No members found!</p>
+    </div>
+</ng-template>

@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 import { LoaderService } from '../services/loader.service';
 import { ForgotPasswordComponent } from './forgot-password-dialog/forgot-password.component';
 import { RegisterDialogNewComponent } from './register-dialog-new/register-dialog-new.component';
+import { AdvertisePopupComponentComponent } from './advertise-popup-component/advertise-popup-component.component';
 // import { RegisterDialog } from './register-dialog/register-dialog.component';
 
 @Component({
@@ -77,8 +78,12 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('auth', JSON.stringify({...resp.data}));
                 localStorage.setItem('auth_token', 'xxxxxxxxxxxxxxxx');
                 localStorage.setItem('menu_categories' , JSON.stringify({menuCategories: this.getFormattedServices(result.data)}));
-                this._router.navigate(['dashboard']);
+
                 this._router.navigate(['my-view']);
+
+                // To show the advertise popup
+                // this.dialog.open(AdvertisePopupComponentComponent);
+
               } else {
                 this._popupService.openAlert({
                   header: 'Fail',
