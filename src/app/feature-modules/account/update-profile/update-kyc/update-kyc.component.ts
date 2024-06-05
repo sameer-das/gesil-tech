@@ -646,7 +646,11 @@ export class UpdateKycComponent implements OnInit {
             "dob_as_pan": this.pan_verified_response.dob,
             "fathername_as_pan": this.fatherFullName.trim(),
             "pan_issue_date": this.getPanIssueDateFromDob(this.pan_verified_response.dob),
-            "masked_aadhaar_number": this.pan_verified_response.masked_aadhaar,
+            // "masked_aadhaar_number": this.pan_verified_response.masked_aadhaar,
+
+            // take the last 4 digit of adhar and append to XXXXXXXX (8 X's)
+            // This is for people whose adhar is not linked with pan
+            "masked_aadhaar_number": 'XXXXXXXX' + (String(this.adhar_verified_response?.aadhaar_number)).slice(8), 
             "name_as_aadhaar": this.adhar_verified_response.full_name,
             "dob_as_aadhaar": this.adhar_verified_response.dob,
             "gender_as_aadhaar": this.adhar_verified_response.gender,
