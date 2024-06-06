@@ -477,7 +477,7 @@ export class UpdateKycComponent implements OnInit {
                 if (!/^[a-zA-Z0-9]+$/.test(this.gstnNo) || this.gstnNo.length !== 15) {
                     this._popupService.openAlert({
                         header: 'Alert',
-                        message: 'Invalid GSTN! Please enter valid GSTN.'
+                        message: 'Invalid GSTIN! Please enter valid GSTIN.'
                     })
                     return;
                 }

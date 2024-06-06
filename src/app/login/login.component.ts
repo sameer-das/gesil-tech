@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
                 this._router.navigate(['my-view']);
 
                 // To show the advertise popup
-                // this.dialog.open(AdvertisePopupComponentComponent);
+                this.dialog.open(AdvertisePopupComponentComponent);
 
               } else {
                 this._popupService.openAlert({
