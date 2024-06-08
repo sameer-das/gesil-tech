@@ -15,14 +15,50 @@ export class NotImplementedGuard implements CanActivate {
     private _authService: AuthService,
     private _router: Router) { }
 
-  currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
+  
 
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // console.log(state)
-    // console.log(route)
+      
+      console.log(route)
+      // Check for KYC 
+      this._authService.getUserVerifiedAdharDetail(JSON.parse(localStorage.getItem('auth') || '{}').user.user_ID).subscribe({
+        next: (resp:any) => {
+          if(resp.status === 'Success' && resp.code === 200) {
+            if(resp.data && JSON.parse(resp.data).data.aadhaar_number) {
+              // Check for routes 
+              this.checkRoutes (state)
+            } else {  
+              this.showPopup();    
+              this._router.navigate(['dashboard']);        
+            }
+          } else {
+            this.showPopup();
+            this._router.navigate(['dashboard']);   
+          }
+        }, error: (err) => {
+          this.showPopup();
+          this._router.navigate(['dashboard']);   
+        }
+      }); 
+
+    return false;
+  }
+
+
+  showPopup () {
+    this._popupService.openAlert({
+      header:'Alert',
+      message: 'Please update your e-KYC to proceed! To update the e-KYC please navigate to Update Profile tab under Account Menu'
+    })
+  }
+
+
+
+  checkRoutes (state: RouterStateSnapshot) {
+    
     if (environment.NOT_IMPLEMENTED_MENU.includes(state.url)) {
       if (state.url === '/pan') {
         console.log('pan');
@@ -34,8 +70,9 @@ export class NotImplementedGuard implements CanActivate {
         }).afterClosed().subscribe((isOk: boolean) => {
           if (isOk) {
             console.log('Call API');
+            const currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
             this._loaderService.showLoader();
-            this._authService.getPANUrl(this.currentUser.user.user_ID).subscribe({
+            this._authService.getPANUrl(currentUser.user.user_ID).subscribe({
               next: (response: any) => {
                 this._loaderService.hideLoader();
                 if (response.status === 'Success' && response.code === 200 && response.data !== '') {
@@ -69,8 +106,5 @@ export class NotImplementedGuard implements CanActivate {
       // If the route not found then redirect to dashboard 
       this._router.navigate(['dashboard'])
     }
-
-    return false;
   }
-
 }

@@ -6,6 +6,7 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { finalize, first, tap } from 'rxjs';
 import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-sender',
@@ -14,8 +15,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AddSenderComponent implements OnInit {
 
-  constructor(private _dmtService: DmtService, private _popupService: PopupService,
-    private _loaderService: LoaderService, private _modal: MatDialog) { }
+  constructor(private _dmtService: DmtService, 
+    private _popupService: PopupService,
+    private _loaderService: LoaderService, 
+    private _modal: MatDialog,
+    private _router: Router) { }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   addSenderForm: FormGroup = new FormGroup({
     senderName: new FormControl('', Validators.required),

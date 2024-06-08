@@ -1,16 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddSenderComponent } from './add-sender/add-sender.component';
-import { AddRecipientComponent } from './add-recipient/add-recipient.component';
-import { SendMoneyComponent } from './send-money/send-money.component';
-import { DmtHomeComponent } from './dmt-home/dmt-home.component';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
-import { DmtService } from './dmt-service.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WalletModule } from '../wallet/wallet.module';
+import { AddRecipientComponent } from './add-recipient/add-recipient.component';
+import { AddSenderComponent } from './add-sender/add-sender.component';
+import { DmtHomeComponent } from './dmt-home/dmt-home.component';
+import { DmtService } from './dmt-service.service';
 import { DmtTransactionComponent } from './dmt-transaction/dmt-transaction.component';
-import { KycGuard } from 'src/app/services/kyc.guard';
+import { SendMoneyComponent } from './send-money/send-money.component';
 
 
 

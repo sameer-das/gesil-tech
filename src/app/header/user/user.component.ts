@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
 
   public signOutEmit() {
     localStorage.clear();
+    sessionStorage.clear ();
     
     this._router.navigate(['login'])
   }

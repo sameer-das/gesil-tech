@@ -6,7 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { PopupService } from '../popups/popup.service';
 import { AuthService } from '../services/auth.service';
 import { LoaderService } from '../services/loader.service';
@@ -28,9 +28,17 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _popupService: PopupService,
     private _loaderService: LoaderService,
-    private _renderer: Renderer2
+    private _renderer: Renderer2,
+    private _route: ActivatedRoute
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this._router.url)
+    if(this._router.url === '/register') {
+      this.openSignupModal ()
+    } else {
+      this.dialog.closeAll ();
+    }
+  }
 
   loginForm: FormGroup = this._fb.group({
     userid: new FormControl('', Validators.required),
@@ -47,6 +55,7 @@ export class LoginComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+        this._router.navigate(['login'])
     });
   }
 
@@ -82,7 +91,9 @@ export class LoginComponent implements OnInit {
                 this._router.navigate(['my-view']);
 
                 // To show the advertise popup
-                this.dialog.open(AdvertisePopupComponentComponent);
+                this.dialog.open(AdvertisePopupComponentComponent, {
+                  panelClass: 'ad-comp'
+                });
 
               } else {
                 this._popupService.openAlert({

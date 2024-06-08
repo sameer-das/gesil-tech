@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'ccavenuemobilestatus', component: CcavenueMobileStatusComponent },
 
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: LoginComponent },
   {
     path: '',
     component: LayoutComponent,
@@ -83,7 +84,7 @@ const routes: Routes = [
           import(
             './feature-modules/mobile-recharge/mobile-recharge.module'
           ).then((m) => m.MobileRechargeModule),
-        canLoad: [AuthGuardService],
+        canLoad: [AuthGuardService, KycGuard],
       },
       {
         path: 'payment',
@@ -107,7 +108,7 @@ const routes: Routes = [
           import(
             './feature-modules/bbps-services/bbps-services.module'
           ).then((m) => m.BbpsServicesModule),
-        canLoad: [AuthGuardService],
+        canLoad: [AuthGuardService, KycGuard],
       },
       {
         path: 'support',
@@ -131,7 +132,7 @@ const routes: Routes = [
           import(
             './feature-modules/pmfby/pmfby.module'
           ).then((m) => m.PmfbyModule),
-        canLoad: [AuthGuardService],
+        canLoad: [AuthGuardService, KycGuard],
       }, 
       {
         path: 'myteam',
@@ -140,7 +141,7 @@ const routes: Routes = [
             './feature-modules/my-team/my-team.module'
           ).then((m) => m.MyTeamModule),
         canLoad: [AuthGuardService],
-      }, 
+      },
       {
         path: "**",
         component: NotImplementedComponent,
@@ -155,10 +156,11 @@ const routes: Routes = [
         (m) => m.ForgotPasswordModule
       ),
   },
+  
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

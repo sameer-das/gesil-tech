@@ -114,9 +114,13 @@ export class RegisterDialogNewComponent implements OnInit, OnDestroy {
     this._authService.checkRefId(refId).subscribe({
       next: (resp: any) => {
         console.log(resp);
-        if (resp.status === 'Success' && resp.code === 200 && resp.data === 'S') {
+        if (resp.status === 'Success' && resp.code === 200 && resp.data.startsWith('S')) {
           this.showRefForm = false;
           this.showRegistrationForm = true;
+          if(resp.data.split('|')[1] == '2') {
+            this.registrationFormGroup.patchValue({userType: '1'});
+            this.registrationFormGroup.get('userType')?.disable();
+          }
         } else if (resp.status === 'Success' && resp.code === 200 && resp.data === 'F') {
           this._popupService.openAlert({
             header: 'Alert',
@@ -206,7 +210,7 @@ export class RegisterDialogNewComponent implements OnInit, OnDestroy {
 
     const userRegData = {
       user_ID: 0,
-      user_Type_ID: +this.registrationFormGroup.value.userType,
+      user_Type_ID: +this.registrationFormGroup.getRawValue().userType,
       location_Type: this.registrationFormGroup.value.locationType + "",
       state_ID: +this.registrationFormGroup.value.state,
       mobile_Number: this.registrationFormGroup.value.mobile,

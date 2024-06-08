@@ -24,8 +24,10 @@
             <br/>
             <p><strong>Name : </strong>{{pmfbyStatus?.data?.name}}</p>
             <p><strong>Mobile : </strong>{{pmfbyStatus?.data?.mobile_no}}</p>
-            <p><strong>Education : </strong>{{pmfbyStatus?.data?.education}}</p>
-            <p><strong>Education Status: </strong>{{pmfbyStatus?.data?.education_status}}</p>
+            <p *ngIf="pmfbyStatus?.data?.education"><strong>Education : </strong>{{pmfbyStatus?.data?.education}}</p>
+            <p *ngIf="pmfbyStatus?.data?.education_status"><strong>Education Status: </strong>{{pmfbyStatus?.data?.education_status}}</p>
+            <br/>
+            <p *ngIf="pmfbyStatus?.data?.remarks"><strong>Remarks: </strong>{{pmfbyStatus?.data?.remarks}}</p>
         </div>
 
         <div *ngIf="pmfbyStatus?.data?.file_path" class="user_image d-flex justify-content-start">

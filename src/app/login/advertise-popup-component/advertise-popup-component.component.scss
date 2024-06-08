@@ -1,4 +1,6 @@
+
 .image_container {
+    position: relative;
     height: 500px;
     img {
         width: 100%;
@@ -10,6 +12,8 @@
     margin-bottom: 0.25rem;
 }
 .close_btn {
+    position: absolute;
+    right: 0;
     cursor: pointer;
     color: orangered;
 }

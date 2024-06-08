@@ -49,3 +49,19 @@
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
   }
+
+
+  .loader-img-container {
+    width: 110px;
+    height: 110px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    p.wait-text {
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+    }
+  }

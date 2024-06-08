@@ -2,7 +2,8 @@
     <h3 class="card__title">{{category.services_Name}}</h3>
     <ul class="menu">
       <li *ngFor="let service of category.services">
-        <a [routerLink]="service?.route" [state]="getState(service)" (click)="onTileClick(service)">
+        <a [routerLink]="service?.route"  
+          (click)="onTileClick(service)">
           <div class="menu__container">
             <div class="menu__container__img__container">
               <img class="menu__image" [ngStyle]="{'width': service.services_Cat_Name === 'Loan Repayment' && '50%' }" [src]="getImagePath(service.services_Cat_ImagesName)">

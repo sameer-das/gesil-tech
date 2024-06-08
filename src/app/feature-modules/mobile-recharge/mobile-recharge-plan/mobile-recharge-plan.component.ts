@@ -145,6 +145,7 @@ export class MobileRechargePlanComponent implements OnInit {
     console.log(mobile_search.currentMobileNumber);
     const operatorId = environment.PREPAID_RECHARGE_OPERATOR.find(x => x.provider.toLowerCase().trim() === mobile_search.currentOperator.toLowerCase().trim());
     console.log(operatorId);
+    const current_service_details = JSON.parse(sessionStorage.getItem('current_service') || '{}');
 
     const rechargePayload = {
       "apiToken": "",
@@ -154,10 +155,11 @@ export class MobileRechargePlanComponent implements OnInit {
       "reqid": uuidv4(),
       "field1": "",
       "field2": "",
-      "serviceId": 1,
-      "categoryId": 1,
+      "serviceId": current_service_details.services_ID,
+      "categoryId": current_service_details.services_Cat_ID,
       "userId": this.currentUser.user.user_EmailID
     };
+    
     console.log(rechargePayload);
     this._loaderService.showLoader();
     this._mobileRechargeService.prepaidRecharge(rechargePayload).subscribe({

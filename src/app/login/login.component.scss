@@ -262,10 +262,10 @@
 
     a {
       text-decoration: none;
-      color: $primary-blue;
+      // color: $primary-blue;
     }
 
-    button {
+    button, a {
       padding: 0.5rem 1rem;
       border: 1px solid $primary-blue;
       outline: none;

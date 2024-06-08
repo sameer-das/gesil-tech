@@ -1,3 +1,7 @@
 <div [ngStyle]="{'display': disp | async}" id="overlay">
-    <div id="loader_ring" class="lds-dual-ring"></div>
+    <!-- <div id="loader_ring" class="lds-dual-ring"></div> -->
+    <div class="loader-img-container">
+        <img width="100%" src="./assets/loader.gif">
+        <p class="wait-text">Please wait...</p>
+    </div>
 </div>

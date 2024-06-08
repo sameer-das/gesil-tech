@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { PopupService } from 'src/app/popups/popup.service';
 import { MobileRechargeService } from '../mobile-recharge.service';
 import { Subject, finalize, takeUntil } from 'rxjs';
@@ -15,7 +15,8 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
   constructor(
     private _router: Router,
     private _mobileService: MobileRechargeService,
-    private _popupService: PopupService
+    private _popupService: PopupService,
+    private _route:ActivatedRoute
   ) { }
 
   showCta: boolean = false;
@@ -33,7 +34,6 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getRecentTrans();
 
     this.mobileNo.valueChanges.subscribe({
       next: (val) => {

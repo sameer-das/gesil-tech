@@ -45,11 +45,6 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       this.serviceName = params.servicename;
     });
 
-    console.log(this._router.getCurrentNavigation()?.extras.state)
-    if (this._router.getCurrentNavigation()?.extras.state) {
-      sessionStorage.setItem('current_service', JSON.stringify(this._router.getCurrentNavigation()?.extras.state));
-    }
-
     const current_service_details = JSON.parse(sessionStorage.getItem('current_service') || '{}');
     if (Object.keys(current_service_details).length === 0) {
       // If services_Cat_ID and services_ID not found go back to dashboard

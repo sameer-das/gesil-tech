@@ -1,16 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AllServicesComponent } from './all-services/all-services.component';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from 'src/app/material.module';
-import { SharedModule } from 'src/app/dynamic-form/shared.module';
-import { BillPaymentComponent } from './bill-payment/bill-payment.component';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RaiseComplaintComponent } from './raise-complaint/raise-complaint.component';
-import { TrackComplaintComponent } from './track-complaint/track-complaint.component';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/dynamic-form/shared.module';
+import { MaterialModule } from 'src/app/material.module';
 import { WalletService } from '../wallet/wallet.service';
+import { AllServicesComponent } from './all-services/all-services.component';
 import { BbpsService } from './bbps.service';
-import { KycGuard } from 'src/app/services/kyc.guard';
+import { BillPaymentComponent } from './bill-payment/bill-payment.component';
 
 
 
@@ -18,8 +15,6 @@ import { KycGuard } from 'src/app/services/kyc.guard';
   declarations: [
     AllServicesComponent,
     BillPaymentComponent,
-    RaiseComplaintComponent,
-    TrackComplaintComponent
   ],
   imports: [
     CommonModule,
@@ -31,9 +26,7 @@ import { KycGuard } from 'src/app/services/kyc.guard';
       path: '', component: AllServicesComponent,
     },
     { path: 'payment/:transid', component: BillPaymentComponent, },
-    { path: 'service/:servicename', component: AllServicesComponent, canActivate:[KycGuard] },
-    { path: 'raise-complaint', component: RaiseComplaintComponent, },
-    { path: 'track-complaint', component: TrackComplaintComponent, },
+    { path: 'service/:servicename', component: AllServicesComponent, canActivate:[] },
     ])
   ],
   providers: [BbpsService, WalletService]

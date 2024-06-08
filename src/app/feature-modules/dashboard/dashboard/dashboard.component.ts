@@ -46,7 +46,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getState(service: any) {
+    console.log(service)
     return { services_ID: service.services_ID, services_Cat_ID: service.services_Cat_ID }
+  }
+
+  onTileClick (service:any) {
+    console.log(`setServiceDetails ==== service_id ${service.services_ID }, service_cat_id ${service.services_Cat_ID}`)
+    sessionStorage.setItem('current_service', JSON.stringify({services_ID: service.services_ID, services_Cat_ID: service.services_Cat_ID    }));   
   }
 
 }

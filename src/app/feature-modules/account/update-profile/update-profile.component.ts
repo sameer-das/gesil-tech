@@ -204,7 +204,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   bankDetailsFormGroup: FormGroup = this._formBuilder.group({
     bank_id: new FormControl('', Validators.required),
-    accountHolderName: new FormControl('', Validators.required),
+    accountHolderName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     ifsc: new FormControl('', Validators.required),
     branchName: new FormControl(),
     accountNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),

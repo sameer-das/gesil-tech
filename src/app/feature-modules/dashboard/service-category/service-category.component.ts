@@ -40,50 +40,8 @@ export class ServiceCategoryComponent implements OnInit {
   }
 
   onTileClick(service: any){
-    // console.log(service);
-    if (service.route?.substring(1) === 'pan') {
-      // Redirect to PAN portal, URL comes from backend
-      this._popupService.openConfirm({
-        header: 'Redirect Alert!',
-        message: 'You will be redirected to PAN portal for PAN related transactions.',
-        showCancelButton: true
-      }).afterClosed().subscribe((isOk: boolean) => {
-        if (isOk) {
-          console.log('Call API');
-          this._loaderService.showLoader();
-          this._authService.getPANUrl(this.currentUser.user.user_ID).subscribe({
-            next: (response: any) => {
-              this._loaderService.hideLoader();
-              if(response.status === 'Success' && response.code === 200 && response.data !== '') {
-                window.open(response.data, '_blank');
-              } else {
-                this._popupService.openAlert({
-                  header: 'Alert',
-                  message:'Something went wrong while fetching details for PAN. Please contact support team!'
-                });
-              }
-            }, error: (error: any) => {
-              this._loaderService.hideLoader();
-              this._popupService.openAlert({
-                header: 'Fail',
-                message:'Error while fetching details for PAN. Please contact support team!'
-              });
-            }
-          })
-        } else {
-          console.log('Dont redirect')
-        }
-      });
-
-      return;
-    }
-
-    if(this.notImplemented.includes(service.route?.substring(1)) || !service.route) {
-      this._popupService.openAlert({
-        header:'Coming Soon',
-        message: 'This service is under development.'
-      })
-    }
+    console.log(`setServiceDetails ==== service_id ${service.services_ID }, service_cat_id ${service.services_Cat_ID}`)
+    sessionStorage.setItem('current_service', JSON.stringify({services_ID: service.services_ID, services_Cat_ID: service.services_Cat_ID    }));
   }
 
 }
