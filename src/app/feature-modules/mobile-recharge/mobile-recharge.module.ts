@@ -10,14 +10,14 @@ import { MobileRechargePlanComponent } from './mobile-recharge-plan/mobile-recha
 import { MobileRechargeService } from './mobile-recharge.service';
 
 const routes: Routes = [
-  { path: '', component: MobileNumberSearchComponent },
+  { path: '', component: MobileNumberSearchComponent, canActivate: [] },
   {
     path: 'plans',
     component: MobileRechargePlanComponent,
     resolve: {
       data: MobilePlanResolverService,
     },
-    canActivate: [, MobilePlanGuard],
+    canActivate: [MobilePlanGuard],
   },
 ];
 

@@ -43,7 +43,7 @@ export class MyProfileComponent implements OnInit {
           this.personalDetail = resp.personalDetail.data;
           this.states = resp.stateMaster.data;
           this.kycDetails = resp.kycDetails.data;
-          this.imageSource = `${environment.service_base_url}${this.downloadAPI}?fileName=${resp.kycDetails.data.passport_Photo}`
+          this.imageSource = `${environment.service_base_url}${this.downloadAPI}?fileName=${resp.kycDetails?.data?.passport_Photo}`
           // this.getUserProfilePic(resp.kycDetails.data.passport_Photo)
         }
 

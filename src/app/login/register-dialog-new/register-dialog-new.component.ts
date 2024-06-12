@@ -117,9 +117,14 @@ export class RegisterDialogNewComponent implements OnInit, OnDestroy {
         if (resp.status === 'Success' && resp.code === 200 && resp.data.startsWith('S')) {
           this.showRefForm = false;
           this.showRegistrationForm = true;
-          if(resp.data.split('|')[1] == '2') {
+          if(resp.data.split('|')[1] == '2') { // retailer can create only end-user
             this.registrationFormGroup.patchValue({userType: '1'});
             this.registrationFormGroup.get('userType')?.disable();
+          } else if(resp.data.split('|')[1] == '3') { // Distribute can create only retailer
+            this.registrationFormGroup.patchValue({userType: '2'});
+            this.registrationFormGroup.get('userType')?.disable();
+          } else {
+            // its 5, Admin can create both retailer and end-user
           }
         } else if (resp.status === 'Success' && resp.code === 200 && resp.data === 'F') {
           this._popupService.openAlert({

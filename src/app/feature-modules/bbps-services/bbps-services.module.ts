@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/dynamic-form/shared.module';
 import { MaterialModule } from 'src/app/material.module';
-import { WalletService } from '../wallet/wallet.service';
 import { AllServicesComponent } from './all-services/all-services.component';
 import { BbpsService } from './bbps.service';
 import { BillPaymentComponent } from './bill-payment/bill-payment.component';
@@ -29,6 +28,6 @@ import { BillPaymentComponent } from './bill-payment/bill-payment.component';
     { path: 'service/:servicename', component: AllServicesComponent, canActivate:[] },
     ])
   ],
-  providers: [BbpsService, WalletService]
+  providers: [BbpsService]
 })
 export class BbpsServicesModule { }

@@ -32,6 +32,6 @@ import { TransactionDetailPopupComponent } from './transaction-detail-popup/tran
       { path: 'forgotpin', component: ForgotPinComponent},
     ])
   ],
-  providers: [WalletService]
+  providers: []
 })
 export class WalletModule { }

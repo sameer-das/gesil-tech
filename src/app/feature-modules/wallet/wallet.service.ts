@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-@Injectable()
+@Injectable({
+    providedIn:'root'
+})
 export class WalletService {
     constructor(private _http: HttpClient) { }
     private readonly URL_POST_GET_WALLET_BAL: string = `${environment.service_base_url}/api/GSKRecharge/GetWalletBalance`

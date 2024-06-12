@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
-import { WalletModule } from '../wallet/wallet.module';
 import { AddRecipientComponent } from './add-recipient/add-recipient.component';
 import { AddSenderComponent } from './add-sender/add-sender.component';
 import { DmtHomeComponent } from './dmt-home/dmt-home.component';
@@ -26,7 +25,6 @@ import { SendMoneyComponent } from './send-money/send-money.component';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    WalletModule,
     RouterModule.forChild([
       {
         path: '', component: DmtHomeComponent,
@@ -35,10 +33,10 @@ import { SendMoneyComponent } from './send-money/send-money.component';
           { path: 'send', component: SendMoneyComponent, },
           { path: 'addrecipient', component: AddRecipientComponent, },
           { path: 'addsender', component: AddSenderComponent, },
-          { path: '', pathMatch: 'full', redirectTo: 'dmttransactions' },
+          // { path: '', pathMatch: 'full', redirectTo: 'dmttransactions' },
         ],
-        canActivateChild: []
-      }])
+        canActivate:[]
+      }]),
   ],
   providers: [DmtService]
 })

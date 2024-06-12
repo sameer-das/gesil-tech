@@ -288,6 +288,14 @@ export class AuthService {
   getRetailerWiseUsers (userId:number) {
     return this._http.get(`${environment.service_base_url}${this.URL_GET_RETAILER_WISE_USERS}${userId}`)
   }
+
+
+
+
+  private URL_DECRYPT = `/api/GSKRecharge/eDecryptRequest`;
+  decrypt (payload: {data: string}) {
+    return this._http.post(`${environment.service_base_url}${this.URL_DECRYPT}`, payload)
+  }
 }
 
 

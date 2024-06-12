@@ -343,7 +343,7 @@ export class UpdateKycComponent implements OnInit {
 
 
     populateKycDetailsFormGroup(kycDetails: any) {
-        this.gstnNo = kycDetails.gsT_Number;
+        this.gstnNo = kycDetails?.gsT_Number;
     }
 
 
@@ -573,7 +573,7 @@ export class UpdateKycComponent implements OnInit {
                         message: 'Details saved successfully!'
                     });
 
-                    if (kycDetails.passport_Photo) {
+                    if (kycDetails?.passport_Photo) {
                         this._authService.profilePicUpdate$.next();
                     }
 
@@ -734,9 +734,9 @@ export class UpdateKycComponent implements OnInit {
         const BASEURL = `https://api.esebakendra.com/api/User/Download?fileName=`
         const payload = {
             "index_id": indexId,
-            "pan_image": BASEURL + this.kycDetails.pancard_Photo,
-            "education_image": BASEURL + this.kycDetails.education_Photo,
-            "profile_image": BASEURL + this.kycDetails.passport_Photo
+            "pan_image": BASEURL + this.kycDetails?.pancard_Photo,
+            "education_image": BASEURL + this.kycDetails?.education_Photo,
+            "profile_image": BASEURL + this.kycDetails?.passport_Photo
         }
         console.log(payload);
         this._loaderService.showLoader();
@@ -821,7 +821,7 @@ export class UpdateKycComponent implements OnInit {
                         this.isAdharAlreadyVerified = !!resp.data?.data?.aadhaar_number;
 
                         // If adhar card number is already there then check equality
-                        if (this.kycDetails.aadhaar_Number) {
+                        if (this.kycDetails?.aadhaar_Number) {
                             this.isKycAdharAndVerifiedAdharMismatch = (this.adhar_verified_response?.aadhaar_number !== this.kycDetails?.aadhaar_Number)
                         }
                         console.log('Adhar mismatch ' + this.isKycAdharAndVerifiedAdharMismatch)
@@ -865,7 +865,7 @@ export class UpdateKycComponent implements OnInit {
                         this.isPanAlreadyVerified = !!this.pan_verified_response?.pan_number;
 
                         // If Pan card is already available then equality check 
-                        if (this.kycDetails.pancard_Number) {
+                        if (this.kycDetails?.pancard_Number) {
                             // this.isPanAlreadyVerified = this.isPanAlreadyVerified && (this.pan_verified_response?.pan_number?.toLowerCase() === this.kycDetails.pancard_Number?.toLowerCase());
                             this.isKycPanAndVerifiedPanMismatch = (this.pan_verified_response?.pan_number?.toLowerCase() !== this.kycDetails?.pancard_Number?.toLowerCase());
                         }
@@ -908,13 +908,13 @@ export class UpdateKycComponent implements OnInit {
     checkKycDetailsWithVerifiedAdharAndPanResponse() {
 
         // If Adhar number is already there then only equate 
-        if (this.kycDetails.aadhar_Number) {
+        if (this.kycDetails?.aadhar_Number) {
             this.isKycAdharAndVerifiedAdharMismatch = (this.adhar_verified_response?.aadhaar_number !== this.kycDetails?.aadhar_Number)
         }
         console.log('Adhar mismatch ' + this.isKycAdharAndVerifiedAdharMismatch)
 
         // If Pan card is already available then equality check 
-        if (this.kycDetails.pancard_Number) {
+        if (this.kycDetails?.pancard_Number) {
             this.isKycPanAndVerifiedPanMismatch = (this.pan_verified_response?.pan_number?.toLowerCase() !== this.kycDetails?.pancard_Number?.toLowerCase());
         }
         console.log('Pan mismatch ' + this.isKycPanAndVerifiedPanMismatch)

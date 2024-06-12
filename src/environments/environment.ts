@@ -60,7 +60,9 @@ export const environment = {
     }
   ],
 
-  NOT_IMPLEMENTED_MENU : ['/DCA', '/PGDCA', '/pan', '/Print-PVC', '/New-Adhar']
+  NOT_IMPLEMENTED_MENU : ['/DCA', '/PGDCA', '/pan', '/Print-PVC', '/New-Adhar'],
+  // Dont change the User Type Order, the index is being used
+  USER_TYPE: ['', 'Users', 'Retailers', 'Distributor', 'Master Distributor', 'Admin']
 };
 
 /*

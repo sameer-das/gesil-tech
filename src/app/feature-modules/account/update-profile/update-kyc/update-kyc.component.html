@@ -3,8 +3,8 @@
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon *ngIf="!isGesil" class="status_icon" 
-        [style]="{color: (kycDetails.aadhar_Number && !isKycAdharAndVerifiedAdharMismatch ) ? 'limegreen': 'orangered'}">
-        {{(kycDetails.aadhar_Number && !isKycAdharAndVerifiedAdharMismatch ) ? 'done' : 'priority_high' }}
+        [style]="{color: (kycDetails?.aadhar_Number && !isKycAdharAndVerifiedAdharMismatch ) ? 'limegreen': 'orangered'}">
+        {{(kycDetails?.aadhar_Number && !isKycAdharAndVerifiedAdharMismatch ) ? 'done' : 'priority_high' }}
       </mat-icon>
         <strong>Adhar Details</strong>
       </mat-panel-title>
@@ -110,7 +110,7 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <mat-icon *ngIf="!isGesil" class="status_icon" [style]="{color: (kycDetails.pancard_Number && !this.isKycPanAndVerifiedPanMismatch) ? 'limegreen': 'orangered'}">{{ (kycDetails.pancard_Number && !this.isKycPanAndVerifiedPanMismatch)  ? 'done' : 'priority_high' }}</mat-icon>
+        <mat-icon *ngIf="!isGesil" class="status_icon" [style]="{color: (kycDetails?.pancard_Number && !this.isKycPanAndVerifiedPanMismatch) ? 'limegreen': 'orangered'}">{{ (kycDetails?.pancard_Number && !this.isKycPanAndVerifiedPanMismatch)  ? 'done' : 'priority_high' }}</mat-icon>
         <strong>PAN Details</strong>
       </mat-panel-title>
     </mat-expansion-panel-header>
@@ -128,7 +128,7 @@
 
       </mat-form-field>
 
-      <ng-container *ngIf="isGesil && !showVerifyPanButton && (!kycDetails.pancard_Number || isKycPanAndVerifiedPanMismatch)">
+      <ng-container *ngIf="isGesil && !showVerifyPanButton && (!kycDetails?.pancard_Number || isKycPanAndVerifiedPanMismatch)">
         <p class="uplaod_adhar_info">PAN is verified. Please upload photo of PAN Card.</p>
       </ng-container>
 
@@ -350,7 +350,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <mat-icon class="status_icon" [style]="{color: (education && kycDetails.education_Photo) ? 'limegreen': 'orangered'}">{{(education && kycDetails.education_Photo) ? 'done' : 'priority_high' }}</mat-icon>
+          <mat-icon class="status_icon" [style]="{color: (education && kycDetails?.education_Photo) ? 'limegreen': 'orangered'}">{{(education && kycDetails?.education_Photo) ? 'done' : 'priority_high' }}</mat-icon>
           <strong>Education Details</strong>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -436,6 +436,6 @@
     !currentUser.user.mobile_Number ||
     !bankDetails?.user_Account_Number ||    
     !education || 
-    !kycDetails.education_Photo || 
+    !kycDetails?.education_Photo || 
     !fatherFullName">Enroll to PMFBY</button>
 </div>

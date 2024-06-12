@@ -43,7 +43,7 @@ export class UserComponent implements OnInit {
   private getProfileImage() {
     this._authService.getKycDetails(this.currentUser.user.user_ID).subscribe({
       next: (resp:any) => {
-        this.imageSource = `${environment.service_base_url}${this.downloadAPI}?fileName=${resp.data.passport_Photo}`
+        this.imageSource = `${environment.service_base_url}${this.downloadAPI}?fileName=${resp?.data?.passport_Photo}`
       }
     })
   }

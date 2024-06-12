@@ -12,7 +12,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [PmfbyComponent],
   imports: [CommonModule, MaterialModule,UpdateKycModule, RouterModule.forChild(routes)],
-  providers: [  ],
+  providers: [],
   exports: [],
 })
 export class PmfbyModule {}
