@@ -297,7 +297,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
       "billerResponse": this.billerResponse,
       "additionalInfo": this.additionalInfo,
       "amountInfo": {
-        "amount": +(+this.amountToBePaid * 100),
+        "amount": +(+this.amountToBePaid * 100).toFixed(2),
         "currency": 356,
         "custConvFee": 0,
         "amountTags": [
@@ -323,7 +323,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
     }
 
     console.log(payBill);
-    this.payBill(payBill)
+    this.payBill(payBill);
   }
 
   billPayWithoutBillFetch(e: any) {
@@ -365,7 +365,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
         ]
       },
       "amountInfo": {
-        "amount": +(+this.amountToBePaid * 100),
+        "amount": +(+this.amountToBePaid * 100).toFixed(2),
         "currency": 356,
         "custConvFee": 0,
         "amountTags": []

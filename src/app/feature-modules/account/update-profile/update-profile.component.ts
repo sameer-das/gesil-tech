@@ -450,7 +450,7 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
       //insert
 
       bankDetails = {
-        bank_Detail_Id: 0,
+        // bank_Detail_Id: 0,
         user_ID: this.currentUser.user.user_ID,
 
         bank_ID: this.bankDetailsFormGroup.value.bank_id,
@@ -462,7 +462,6 @@ export class UpdateProfileComponent implements OnInit, OnChanges, OnDestroy {
 
       bankSaveObservable = this._authService.saveUserBankDetails(bankDetails);
     }
-
 
 
     console.log(bankDetails);
