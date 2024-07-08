@@ -34,6 +34,7 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.getRecentTrans ()
 
     this.mobileNo.valueChanges.subscribe({
       next: (val) => {

@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
+import { AdvertisePopupComponentComponent } from 'src/app/login/advertise-popup-component/advertise-popup-component.component';
 import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -10,7 +12,9 @@ import { LoaderService } from 'src/app/services/loader.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  constructor(private _popupService: PopupService, private _loaderService: LoaderService, private _authService: AuthService) { }
+  constructor(private _popupService: PopupService, private _loaderService: LoaderService, 
+    private _authService: AuthService,
+    public dialog: MatDialog,) { }
   ngOnDestroy(): void {
     this.$destroy.next(true)
   }
@@ -24,6 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       next: (resp:any) => {
         if(resp.status = "Success" && resp.code === 200) {
           this.esebaNews = resp.data;
+          console.log(this.esebaNews)
         }
       }
     })
@@ -53,6 +58,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onTileClick (service:any) {
     console.log(`setServiceDetails ==== service_id ${service.services_ID }, service_cat_id ${service.services_Cat_ID}`)
     sessionStorage.setItem('current_service', JSON.stringify({services_ID: service.services_ID, services_Cat_ID: service.services_Cat_ID    }));   
+  }
+
+  openAddPopup () {
+    this.dialog.open(AdvertisePopupComponentComponent, {
+      panelClass: 'ad-comp'
+    });
   }
 
 }

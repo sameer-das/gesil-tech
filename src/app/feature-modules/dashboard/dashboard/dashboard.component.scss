@@ -406,12 +406,28 @@
       }
 
       .notice__section {
-        p {
+        background-color: $gradient1;
+        height: 60%;
+        border-radius: 0.25rem;
+        > marquee {
           padding: 0.5rem;
           margin-bottom: 0.5rem;
-          border: 1px solid $gradient1;
-          color: $gradient1;
+          color: white;
           font-weight: bold;
+          height: 100%;
+        }
+      }
+
+      .add__image {
+        border-radius: 0.25rem;
+        height: 40%;
+        margin-top: 0.5rem;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: inherit;
+          cursor: pointer;
         }
       }
     }
@@ -422,5 +438,5 @@
   font-size: 1.5rem;
     font-weight: 500;
     color: #4a4a4a;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
