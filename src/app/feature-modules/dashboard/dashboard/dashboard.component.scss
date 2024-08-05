@@ -409,13 +409,35 @@
         background-color: $gradient1;
         height: 60%;
         border-radius: 0.25rem;
-        > marquee {
+        overflow: hidden;
+        > .eseba_news {
           padding: 0.5rem;
           margin-bottom: 0.5rem;
           color: white;
           font-weight: bold;
           height: 100%;
+          
+          
         }
+
+        .scroll {
+          transform: translateY(100%);
+          animation: my-animation 15s linear infinite;
+        }
+
+        @keyframes my-animation {
+          from {
+            -moz-transform: translateY(100%);
+            -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+          }
+          to {
+            -moz-transform: translateY(-100%);
+            -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+          }
+      }
+
       }
 
       .add__image {

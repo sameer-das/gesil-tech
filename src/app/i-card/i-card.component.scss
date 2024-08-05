@@ -1,0 +1,106 @@
+@import '../styles/constants.scss';
+
+.page__header {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-left: 1rem;
+  }
+
+.icard-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 600px;
+    gap: 1rem;
+
+}
+
+
+.icard-front {
+    background-image: url('../../assets/icard/card_bg.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height:244px;
+    
+
+    &-header {
+        margin-top: 1rem;
+        
+        // padding: 0 2rem;
+        img.digisafe-logo {
+            width: 30%;
+            margin-left: 1rem;
+        }
+        img.esk-logo {
+            width: 30%;
+            margin-right: 2rem;
+        }
+    }
+
+    &-body {
+        display: flex;
+        height: 180px;
+
+        &-data{
+            flex: 0 0 50%;
+            padding-left: 1rem;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            p {
+                span {
+                    color: $gradient1;
+                };
+                padding: 0;
+                margin: 0;
+                color: #000;
+                font-weight: 600;
+                margin-bottom: 0.25rem;
+            }
+        }
+        &-image{
+            flex: 0 0 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .user-icon {
+                width: 115px;
+                height: 115px;
+                border-radius: 50%;
+                border: 4px solid $gradient1;
+                padding: 2px;
+              }
+
+            p.esathi-text {
+                color: #fff;
+                margin-top: 0.25rem;
+                margin-bottom: 0;
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
+              
+        }
+
+    }
+}
+
+.icard-back {
+    background-image: url('../../assets/icard/card_back.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height:244px;    
+}
+
+
+@media print {
+    .page__header {
+        display: none;
+    }
+
+    .printable {
+        gap: 2rem;
+    }
+}

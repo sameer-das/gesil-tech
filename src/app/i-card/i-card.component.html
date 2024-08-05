@@ -1,0 +1,28 @@
+<h2 class="page__header mb-3">My Identity Card</h2>
+<div #pdf class="d-flex justify-content-center printable">
+    <div class="icard-container">
+
+        <div class="icard-front">
+            <div class="icard-front-header d-flex justify-content-between align-items-center">
+                <img class="digisafe-logo" src="./assets/icard/digi_safe_logo.png" alt="digisafe logo" />
+                <img class="esk-logo" src="./assets/logo/esk_logo.png" alt="ESK logo" />
+            </div>
+            <div class="d-flex icard-front-body">
+                <div class="icard-front-body-data">
+                    <p><span>NAME :</span> {{fullname | uppercase}} </p>
+                    <p><span>ID :</span> {{id}} </p>
+                </div>
+                <div class="icard-front-body-image">
+                    <img 
+                        src="https://api.esebakendra.com/api/User/Download?fileName={{currentUser.kycDetail.passport_Photo}}" 
+                        class="user-icon" 
+                        alt="user image">
+                    <p class="esathi-text">e-Sathi</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="icard-back"></div>
+
+    </div>
+</div>

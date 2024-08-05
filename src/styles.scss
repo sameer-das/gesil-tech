@@ -104,3 +104,12 @@ body {
 .ad-comp .mat-dialog-container {
   padding: 0.25rem !important;
 }
+
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #0e2c6ca6;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #0e2b6c;
+}

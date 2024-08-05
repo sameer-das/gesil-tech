@@ -100,3 +100,10 @@ $header-title-color-dark-theme: #889AFF;
     font-size: 0.8rem;
   }
 }
+
+
+@media print {
+  .header {
+    display: none;
+  }
+}

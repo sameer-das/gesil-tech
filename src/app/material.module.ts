@@ -23,6 +23,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio'
 import {MatDividerModule} from '@angular/material/divider';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 const MATERIAL = [
   MatDialogModule,
   MatTabsModule,
@@ -46,7 +47,8 @@ const MATERIAL = [
   MatExpansionModule,
   MatCheckboxModule,
   MatRadioModule,
-  MatDividerModule
+  MatDividerModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

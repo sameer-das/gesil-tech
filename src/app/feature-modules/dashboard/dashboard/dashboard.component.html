@@ -29,7 +29,8 @@
       
       <div class="h-100"> 
         <div class="notice__section" >
-          <marquee direction="up" [innerText]="esebaNews"></marquee>
+          <p #esebanews [innerText]="esebaNews" class="eseba_news scroll" (mouseover)="onMouseOver ()" (mouseout)="onMouseOut ()"></p>
+          <!-- <marquee direction="up" [innerText]="esebaNews" class="eseba_news"></marquee> -->
         </div>
   
         <div class="add__image">

@@ -9,6 +9,13 @@
       <button mat-menu-item class="user-menu__item-title" routerLink="/account">
         <mat-icon class="user-menu-icon">account_circle</mat-icon>My Account
       </button>
+      
+      <ng-container *ngIf="currentUser?.user?.user_Type_ID === 2">
+        <button mat-menu-item class="user-menu__item-title" routerLink="/icard">
+          <mat-icon class="user-menu-icon">badge</mat-icon>ID Card
+        </button>
+      </ng-container>
+
       <!-- <button mat-menu-item class="user-menu__item-title">
         <mat-icon class="user-menu-icon">description</mat-icon>Tasks
       </button>

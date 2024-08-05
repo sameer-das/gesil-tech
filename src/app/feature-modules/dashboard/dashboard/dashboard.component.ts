@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AdvertisePopupComponentComponent } from 'src/app/login/advertise-popup-component/advertise-popup-component.component';
@@ -14,13 +14,15 @@ import { LoaderService } from 'src/app/services/loader.service';
 export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private _popupService: PopupService, private _loaderService: LoaderService, 
     private _authService: AuthService,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog,
+  private _renderer: Renderer2) { }
   ngOnDestroy(): void {
     this.$destroy.next(true)
   }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   menu_categories: any = JSON.parse(localStorage.getItem('menu_categories') || '{}');
   $destroy: Subject<boolean> = new Subject();
+  @ViewChild('esebanews') esebanewsElement!: ElementRef;
 
   esebaNews: string = '';
   public ngOnInit(): void { 
@@ -66,6 +68,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  onMouseOver () {
+    // this._renderer.removeClass(this.esebanewsElement.nativeElement, 'scroll');
+  }
+
+  onMouseOut () {
+    // this._renderer.addClass(this.esebanewsElement.nativeElement, 'scroll');
+  }
 }
 
 @Component({

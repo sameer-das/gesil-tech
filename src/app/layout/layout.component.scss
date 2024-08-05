@@ -46,3 +46,17 @@ footer {
   }
 }
 
+
+
+@media print {
+  /* styles here */
+  .layout-sidebar, footer {
+    display:none;
+  }
+
+  .layout-content {
+    background-color: #fff;
+  }
+
+
+}

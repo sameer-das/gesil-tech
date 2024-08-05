@@ -9,6 +9,8 @@ import { CcavenueMobileStatusComponent } from './ccavenue-mobile-status/ccavenue
 import { KycGuard } from './services/kyc.guard';
 import { NotImplementedComponent } from './not-implemented/not-implemented.component';
 import { NotImplementedGuard } from './services/not-implemented.guard';
+import { ICardComponent } from './i-card/i-card.component';
+import { ESathiGuard } from './services/user-type.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -132,7 +134,7 @@ const routes: Routes = [
           import(
             './feature-modules/pmfby/pmfby.module'
           ).then((m) => m.PmfbyModule),
-        canLoad: [AuthGuardService, KycGuard],
+        canLoad: [AuthGuardService, KycGuard, ESathiGuard],
       }, 
       {
         path: 'myteam',
@@ -141,6 +143,11 @@ const routes: Routes = [
             './feature-modules/my-team/my-team.module'
           ).then((m) => m.MyTeamModule),
         canLoad: [AuthGuardService],
+      }, 
+      {
+        path: 'icard',
+        component: ICardComponent,
+        canActivate: [ESathiGuard]
       },
       {
         path: "**",
