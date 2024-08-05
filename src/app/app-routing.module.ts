@@ -150,6 +150,13 @@ const routes: Routes = [
         canActivate: [ESathiGuard]
       },
       {
+        path: 'aadhar',
+        loadChildren: () =>
+          import(
+            './feature-modules/aadhar/aadhar.module'
+          ).then((m) => m.AadharModule),
+      }, 
+      {
         path: "**",
         component: NotImplementedComponent,
         canActivate: [NotImplementedGuard]

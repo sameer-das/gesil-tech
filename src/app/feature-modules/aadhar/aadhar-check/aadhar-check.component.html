@@ -1,0 +1,45 @@
+<div class="container">
+    <form [formGroup]="checkAadharFormGroup">
+        <mat-form-field class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
+            <mat-label>Have you used aadhar services before?</mat-label>
+            <mat-select formControlName="haveUsedAadhar">
+                <mat-option value="no">No</mat-option>
+                <mat-option value="yes">Yes</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="checkAadharFormGroup.get('haveUsedAadhar')?.value === 'yes'" class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
+            <mat-label>Please enter your User ID</mat-label>
+            <input matInput type="text" formControlName="userId">
+            <mat-error *ngIf="checkAadharFormGroup.get('userId')?.invalid">Please enter a valid User ID</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field *ngIf="checkAadharFormGroup.get('userId')?.valid" class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
+            <mat-label>Please mention if the User ID/Account is active or not?</mat-label>
+            <mat-select formControlName="isUserIdActive">
+                <mat-option value="active">Active</mat-option>
+                <mat-option value="de-active">De-Active</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="checkAadharFormGroup.get('isUserIdActive')?.value === 'de-active'" class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
+            <mat-label>Select the reason of deactivation?</mat-label>
+            <mat-select formControlName="deactiveReason">
+                <mat-option value="suspended">Suspended</mat-option>
+                <mat-option value="blacklisted">Blacklisted</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="checkAadharFormGroup.get('isUserIdActive')?.value === 'de-active'" class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
+            <mat-label>Date of deactivation/suspension</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="duration" [max]="today">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="checkAadharFormGroup.get('duration')?.invalid">Please choose a date.</mat-error>
+
+        </mat-form-field>
+
+        <button class="btn" (click)="onButtonClick()">Click</button>
+    </form>
+</div>
