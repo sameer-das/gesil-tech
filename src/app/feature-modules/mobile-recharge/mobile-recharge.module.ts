@@ -8,6 +8,7 @@ import {
 } from './mobile-plan-resolver.service';
 import { MobileRechargePlanComponent } from './mobile-recharge-plan/mobile-recharge-plan.component';
 import { MobileRechargeService } from './mobile-recharge.service';
+import { BbpsService } from '../bbps-services/bbps.service';
 
 const routes: Routes = [
   { path: '', component: MobileNumberSearchComponent, canActivate: [] },
@@ -28,6 +29,7 @@ const routes: Routes = [
     MobileRechargeService,
     MobilePlanResolverService,
     MobilePlanGuard,
+    BbpsService
   ],
   exports: [],
 })

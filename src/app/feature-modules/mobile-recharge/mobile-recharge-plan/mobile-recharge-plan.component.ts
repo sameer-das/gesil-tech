@@ -7,8 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 import { LoaderService } from 'src/app/services/loader.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map, startWith, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { BbpsService } from '../../bbps-services/bbps.service';
 @Component({
     selector: 'app-mobile-recharge-plan',
     templateUrl: './mobile-recharge-plan.component.html',
@@ -17,7 +18,7 @@ import { environment } from 'src/environments/environment';
 export class MobileRechargePlanComponent implements OnInit {
     constructor(private _route: ActivatedRoute, private _router: Router, private _matDialog: MatDialog,
         private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService,
-        private _loaderService: LoaderService) { }
+        private _loaderService: LoaderService, private _bbpsService: BbpsService) { }
     rechargePlans: any[] = [];
     rawRechargePlans: any[] = []
     currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
@@ -26,7 +27,7 @@ export class MobileRechargePlanComponent implements OnInit {
     searchString: FormControl = new FormControl('');
     filteredPlan: any[] = [];
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this._route.data.subscribe({
             next: (resp: any) => {
                 console.log(resp);
@@ -69,7 +70,7 @@ export class MobileRechargePlanComponent implements OnInit {
             })
     }
 
-    sortPlans(rechargePlans: any[]) {
+    sortPlans (rechargePlans: any[]) {
         if (rechargePlans.length === 0) return [];
 
         const result: any[] = [];
@@ -128,19 +129,30 @@ export class MobileRechargePlanComponent implements OnInit {
         }
     ]
 
-    openPinDialog(amount: string) {
+    openPinDialog (amount: string) {
         // this.onPlanSelect(amount);
         // return;
         const dialogRef = this._matDialog.open(PinPopupComponent, { disableClose: true });
+
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Pin Dialog closed ${result}`);
-            if (result)
-                this.onPlanSelect(amount);
+            if (result) {
+                const mobile_search: any = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
+                if(mobile_search?.commission) {
+                    this.onPlanSelect(amount);
+                } else {
+                    this.onPlanSelectHighCommission(amount)
+                }
+            }
+
+
         });
+
     }
 
 
-    onPlanSelect(amount: string) {
+    onPlanSelect (amount: string) {
+        console.log('Calling with Commission')
         const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
         console.log(amount);
         console.log(mobile_search.currentOperator);
@@ -190,44 +202,118 @@ export class MobileRechargePlanComponent implements OnInit {
         })
     }
 
-    goBackMobileSearchScreen() {
+    goBackMobileSearchScreen () {
         this._router.navigate(['/mobile-recharge'])
     }
 
 
-    onPlanSelectHighCommission() {
-        const inputParams = {
-            "input": [
-                {
-                    "paramName": "Mobile Number",
-                    "paramValue": "9870456000"
-                },
-                {
-                    "paramName": "Location",
-                    "paramValue": "MUM"
-                }
-            ]
+    onPlanSelectHighCommission (amount: string) {
+        console.log('Calling without Commission')
+        const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
+        console.log(amount);
+        console.log(mobile_search.currentOperator);
+        console.log(mobile_search.currentMobileNumber);
+
+        const inputParams: any = {
+
         };
 
-        const billerResponse = [
-            {
-                "billAmount": "92300",
-                "billNumber": "1123314338567",
-                "customerName": "Ramesh Agrawal",
-                "dueDate": ""
-            }
-        ];
 
-        const paymentPayload = {
-            "agentId": environment.BBPS_AGENT_ID,
-            "billerAdhoc": true,
-            "agentDeviceInfo": environment.BBPS_AGENT_DEVICE_INFO,
-            "customerInfo": {
-                "customerMobile": "9777117452",
-                "customerEmail": "info.gskindiaorg@gmail.com",
-                "customerAdhaar": "",
-                "customerPan": ""
-            },
-        }
+        this._loaderService.showLoader();
+        // Get the biller ID if BBPS services are choosen 
+        this._bbpsService.getBillerInfo(mobile_search.currentBillerId)
+            .pipe(finalize(() => this._loaderService.hideLoader()))
+            .subscribe({
+                next: (resp: any) => {
+                    console.log(resp)
+                    if (resp.code === 200 && resp.status === 'Success' && resp.resultDt?.resultDt?.billerId) {
+                        const found = resp.resultDt?.resultDt?.billerInputParams.paramInfo.filter((curr: any) => curr.isOptional)
+                        console.log(found)
+                        inputParams.input = [{
+                            "paramName": "Mobile Number",
+                            "paramValue": mobile_search.currentMobileNumber
+                        }]
+
+                        const paymentPayload = {
+                            "agentId": environment.BBPS_AGENT_ID,
+                            "billerAdhoc": resp.resultDt?.resultDt?.billerAdhoc,
+                            "agentDeviceInfo": environment.BBPS_AGENT_DEVICE_INFO,
+                            "customerInfo": {
+                                "customerMobile": "9777117452",
+                                "customerEmail": "info.gskindiaorg@gmail.com",
+                                "customerAdhaar": "",
+                                "customerPan": ""
+                            },
+                            "billerId": mobile_search.currentBillerId,
+                            inputParams,
+                            "amountInfo": {
+                                "amount": (+amount * 100),
+                                "currency": 356,
+                                "custConvFee": 0
+                            },
+                            "paymentMethod": {
+                                "paymentMode": "WALLET",
+                                "quickPay": "N",
+                                "splitPay": "N",
+                            },
+                            "paymentInfo": {
+                                "info": [
+                                    {
+                                        "infoName": "WalletName",
+                                        "infoValue": "Paytm"
+                                    }, {
+                                        "infoName": "MobileNo",
+                                        "infoValue": this.currentUser.user.mobile_Number
+                                    }
+                                ]
+                            }
+                        }
+
+
+                        console.log(paymentPayload);
+
+
+                        this._loaderService.showLoader()
+                        this._bbpsService.payBill('', paymentPayload, '1', '1', this.currentUser.user.user_EmailID)
+                        .pipe(finalize(() => this._loaderService.hideLoader()))    
+                        .subscribe({
+                                next: (resp: any) => {
+                                    // this._loaderService.hideLoader();
+                                    console.log(resp);
+                                    if(resp.status === 'Success') {
+                                        this._popupService.openAlert({
+                                            header: 'success',
+                                            message: resp.message
+                                        })
+                                    } else {
+                                        this._popupService.openAlert({
+                                            header: 'alert',
+                                            message: resp.message
+                                        })
+                                    }
+                                    this._router.navigate(['/mobile-recharge'])
+                                },
+                                error: (err) => {
+                                    console.log(err)
+                                    this._popupService.openAlert({
+                                        header: 'fail',
+                                        message: 'Error while recharge!'
+                                    })
+                                    this._router.navigate(['/mobile-recharge'])
+                                    // this._loaderService.hideLoader();
+                                }
+                            })
+
+                    }
+                },
+                error: (err) => {
+
+                }
+            })
+
+
+
+
+
     }
 }

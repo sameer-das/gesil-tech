@@ -4,7 +4,7 @@
     </button>
   <div class="d-flex justify-content-between align-items-center flex-1">
       <h2 class="page__header">Prepaid Recharge</h2>
-      <mat-slide-toggle>High Commission</mat-slide-toggle>
+      <mat-slide-toggle [checked]="commission" [matTooltip]="commissionTooltipMessage" (change)="onToggle ($event)">Commission</mat-slide-toggle>
   </div>  
 
 </div>
@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<div class="mob-root-wrapper">   
+<div class="mob-root-wrapper mt-4">   
         <div class="mob-recharge-wrapper">
             <div class="mob-recharge-vector">
                 <img src="./assets/mob-recharge-vector.png" alt="mob-recharge-vector">
