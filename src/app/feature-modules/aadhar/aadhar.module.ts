@@ -4,13 +4,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AadharCheckComponent } from './aadhar-check/aadhar-check.component';
+import { AadharEnrollmentFormComponent } from './aadhar-enrollment-form/aadhar-enrollment-form.component';
 
 const routes: Routes = [
   { path: '', component: AadharCheckComponent, canActivate: [] },
 ];
 
 @NgModule({
-  declarations: [AadharCheckComponent],
+  declarations: [AadharCheckComponent, AadharEnrollmentFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

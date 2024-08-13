@@ -1,5 +1,8 @@
 <div class="container">
-    <form [formGroup]="checkAadharFormGroup">
+    <h2 class="page__header">Aadhar Service</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat reprehenderit non eveniet assumenda fugiat, obcaecati dicta fuga amet commodi voluptates consequuntur dolore quos magnam! Iusto aliquam tempore dolore enim recusandae?</p>
+
+    <form *ngIf="showEnrollmentForm; else enrollmentForm" [formGroup]="checkAadharFormGroup">
         <mat-form-field class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
             <mat-label>Have you used aadhar services before?</mat-label>
             <mat-select formControlName="haveUsedAadhar">
@@ -32,14 +35,28 @@
         </mat-form-field>
 
         <mat-form-field *ngIf="checkAadharFormGroup.get('isUserIdActive')?.value === 'de-active'" class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
+            <mat-label>No of months its deactivated/suspended for</mat-label>
+            <input matInput type="text" formControlName="duration">
+            <mat-error *ngIf="checkAadharFormGroup.get('duration')?.invalid">Please enter a valid no. of months</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field *ngIf="checkAadharFormGroup.get('isUserIdActive')?.value === 'de-active'" class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
             <mat-label>Date of deactivation/suspension</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="duration" [max]="today">
+            <input matInput [matDatepicker]="picker" formControlName="dateOfDeactivation" [max]="today">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="checkAadharFormGroup.get('duration')?.invalid">Please choose a date.</mat-error>
 
         </mat-form-field>
 
-        <button class="btn" (click)="onButtonClick()">Click</button>
+        <div class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4">
+            <button class="btn primary w-100" [disabled]="checkAadharFormGroup.invalid" (click)="onProceedClick()">Proceed</button>
+        </div>
+
     </form>
+
+    <ng-template #enrollmentForm>
+        <app-aadhar-enrollment-form></app-aadhar-enrollment-form>
+    </ng-template>
 </div>
