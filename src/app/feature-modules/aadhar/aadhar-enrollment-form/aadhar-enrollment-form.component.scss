@@ -5,3 +5,40 @@
     margin: 0;
     padding: 0;
 }
+.form-sub-heading-2 {
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+    margin-left: 0.75rem;
+}
+
+.submit-button {
+    margin-top: 1.25rem;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+
+    input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    button {
+        display: flex;
+    }
+  }
+
+
+.remove-file-button {
+    display: flex;
+}
+
+h2, h3, h4 {
+    color: $gradient1;
+    font-weight: 500;
+}

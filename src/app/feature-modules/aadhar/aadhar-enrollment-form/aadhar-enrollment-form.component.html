@@ -1,38 +1,375 @@
-<form>
+<form [formGroup]="enrollmentFormGroup">
 
     <section class="form-section">
-        <h3 class="form-sub-heading">Enter Aadhar Details</h3>
+        <h3 class="form-sub-heading">NSEIT Details</h3>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <mat-form-field class="w-100" appearance="standard">
-                    <mat-label>Enter Aadhar No</mat-label>
-                    <input matInput type="text">
-                        <!-- <mat-error *ngIf="checkAadharFormGroup.get('userId')?.invalid">Please enter a valid User ID</mat-error> -->
+                    <mat-label>Enter NSEIT Certificate No.</mat-label>
+                    <input matInput type="text" formControlName="nseit_certificate_number">
+                    <mat-error *ngIf="enrollmentFormGroup.get('nseit_certificate_number')?.invalid">Please enter NSEIT
+                        Certificate No.</mat-error>
                 </mat-form-field>
             </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="w-100 d-flex align-items-baseline gap-2">
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>NSEIT Certificate</mat-label>
+                        <input matInput type="text" readonly formControlName="nseit_certificate_file_name">
+                        <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint>
+                        <mat-error *ngIf="enrollmentFormGroup.get('nseit_certificate_file_name')?.invalid">Please upload
+                            NSEIT Certificate</mat-error>
+                    </mat-form-field>
+                    <div class="upload-btn-wrapper">
+                        <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                        <input type="file" #certificate (change)="handleUpload($event,'certificate')">
+                    </div>
+                    <button *ngIf="file_names.certificate" type="button" class="btn secondary remove-file-button"
+                        (click)="remove_file ('certificate')"><mat-icon>delete</mat-icon>Remove</button>
+                </div>
+            </div>
+
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <mat-form-field class="w-100" appearance="standard">
-                    <mat-label>Enter Aadhar No</mat-label>
-                    <input matInput type="text">
-                        <!-- <mat-error *ngIf="checkAadharFormGroup.get('userId')?.invalid">Please enter a valid User ID</mat-error> -->
+                    <mat-label>Date of Certificate Issue</mat-label>
+                    <input matInput [matDatepicker]="picker" [max]="today" [disabled]="true"
+                        formControlName="nseit_certificate_date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="enrollmentFormGroup.get('nseit_certificate_date')?.invalid">Please choose Date of
+                        Certificate Issue.</mat-error>
+
                 </mat-form-field>
             </div>
+
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <mat-form-field class="w-100" appearance="standard">
-                    <mat-label>Enter Aadhar No</mat-label>
-                    <input matInput type="text">
-                        <!-- <mat-error *ngIf="checkAadharFormGroup.get('userId')?.invalid">Please enter a valid User ID</mat-error> -->
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <mat-form-field class="w-100" appearance="standard">
-                    <mat-label>Enter Aadhar No</mat-label>
-                    <input matInput type="text">
-                        <!-- <mat-error *ngIf="checkAadharFormGroup.get('userId')?.invalid">Please enter a valid User ID</mat-error> -->
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="nseit_certificate_type">
+                        <mat-option value="opr">Operator</mat-option>
+                        <mat-option value="sup">Supervisor</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="enrollmentFormGroup.get('nseit_certificate_type')?.invalid">Please choose
+                        certification type.</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </section>
 
 
+    <section class="form-section">
+        <h3 class="form-sub-heading">Aadhar Details</h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Enter Aadhar No.</mat-label>
+                    <input matInput type="text" formControlName="aadhar_no">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_no')?.invalid">Please enter valid aadhar number.</mat-error>
+                </mat-form-field>
+            </div>
+
+           
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="w-100 d-flex align-items-baseline gap-2">
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>Upload E-Aadhar</mat-label>
+                        <input matInput type="text" readonly formControlName="aadhar_front_name">
+                        <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint>
+                        <mat-error *ngIf="enrollmentFormGroup.get('aadhar_front_name')?.invalid">Please upload E-Aadhar</mat-error>
+                    </mat-form-field>
+                    <div class="upload-btn-wrapper">
+                        <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                        <input type="file" #aadhar_front (change)="handleUpload($event,'aadhar_front')">
+                    </div>
+                    <button *ngIf="file_names.aadhar_front" type="button" class="btn secondary remove-file-button"
+                        (click)="remove_file ('aadhar_front')"><mat-icon>delete</mat-icon>Remove</button>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Name as per Aadhar</mat-label>
+                    <input matInput type="text" formControlName="name">
+                    <mat-error *ngIf="enrollmentFormGroup.get('name')?.invalid">Please enter name as per aadhar.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Choose Gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option value="m">Male</mat-option>
+                        <mat-option value="f">Female</mat-option>
+                        <mat-option value="o">Others</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="enrollmentFormGroup.get('gender')?.invalid">Please choose gender.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Aadhar registered phone no.</mat-label>
+                    <input matInput type="text" formControlName="aadhar_phone">
+                    <!-- <span matTextPrefix>+91</span> -->
+                     <mat-hint>Please do not add +91 or 0 before phone no.</mat-hint>
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_phone')?.invalid">Please enter valid mobile no. (Do not add +91 or 0 before phone no.)</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Aadhar registered e-mail.</mat-label>
+                    <input matInput type="text" formControlName="aadhar_email">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_email')?.invalid">Please enter valid email.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker1" [max]="today" [disabled]="true"
+                        formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="enrollmentFormGroup.get('dob')?.invalid">Please choose Date of birth</mat-error>
+
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Father's Name</mat-label>
+                    <input matInput type="text" formControlName="father_name">
+                    <mat-error *ngIf="enrollmentFormGroup.get('father_name')?.invalid">Please enter father's name.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Please Enter Aadhar Enrollment No.</mat-label>
+                    <input matInput type="text" formControlName="aadhar_enrollment_no">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_enrollment_no')?.invalid">Please enter valid enrollment no.</mat-error>
+                </mat-form-field>
+            </div>            
+
+            <div class="col-sm-12 col-md-6 col-lg-6"> 
+                <div class="w-100 d-flex gap-2" >
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>Date of Enrollment/Update</mat-label>
+                        <input matInput [matDatepicker]="picker0" [max]="today" [disabled]="true"
+                            formControlName="aadhar_enrollment_date">
+                        <mat-datepicker-toggle matSuffix [for]="picker0"></mat-datepicker-toggle>
+                        <mat-datepicker #picker0 disabled="false"></mat-datepicker>
+                        <mat-error *ngIf="enrollmentFormGroup.get('aadhar_enrollment_date')?.invalid">Please choose Date of Enrollment/Update</mat-error>
+    
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>Time of Enrollment/Update</mat-label>
+                        <input matInput type="text" formControlName="aadhar_enrollment_time" [ngxTimepicker]="timePicker">
+                        <mat-error *ngIf="enrollmentFormGroup.get('aadhar_enrollment_time')?.invalid">Please choose Time of Enrollment/Update</mat-error>
+
+                    </mat-form-field>
+
+                    <ngx-material-timepicker #timePicker></ngx-material-timepicker>
+                </div>
+
+            </div>
+
+            <h4 class="form-sub-heading-2">Proive your residence address:</h4>
+
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>At</mat-label>
+                    <input matInput type="text" formControlName="address_at">
+                    <mat-error *ngIf="enrollmentFormGroup.get('address_at')?.invalid">Please enter At.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Post</mat-label>
+                    <input matInput type="text" formControlName="address_post">
+                    <mat-error *ngIf="enrollmentFormGroup.get('address_post')?.invalid">Please enter post.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Block</mat-label>
+                    <input matInput type="text" formControlName="address_block">
+                    <mat-error *ngIf="enrollmentFormGroup.get('address_block')?.invalid">Please enter block.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Dist</mat-label>
+                    <input matInput type="text" formControlName="address_dist">
+                    <mat-error *ngIf="enrollmentFormGroup.get('address_dist')?.invalid">Please enter dist.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Pin</mat-label>
+                    <input matInput type="text" formControlName="address_pin">
+                    <mat-error *ngIf="enrollmentFormGroup.get('address_pin')?.invalid">Please enter a valid Pin.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>State</mat-label>
+                    <input matInput type="text" formControlName="address_state">
+                    <mat-error *ngIf="enrollmentFormGroup.get('address_state')?.invalid">Please enter state.</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="form-section">
+        <h3 class="form-sub-heading">PAN Details</h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Enter PAN.</mat-label>
+                    <input matInput type="text" formControlName="pan">
+                    <mat-error *ngIf="enrollmentFormGroup.get('pan')?.invalid">Please enter a valid PAN.</mat-error>
+                </mat-form-field>
+            </div>
+
+           
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="w-100 d-flex align-items-baseline gap-2">
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>Upload PAN</mat-label>
+                        <input matInput type="text" readonly formControlName="pan_image_name">
+                        <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint>
+                        <mat-error *ngIf="enrollmentFormGroup.get('pan_image_name')?.invalid">Please upload PAN</mat-error>
+                    </mat-form-field>
+                    <div class="upload-btn-wrapper">
+                        <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                        <input type="file" #pan (change)="handleUpload($event,'pan')">
+                    </div>
+                    <button *ngIf="file_names.pan" type="button" class="btn secondary remove-file-button"
+                        (click)="remove_file ('pan')"><mat-icon>delete</mat-icon>Remove</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <h3 class="form-sub-heading">Aadhar Center Apply Address</h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>State</mat-label>
+                    <input matInput type="text" formControlName="aadhar_center_address_state">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_center_address_state')?.invalid">Please enter aadhar center state.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>District</mat-label>
+                    <input matInput type="text" formControlName="aadhar_center_address_dist">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_center_address_dist')?.invalid">Please enter aadhar center district.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Block</mat-label>
+                    <input matInput type="text" formControlName="aadhar_center_address_block">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_center_address_block')?.invalid">Please enter aadhar center block.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>NAC/Gram Panchayat</mat-label>
+                    <input matInput type="text" formControlName="aadhar_center_address_nacgp">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_center_address_nacgp')?.invalid">Please enter aadhar center NAC/Gram Panchayat.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Ward No.</mat-label>
+                    <input matInput type="text" formControlName="aadhar_center_address_wardno">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_center_address_wardno')?.invalid">Please enter aadhar center Ward No.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Pin.</mat-label>
+                    <input matInput type="text" formControlName="aadhar_center_address_pin">
+                    <mat-error *ngIf="enrollmentFormGroup.get('aadhar_center_address_pin')?.invalid">Please enter aadhar center Pin.</mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="form-section">
+        <h2 class="form-sub-heading">Education Details</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Choose your highest education.</mat-label>
+                    <mat-select formControlName="education">
+                        <mat-option value="1">10th/Equivalent</mat-option>
+                        <mat-option value="2">12th/Diploma/Equivalent</mat-option>
+                        <mat-option value="3">Graduation</mat-option>
+                        <mat-option value="4">Post Graduation</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="enrollmentFormGroup.get('gender')?.invalid">Please choose gender.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="w-100 d-flex align-items-baseline gap-2">
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>Upload Education Certificate</mat-label>
+                        <input matInput type="text" readonly formControlName="education_certificate_name">
+                        <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint>
+                        <mat-error *ngIf="enrollmentFormGroup.get('education_certificate_name')?.invalid">Please upload Education Certificate</mat-error>
+                    </mat-form-field>
+                    <div class="upload-btn-wrapper">
+                        <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                        <input type="file" #education_certificate (change)="handleUpload($event,'education_certificate')">
+                    </div>
+                    <button *ngIf="file_names.education_certificate" type="button" class="btn secondary remove-file-button"
+                        (click)="remove_file ('education_certificate')"><mat-icon>delete</mat-icon>Remove</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <h3 class="form-sub-heading">Upload Photo</h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="w-100 d-flex align-items-baseline gap-2">
+                    <mat-form-field class="flex-1" appearance="standard">
+                        <mat-label>Upload Passport size photo.</mat-label>
+                        <input matInput type="text" readonly formControlName="photo">
+                        <mat-hint>Please make sure the photo is colorful and in JPEG format.</mat-hint>
+                        <mat-error *ngIf="enrollmentFormGroup.get('photo')?.invalid">Please upload Passport size photo.</mat-error>
+                    </mat-form-field>
+                    <div class="upload-btn-wrapper">
+                        <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                        <input type="file" #photo (change)="handleUpload($event,'photo')">
+                    </div>
+                    <button *ngIf="file_names.photo" type="button" class="btn secondary remove-file-button"
+                        (click)="remove_file ('photo')"><mat-icon>delete</mat-icon>Remove</button>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <button type="submit" 
+                class="w-100 btn primary submit-button" 
+                [disabled]="enrollmentFormGroup.invalid" 
+                (click)="onFormSubmit ()">Enroll for Aadhar</button>
+            </div>
+        </div>
+    </section>
+    
 </form>

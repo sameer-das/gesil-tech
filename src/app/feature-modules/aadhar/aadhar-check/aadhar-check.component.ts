@@ -37,7 +37,7 @@ export class AadharCheckComponent implements OnInit {
                             if(status === 'de-active') {
                                 this.checkAadharFormGroup.addControl('deactiveReason', new FormControl('suspended', Validators.required));
                                 this.checkAadharFormGroup.addControl('dateOfDeactivation', new FormControl('suspended', [Validators.required]));
-                                this.checkAadharFormGroup.addControl('duration', new FormControl('', [Validators.required, ]));
+                                this.checkAadharFormGroup.addControl('duration', new FormControl('', [Validators.required, Validators.pattern('^[1-9]{1}$')]));
                             }
                         } 
                     })
