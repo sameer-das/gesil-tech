@@ -6,12 +6,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AadharCheckComponent } from './aadhar-check/aadhar-check.component';
 import { AadharEnrollmentFormComponent } from './aadhar-enrollment-form/aadhar-enrollment-form.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AadharEnrollmentFormStepperComponent } from './aadhar-enrollment-form-stepper/aadhar-enrollment-form-stepper.component';
 const routes: Routes = [
   { path: '', component: AadharCheckComponent, canActivate: [] },
 ];
 
 @NgModule({
-  declarations: [AadharCheckComponent, AadharEnrollmentFormComponent],
+  declarations: [AadharCheckComponent, AadharEnrollmentFormComponent, AadharEnrollmentFormStepperComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

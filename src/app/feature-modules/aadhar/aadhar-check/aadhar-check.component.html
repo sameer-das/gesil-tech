@@ -1,8 +1,8 @@
-<div class="container">
+<div class="">
     <h2 class="page__header">Aadhar Service</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat reprehenderit non eveniet assumenda fugiat, obcaecati dicta fuga amet commodi voluptates consequuntur dolore quos magnam! Iusto aliquam tempore dolore enim recusandae?</p>
 
-    <form *ngIf="showEnrollmentForm; else enrollmentForm" [formGroup]="checkAadharFormGroup">
+    <form *ngIf="!showEnrollmentForm; else enrollmentForm" [formGroup]="checkAadharFormGroup">
         <mat-form-field class="col-sm-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4" appearance="standard">
             <mat-label>Have you used aadhar services before?</mat-label>
             <mat-select formControlName="haveUsedAadhar">
@@ -57,6 +57,7 @@
     </form>
 
     <ng-template #enrollmentForm>
-        <app-aadhar-enrollment-form></app-aadhar-enrollment-form>
+        <!-- <app-aadhar-enrollment-form></app-aadhar-enrollment-form> -->
+        <app-aadhar-enrollment-form-stepper></app-aadhar-enrollment-form-stepper>
     </ng-template>
 </div>

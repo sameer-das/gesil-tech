@@ -75,13 +75,17 @@ body {
 
 
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-  background-color: #03a9f5 !important;
+  background-color: #0e2b6c !important;
 }
 
 
 .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
-  background-color: #03a9f5 !important;
+  background-color: #0e2b6c !important;
   color: #fff;
+}
+
+.mat-step-header .mat-step-label.mat-step-label-active {
+  color: #0e2b6c !important;
 }
 
 .mat-progress-spinner circle, .mat-spinner circle {

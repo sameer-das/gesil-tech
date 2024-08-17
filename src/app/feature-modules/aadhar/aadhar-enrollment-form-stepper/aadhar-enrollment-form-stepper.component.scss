@@ -1,0 +1,35 @@
+@import '../../../styles/constants.scss';
+
+.submit-button {
+    margin-top: 1.25rem;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+
+    input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    button {
+        display: flex;
+    }
+  }
+
+
+.remove-file-button {
+    display: flex;
+}
+
+.form-sub-heading-2 {
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+    margin-left: 0.75rem;
+    color: $gradient1;
+}
