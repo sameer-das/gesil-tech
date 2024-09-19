@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DmtService } from '../dmt-service.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { finalize, first } from 'rxjs';
@@ -12,13 +12,15 @@ import { Location } from '@angular/common';
 })
 export class DmtHomeComponent implements OnInit  {
   constructor(private router:Router, private _dmtService:DmtService, 
-    private _loaderService: LoaderService, private _location:Location) { }
-  routes = [
-    {route:'/dmtransfer/send', ind: 0},
-    {route:'/dmtransfer/addrecipient', ind: 1},
-    {route:'/dmtransfer/addsender', ind: 2},
-    {route:'/dmtransfer/dmttransactions', ind: 3},
-  ]
+    private _loaderService: LoaderService, private _location:Location,
+    private _route:ActivatedRoute) { }
+
+  // routes = [
+  //   {route:'/dmtransfer/send', ind: 0},
+  //   {route:'/dmtransfer/addrecipient', ind: 1},
+  //   {route:'/dmtransfer/addsender', ind: 2},
+  //   {route:'/dmtransfer/dmttransactions', ind: 3},
+  // ]
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   ngOnInit(): void {
     console.log(this.router.url)
@@ -55,6 +57,7 @@ export class DmtHomeComponent implements OnInit  {
           this.router.navigate(['dmtransfer/addsender']);
           this.showAddSenderTab = true;
         } else {
+          console.log(this._route)
           this.router.navigate(['dmtransfer/dmttransactions']);
         }
       }

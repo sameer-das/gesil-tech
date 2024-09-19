@@ -30,7 +30,7 @@
         </thead>
         <tbody>
             <!-- (click)="openTransactionDetailPopup(trans)" -->
-            <tr *ngFor="let trans of templateBoundTransactions; let i = index">
+            <tr *ngFor="let trans of templateBoundTransactions; let i = index"  (click)="initiateTransaction(trans)" >
                 <td>{{i + 1}}</td>
                 <td>{{trans.wallet_transaction_ID | uppercase}}</td>
                 <td>{{trans.wallet_transaction_Date | date:'medium'}}</td>
@@ -39,10 +39,11 @@
                 <!-- <td>{{trans.wallet_transaction_recall === 'ManiMulti' ? 'Prepaid Recharge' : trans.wallet_transaction_recall}}</td> -->
                 <td class="transaction-status" [ngClass]="getStatusClass(trans.wallet_transaction_Status)">
                     {{trans.wallet_transaction_Status === 'TXN_SUCCES' ? 'Success' : 'Fail'}}
-                <mat-icon title="Initiate Refund" 
+                
+                    <mat-icon title="Initiate Refund" 
                 (click)="initiateTransaction(trans)" 
                 class="refund-button" 
-                *ngIf="trans.wallet_transaction_Status === 'TXN_FAIL'">reply</mat-icon>
+                *ngIf="trans.wallet_transaction_Status === 'Refund' || trans.wallet_transaction_Status === 'Refund Pending'">reply</mat-icon>
                 </td>
 
             </tr>

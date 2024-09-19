@@ -65,4 +65,9 @@ export class DmtService {
     getTransactionHistory(emailid: string) {
         return this._httpClient.post(`${this.URL_GET_WALLET_TRANSACTION_HISTORY}?emailid=${emailid}`, {})
     }
+
+
+    initiateTransactionRefund (payload: any, serviceId: string, categoryId: string, userId: string) {
+        return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eReFundTransactionserviceId=${serviceId}&categoryId=${categoryId}&userId=${userId}`, payload)
+    }
 }
