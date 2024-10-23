@@ -111,7 +111,7 @@
       width: 7rem;
       height  : 7rem;
       cursor: pointer;
-      padding: 0.5rem 0;
+      // padding: 0.5rem 0;
       border: none;
       transition: all 0.3s;
       background-color: $gradient1;
@@ -127,21 +127,22 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         height: 100%;
+
 
         &__img__container {
           display: flex;
           justify-content: center;
           align-items: center;
-          aspect-ratio: 1;
+          // aspect-ratio: 1;
           transition: all 0.3s;
 
           img {
-            width: 70%;
+            width: 40%;
           }
           img.loanRepayment {
-            width: 50%;
+            width: 30%;
           }
         }
 
