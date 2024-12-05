@@ -1,5 +1,9 @@
-<h2 class="page__header mb-3">My Identity Card</h2>
-<div #pdf class="d-flex justify-content-center printable">
+<div class="d-flex justify-content-between">
+    <h2 class="page__header">My Identity Card</h2>
+    <button class="btn btn-primary" (click)="download()">Download</button>
+</div>
+
+<div #pdf class="d-flex justify-content-center printable mt-3">
     <div class="icard-container">
 
         <div class="icard-front">
