@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   downloadIdcard(userid: number) {
-    return this._http.get(`http://181.214.10.5:4000/api/v1/icard/${userid}`, {
+    return this._http.get(`${environment.service_base_url}/api/User/DownloadICardFile?userid=${userid}`, {
       responseType: 'blob'
     });
   }
