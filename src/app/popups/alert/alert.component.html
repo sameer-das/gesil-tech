@@ -1,5 +1,5 @@
 <div class="header">
-    <h4 mat-dialog-title [ngStyle]="style">{{data.header}}</h4>
+    <h4 mat-dialog-title [ngStyle]="style">{{data.header | titlecase }}</h4>
 </div>
 <div mat-dialog-content>
     <p class="dialog-message">{{data.message}}</p>

@@ -30,6 +30,6 @@ export class AlertComponent implements OnInit {
 }
 
 export interface AlertPopupData {
-  header: string,
+  header: 'alert' | 'success' | 'fail' | 'Alert' | 'Success' | 'Fail' | 'Coming Soon',
   message:string,
 }

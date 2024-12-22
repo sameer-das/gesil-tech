@@ -415,7 +415,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
                             this.payBill(payBill)
                         } else {
                             this._popupService.openAlert({
-                                header: 'Failed',
+                                header: 'alert',
                                 message: "Bill validation failed. Please contact support team!"
                             })
                         }
@@ -423,7 +423,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
                     error: (err) => {
                         console.log(err);
                         this._popupService.openAlert({
-                            header: 'Error',
+                            header: 'fail',
                             message: err.message
                         })
                     }

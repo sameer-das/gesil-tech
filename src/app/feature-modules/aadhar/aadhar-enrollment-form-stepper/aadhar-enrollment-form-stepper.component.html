@@ -1,6 +1,7 @@
+
 <mat-stepper [linear]="false" #stepper orientation="vertical">
 
-    <mat-step [stepControl]="nseitFormGroup">
+    <mat-step [stepControl]="nseitFormGroup" [completed]="false">
         <ng-template matStepLabel>NSEIT Details</ng-template>
         <form [formGroup]="nseitFormGroup">
             <div class="row">
@@ -57,8 +58,8 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end">
-                <button class="btn primary" matStepperNext>Next</button>
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn primary" (click)="onSaveNseitDetails()">Update NSEIT Details</button>
             </div>
 
         </form>
@@ -164,7 +165,7 @@
     
                 <div class="col-sm-12 col-md-6 col-lg-6 row p-0 m-0"> 
                     <!-- <div class="w-100 d-flex flex-sm-column gap-2" > -->
-                        <mat-form-field class="col-md-6 col-lg-6 col-sm-12" appearance="standard">
+                        <mat-form-field appearance="standard">
                             <mat-label>Date of Enrollment/Update</mat-label>
                             <input matInput [matDatepicker]="picker0" [max]="today" [disabled]="true"
                                 formControlName="aadhar_enrollment_date">
@@ -174,12 +175,12 @@
         
                         </mat-form-field>
     
-                        <mat-form-field class="col-md-6 col-lg-6 col-sm-12" appearance="standard">
+                        <!-- <mat-form-field class="col-md-6 col-lg-6 col-sm-12" appearance="standard">
                             <mat-label>Time of Enrollment/Update</mat-label>
                             <input matInput type="text" formControlName="aadhar_enrollment_time" [ngxTimepicker]="timePicker">
                             <mat-error *ngIf="aadharFormGroup.get('aadhar_enrollment_time')?.invalid">Please choose Time of Enrollment/Update</mat-error>    
                         </mat-form-field>    
-                        <ngx-material-timepicker #timePicker></ngx-material-timepicker>
+                        <ngx-material-timepicker #timePicker></ngx-material-timepicker> -->
                     <!-- </div> -->
     
                 </div>
@@ -230,9 +231,10 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end gap-2">
-                <button class="btn primary" matStepperPrevious>Back</button>
-                <button class="btn primary" matStepperNext>Next</button>
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
+                <!-- <button class="btn primary" matStepperNext>Next</button> -->
+                <button class="btn primary" (click)="onSaveAadharDetails()">Update Aadhar Details</button>
             </div>
         </form>
     </mat-step>
@@ -270,9 +272,10 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end gap-2">
-                <button class="btn primary" matStepperPrevious>Back</button>
-                <button class="btn primary" matStepperNext>Next</button>
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
+                <!-- <button class="btn primary" matStepperNext>Next</button> -->
+                <button class="btn primary" (click)="onSavePanDetails()">Update Pan Details</button>
             </div>
         </form>
     </mat-step>
@@ -325,9 +328,11 @@
                 </div>
     
             </div>
-            <div class="d-flex justify-content-end gap-2">
-                <button class="btn primary" matStepperPrevious>Back</button>
-                <button class="btn primary" matStepperNext>Next</button>
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
+                <!-- <button class="btn primary" matStepperNext>Next</button> -->
+                <button class="btn primary" (click)="onSaveAadharCenterDetails()">Update Aadhar Center Details</button>
+
             </div>
         </form>
         
@@ -367,9 +372,10 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end gap-2">
-                <button class="btn primary" matStepperPrevious>Back</button>
-                <button class="btn primary" matStepperNext>Next</button>
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
+                <!-- <button class="btn primary" matStepperNext>Next</button> -->
+                <button class="btn primary" (click)="onSaveEducationDetails()">Update Education Details</button>
             </div>
         </form>
         
@@ -396,11 +402,13 @@
                     </div>
                 </div>
     
-                <div class="d-flex justify-content-end gap-2">
-                    <button type="submit" 
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <!-- <button type="submit" 
                     class="w-100 btn primary submit-button" 
                     [disabled]="photoFormGroup.invalid" 
-                    (click)="onFormSubmit ()">Enroll for Aadhar</button>
+                    (click)="onFormSubmit ()">Enroll for Aadhar</button> -->
+
+                    <button class="btn primary" (click)="onSavePhotoDetails()">Update Your Photo</button>
                 </div>
             </div>
         </form>
