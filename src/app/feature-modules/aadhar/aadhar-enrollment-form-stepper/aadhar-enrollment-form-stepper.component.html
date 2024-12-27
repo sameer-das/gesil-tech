@@ -27,8 +27,8 @@
                             <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
                             <input type="file" #certificate (change)="handleUpload($event,'certificate')">
                         </div>
-                        <button *ngIf="file_names.certificate" type="button" class="btn secondary remove-file-button"
-                            (click)="remove_file ('certificate')"><mat-icon>delete</mat-icon>Remove</button>
+                        <!-- <button *ngIf="file_names.certificate" type="button" class="btn secondary remove-file-button"
+                            (click)="remove_file ('certificate')"><mat-icon>delete</mat-icon>Remove</button> -->
                     </div>
                 </div>
     
@@ -59,7 +59,7 @@
             </div>
 
             <div class="d-flex justify-content-end mt-3">
-                <button class="btn primary" (click)="onSaveNseitDetails()">Update NSEIT Details</button>
+                <button [disabled]="nseitFormGroup.invalid" class="btn primary" (click)="onSaveNseitDetails()">Update NSEIT Details</button>
             </div>
 
         </form>
@@ -91,8 +91,8 @@
                             <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
                             <input type="file" #aadhar_front (change)="handleUpload($event,'aadhar_front')">
                         </div>
-                        <button *ngIf="file_names.aadhar_front" type="button" class="btn secondary remove-file-button"
-                            (click)="remove_file ('aadhar_front')"><mat-icon>delete</mat-icon>Remove</button>
+                        <!-- <button *ngIf="file_names.aadhar_front" type="button" class="btn secondary remove-file-button"
+                            (click)="remove_file ('aadhar_front')"><mat-icon>delete</mat-icon>Remove</button> -->
                     </div>
                 </div>
     
@@ -189,6 +189,34 @@
     
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Choose State</mat-label>
+                        <mat-select formControlName="address_state">
+                          <mat-option *ngFor="let state of states" [value]="state">{{state.state_Name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Choose District</mat-label>
+                        <mat-select formControlName="address_dist">
+                          <mat-option *ngFor="let dist of districts" [value]="dist">{{dist.district_Name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Choose Block</mat-label>
+                        <mat-select formControlName="address_block">
+                          <mat-option *ngFor="let block of blocks" [value]="block">{{block.block_Name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
+
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <mat-form-field class="w-100" appearance="standard">
                         <mat-label>At</mat-label>
                         <input matInput type="text" formControlName="address_at">
                         <mat-error *ngIf="aadharFormGroup.get('address_at')?.invalid">Please enter At.</mat-error>
@@ -201,20 +229,7 @@
                         <mat-error *ngIf="aadharFormGroup.get('address_post')?.invalid">Please enter post.</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                    <mat-form-field class="w-100" appearance="standard">
-                        <mat-label>Block</mat-label>
-                        <input matInput type="text" formControlName="address_block">
-                        <mat-error *ngIf="aadharFormGroup.get('address_block')?.invalid">Please enter block.</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                    <mat-form-field class="w-100" appearance="standard">
-                        <mat-label>Dist</mat-label>
-                        <input matInput type="text" formControlName="address_dist">
-                        <mat-error *ngIf="aadharFormGroup.get('address_dist')?.invalid">Please enter dist.</mat-error>
-                    </mat-form-field>
-                </div>
+                
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <mat-form-field class="w-100" appearance="standard">
                         <mat-label>Pin</mat-label>
@@ -222,19 +237,11 @@
                         <mat-error *ngIf="aadharFormGroup.get('address_pin')?.invalid">Please enter a valid Pin.</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                    <mat-form-field class="w-100" appearance="standard">
-                        <mat-label>State</mat-label>
-                        <input matInput type="text" formControlName="address_state">
-                        <mat-error *ngIf="aadharFormGroup.get('address_state')?.invalid">Please enter state.</mat-error>
-                    </mat-form-field>
-                </div>
+                
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-3">
-                <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
-                <!-- <button class="btn primary" matStepperNext>Next</button> -->
-                <button class="btn primary" (click)="onSaveAadharDetails()">Update Aadhar Details</button>
+                <button class="btn primary" [disabled]="aadharFormGroup.invalid" (click)="onSaveAadharDetails()">Update Aadhar Details</button>
             </div>
         </form>
     </mat-step>
@@ -266,8 +273,8 @@
                             <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
                             <input type="file" #pan (change)="handleUpload($event,'pan')">
                         </div>
-                        <button *ngIf="file_names.pan" type="button" class="btn secondary remove-file-button"
-                            (click)="remove_file ('pan')"><mat-icon>delete</mat-icon>Remove</button>
+                        <!-- <button *ngIf="file_names.pan" type="button" class="btn secondary remove-file-button"
+                            (click)="remove_file ('pan')"><mat-icon>delete</mat-icon>Remove</button> -->
                     </div>
                 </div>
             </div>
@@ -275,7 +282,7 @@
             <div class="d-flex justify-content-end gap-2 mt-3">
                 <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
                 <!-- <button class="btn primary" matStepperNext>Next</button> -->
-                <button class="btn primary" (click)="onSavePanDetails()">Update Pan Details</button>
+                <button class="btn primary" [disabled]="panFormGroup.invalid" (click)="onSavePanDetails()">Update Pan Details</button>
             </div>
         </form>
     </mat-step>
@@ -286,24 +293,48 @@
             <div class="row">
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Choose State</mat-label>
+                        <mat-select formControlName="aadhar_center_address_state">
+                          <mat-option *ngFor="let state of states" [value]="state">{{state.state_Name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="aadharCenterAddressFromGroup.get('aadhar_center_address_state')?.invalid">Please choose aadhar center state.</mat-error>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="w-100" appearance="standard">
                         <mat-label>State</mat-label>
                         <input matInput type="text" formControlName="aadhar_center_address_state">
                         <mat-error *ngIf="aadharCenterAddressFromGroup.get('aadhar_center_address_state')?.invalid">Please enter aadhar center state.</mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Choose District</mat-label>
+                        <mat-select formControlName="aadhar_center_address_dist">
+                          <mat-option *ngFor="let dist of ac_districts" [value]="dist">{{dist.district_Name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="aadharCenterAddressFromGroup.get('aadhar_center_address_dist')?.invalid">Please choose aadhar center district.</mat-error>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="w-100" appearance="standard">
                         <mat-label>District</mat-label>
                         <input matInput type="text" formControlName="aadhar_center_address_dist">
                         <mat-error *ngIf="aadharCenterAddressFromGroup.get('aadhar_center_address_dist')?.invalid">Please enter aadhar center district.</mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Choose Block</mat-label>
+                        <mat-select formControlName="aadhar_center_address_block">
+                          <mat-option *ngFor="let block of ac_blocks" [value]="block">{{block.block_Name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="aadharCenterAddressFromGroup.get('aadhar_center_address_block')?.invalid">Please choose aadhar center block.</mat-error>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="w-100" appearance="standard">
                         <mat-label>Block</mat-label>
                         <input matInput type="text" formControlName="aadhar_center_address_block">
                         <mat-error *ngIf="aadharCenterAddressFromGroup.get('aadhar_center_address_block')?.invalid">Please enter aadhar center block.</mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <mat-form-field class="w-100" appearance="standard">
@@ -331,51 +362,8 @@
             <div class="d-flex justify-content-end gap-2 mt-3">
                 <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
                 <!-- <button class="btn primary" matStepperNext>Next</button> -->
-                <button class="btn primary" (click)="onSaveAadharCenterDetails()">Update Aadhar Center Details</button>
+                <button class="btn primary" [disabled]="aadharCenterAddressFromGroup.invalid" (click)="onSaveAadharCenterDetails()">Update Aadhar Center Details</button>
 
-            </div>
-        </form>
-        
-    </mat-step>
-
-    <mat-step [stepControl]="educationFormGroup">
-        <ng-template matStepLabel>Education Details</ng-template>
-        <form [formGroup]="educationFormGroup">
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <mat-form-field class="w-100" appearance="standard">
-                        <mat-label>Choose your highest education.</mat-label>
-                        <mat-select formControlName="education">
-                            <mat-option value="1">10th/Equivalent</mat-option>
-                            <mat-option value="2">12th/Diploma/Equivalent</mat-option>
-                            <mat-option value="3">Graduation</mat-option>
-                            <mat-option value="4">Post Graduation</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="educationFormGroup.get('gender')?.invalid">Please choose gender.</mat-error>
-                    </mat-form-field>
-                </div>
-    
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <div class="w-100 d-flex align-items-baseline gap-2">
-                        <mat-form-field class="flex-1" appearance="standard">
-                            <mat-label>Upload Education Certificate</mat-label>
-                            <input matInput type="text" readonly formControlName="education_certificate_name">
-                            <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint>
-                            <mat-error *ngIf="educationFormGroup.get('education_certificate_name')?.invalid">Please upload Education Certificate</mat-error>
-                        </mat-form-field>
-                        <div class="upload-btn-wrapper">
-                            <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
-                            <input type="file" #education_certificate (change)="handleUpload($event,'education_certificate')">
-                        </div>
-                        <button *ngIf="file_names.education_certificate" type="button" class="btn secondary remove-file-button"
-                            (click)="remove_file ('education_certificate')"><mat-icon>delete</mat-icon>Remove</button>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end gap-2 mt-3">
-                <!-- <button class="btn primary" matStepperPrevious>Back</button> -->
-                <!-- <button class="btn primary" matStepperNext>Next</button> -->
-                <button class="btn primary" (click)="onSaveEducationDetails()">Update Education Details</button>
             </div>
         </form>
         
@@ -397,20 +385,196 @@
                             <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
                             <input type="file" #photo (change)="handleUpload($event,'photo')">
                         </div>
-                        <button *ngIf="file_names.photo" type="button" class="btn secondary remove-file-button"
-                            (click)="remove_file ('photo')"><mat-icon>delete</mat-icon>Remove</button>
+                        <!-- <button *ngIf="file_names.photo" type="button" class="btn secondary remove-file-button"
+                            (click)="remove_file ('photo')"><mat-icon>delete</mat-icon>Remove</button> -->
                     </div>
-                </div>
-    
-                <div class="d-flex justify-content-end gap-2 mt-3">
-                    <!-- <button type="submit" 
-                    class="w-100 btn primary submit-button" 
-                    [disabled]="photoFormGroup.invalid" 
-                    (click)="onFormSubmit ()">Enroll for Aadhar</button> -->
-
-                    <button class="btn primary" (click)="onSavePhotoDetails()">Update Your Photo</button>
                 </div>
             </div>
         </form>
     </mat-step>
+
+    <mat-step [stepControl]="educationFormGroup">
+        <ng-template matStepLabel>Education and Other Documents</ng-template>
+        <ng-container *ngIf="nseitFormGroup.valid && 
+            aadharFormGroup.valid && 
+            panFormGroup.valid && 
+            aadharCenterAddressFromGroup.valid && 
+            photoFormGroup.valid; else invalidMessage">
+
+            <div class="d-flex justify-content-center mt-4">
+                <p class="info d-flex align-items-center p-0"><mat-icon>info</mat-icon> Please make sure the documents are colorful and in PDF format</p>
+            </div>
+            <form [formGroup]="educationFormGroup">
+                <div class="row">
+                    <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>Choose your highest education.</mat-label>
+                            <mat-select formControlName="education">
+                                <mat-option value="1">10th/Equivalent</mat-option>
+                                <mat-option value="2">12th/Diploma/Equivalent</mat-option>
+                                <mat-option value="3">Graduation</mat-option>
+                                <mat-option value="4">Post Graduation</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="educationFormGroup.get('gender')?.invalid">Please choose gender.</mat-error>
+                        </mat-form-field>
+                    </div> -->
+        
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Tenth Marksheet</mat-label>
+                                <input matInput type="text" readonly formControlName="tenth_marksheet_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('tenth_marksheet_name')?.invalid">Please upload tenth marksheet</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #tenth_marksheet (change)="handleUpload($event,'tenth_marksheet')">
+                            </div>
+                            <!-- <button *ngIf="file_names.tenth_marksheet" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('tenth_marksheet')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Tenth Certificate</mat-label>
+                                <input matInput type="text" readonly formControlName="tenth_certificate_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('tenth_certificate_name')?.invalid">Please upload tenth certificate</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #tenth_certificate (change)="handleUpload($event,'tenth_certificate')">
+                            </div>
+                            <!-- <button *ngIf="file_names.tenth_certificate" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('tenth_certificate')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Tenth Marksheet</mat-label>
+                                <input matInput type="text" readonly formControlName="twelfth_marksheet_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('twelfth_marksheet_name')?.invalid">Please upload twelfth marksheet</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #twelfth_marksheet (change)="handleUpload($event,'twelfth_marksheet')">
+                            </div>
+                            <!-- <button *ngIf="file_names.twelfth_marksheet" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('twelfth_marksheet')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Twelfth Certificate</mat-label>
+                                <input matInput type="text" readonly formControlName="twelfth_certificate_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('twelfth_certificate_name')?.invalid">Please upload twelfthe certificate</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #twelfth_certificate (change)="handleUpload($event,'twelfth_certificate')">
+                            </div>
+                            <!-- <button *ngIf="file_names.twelfth_certificate" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('twelfth_certificate')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- highest education documents -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Highest Education Marksheet</mat-label>
+                                <input matInput type="text" readonly formControlName="highest_education_marksheet_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('highest_education_marksheet_name')?.invalid">Please upload marksheet of your highest education</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #highest_education_marksheet (change)="handleUpload($event,'highest_education_marksheet')">
+                            </div>
+                            <!-- <button *ngIf="file_names.highest_education_marksheet" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('highest_education_marksheet')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Highest Education Certificate</mat-label>
+                                <input matInput type="text" readonly formControlName="highest_education_certificate_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('highest_education_certificate_name')?.invalid">Please upload certificate of your highest education</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #highest_education_certificate (change)="handleUpload($event,'highest_education_certificate')">
+                            </div>
+                            <!-- <button *ngIf="file_names.highest_education_certificate" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('highest_education_certificate')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LSM and certificate documents -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>LMS Certificate </mat-label>
+                                <input matInput type="text" readonly formControlName="lms_certificate_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('lms_certificate_name')?.invalid">Please upload LMS certificate</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #lms_certificate (change)="handleUpload($event,'lms_certificate')">
+                            </div>
+                            <!-- <button *ngIf="file_names.lms_certificate" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('lms_certificate')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+
+                    <div *ngIf="educationFormGroup.get('police_verification_certificate_name')" class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="w-100 d-flex align-items-baseline gap-2">
+                            <mat-form-field class="flex-1" appearance="standard">
+                                <mat-label>Police Verified Certificate</mat-label>
+                                <input matInput type="text" readonly formControlName="police_verification_certificate_name">
+                                <!-- <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint> -->
+                                <mat-error *ngIf="educationFormGroup.get('police_verification_certificate_name')?.invalid">Please upload police verified certificate</mat-error>
+                            </mat-form-field>
+                            <div class="upload-btn-wrapper">
+                                <button type="button" class="btn primary"><mat-icon>upload</mat-icon>Upload</button>
+                                <input type="file" #police_verification_certificate (change)="handleUpload($event,'police_verification_certificate')">
+                            </div>
+                            <!-- <button *ngIf="file_names.police_verification_certificate" type="button" class="btn secondary remove-file-button"
+                                (click)="remove_file ('police_verification_certificate')"><mat-icon>delete</mat-icon>Remove</button> -->
+                        </div>
+                    </div>
+                </div>
+            
+            </form>
+
+        </ng-container>
+
+        <ng-template #invalidMessage>
+            <div class="d-flex justify-content-center mt-5">
+                <p class="invalid-message d-flex align-items-center p-0"><mat-icon>info</mat-icon>Please provide all the above/previous details to upload education details!</p>
+            </div>
+        </ng-template>
+
+        
+    </mat-step>
+
+   
 </mat-stepper>

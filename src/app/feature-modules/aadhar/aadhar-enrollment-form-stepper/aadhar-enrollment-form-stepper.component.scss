@@ -33,3 +33,16 @@
     margin-left: 0.75rem;
     color: $gradient1;
 }
+
+
+p.info {
+    color: $gradient1;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+p.invalid-message {
+    color: $dark-pink;
+    font-style: italic;
+    font-size: 0.9rem;
+}
