@@ -1,11 +1,12 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { PopupService } from 'src/app/popups/popup.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { AadharService } from '../aadhar.service';
+import * as moment from 'moment';
 
 
 
@@ -101,7 +102,7 @@ export class AadharEnrollmentFormStepperComponent implements OnInit, OnChanges {
     nseitFormGroup = new FormGroup({
         nseit_certificate_number: new FormControl('', [Validators.required]),
         nseit_certificate_file_name: new FormControl('', [Validators.required]),
-        nseit_certificate_date: new FormControl('', [Validators.required]),
+        nseit_certificate_date: new FormControl('', [Validators.required, this.ExpiryValidator]),
         nseit_certificate_type: new FormControl('', [Validators.required]),
     });
 
@@ -226,6 +227,8 @@ export class AadharEnrollmentFormStepperComponent implements OnInit, OnChanges {
             if(dist)
                 this.populateAcBlock(this.aadharCenterAddressFromGroup.value['aadhar_center_address_state'].state_ID,dist.district_ID)
         })
+
+        // ===========================================================================================
     }
 
     populateState() {
@@ -911,5 +914,33 @@ export class AadharEnrollmentFormStepperComponent implements OnInit, OnChanges {
     }
 
 
+    ExpiryValidator(control: AbstractControl): ValidationErrors | null {
+
+        if(!control.value)
+            return null;
+
+        function _addMonths(date: Date, months: number) {
+            let result = new Date(date);
+            let day = result.getDate();
+
+            // Set the month and adjust the date for overflow
+            result.setMonth(result.getMonth() + months);
+
+            // If the day overflows (e.g., Feb 31), adjust to the last valid day of the month
+            if (result.getDate() < day) {
+                result.setDate(0); // Go back to the last day of the previous month
+            }
+
+            return result;
+        }
+
+        const expiryDate = _addMonths(control.value, 36); // Add 3 years or 36 months
+
+        if(moment(new Date()).isAfter(expiryDate)) {           
+            return { expired: 'Certificate has expired.' }
+        }
+
+        return null;
+    }
 
 }

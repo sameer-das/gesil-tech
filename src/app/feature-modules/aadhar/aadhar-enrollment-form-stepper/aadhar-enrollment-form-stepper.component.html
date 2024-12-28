@@ -1,7 +1,7 @@
 
-<mat-stepper [linear]="false" #stepper orientation="vertical">
+<mat-stepper [linear]="true" #stepper orientation="vertical">
 
-    <mat-step [stepControl]="nseitFormGroup" [completed]="false">
+    <mat-step [stepControl]="nseitFormGroup">
         <ng-template matStepLabel>NSEIT Details</ng-template>
         <form [formGroup]="nseitFormGroup">
             <div class="row">
@@ -39,9 +39,12 @@
                             formControlName="nseit_certificate_date">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker disabled="false"></mat-datepicker>
-                        <mat-error *ngIf="nseitFormGroup.get('nseit_certificate_date')?.invalid">Please choose Date of
-                            Certificate Issue.</mat-error>
-    
+                        <mat-error *ngIf="nseitFormGroup.get('nseit_certificate_date')?.hasError('required')">
+                            Please choose certificate issue date.
+                        </mat-error>
+                        <mat-error *ngIf="nseitFormGroup.get('nseit_certificate_date')?.hasError('expired')">
+                            The certificate has expired! Please renew the certificate.
+                        </mat-error>    
                     </mat-form-field>
                 </div>
     
@@ -84,7 +87,7 @@
                         <mat-form-field class="flex-1" appearance="standard">
                             <mat-label>Upload E-Aadhar</mat-label>
                             <input matInput type="text" readonly formControlName="aadhar_front_name">
-                            <mat-hint>Please make sure the document is colorful and in PDF format.</mat-hint>
+                            <mat-hint>Please make sure the document is colorful, in PDF format and password not protected.</mat-hint>
                             <mat-error *ngIf="aadharFormGroup.get('aadhar_front_name')?.invalid">Please upload E-Aadhar</mat-error>
                         </mat-form-field>
                         <div class="upload-btn-wrapper">
@@ -395,30 +398,11 @@
 
     <mat-step [stepControl]="educationFormGroup">
         <ng-template matStepLabel>Education and Other Documents</ng-template>
-        <ng-container *ngIf="nseitFormGroup.valid && 
-            aadharFormGroup.valid && 
-            panFormGroup.valid && 
-            aadharCenterAddressFromGroup.valid && 
-            photoFormGroup.valid; else invalidMessage">
-
             <div class="d-flex justify-content-center mt-4">
-                <p class="info d-flex align-items-center p-0"><mat-icon>info</mat-icon> Please make sure the documents are colorful and in PDF format</p>
+                <p class="info d-flex align-items-center p-0"><mat-icon>info</mat-icon> Please make sure the documents are colorful, in PDF format and password not protected.</p>
             </div>
             <form [formGroup]="educationFormGroup">
-                <div class="row">
-                    <!-- <div class="col-sm-12 col-md-6 col-lg-6">
-                        <mat-form-field class="w-100" appearance="standard">
-                            <mat-label>Choose your highest education.</mat-label>
-                            <mat-select formControlName="education">
-                                <mat-option value="1">10th/Equivalent</mat-option>
-                                <mat-option value="2">12th/Diploma/Equivalent</mat-option>
-                                <mat-option value="3">Graduation</mat-option>
-                                <mat-option value="4">Post Graduation</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="educationFormGroup.get('gender')?.invalid">Please choose gender.</mat-error>
-                        </mat-form-field>
-                    </div> -->
-        
+                <div class="row">        
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="w-100 d-flex align-items-baseline gap-2">
                             <mat-form-field class="flex-1" appearance="standard">
@@ -563,17 +547,7 @@
                     </div>
                 </div>
             
-            </form>
-
-        </ng-container>
-
-        <ng-template #invalidMessage>
-            <div class="d-flex justify-content-center mt-5">
-                <p class="invalid-message d-flex align-items-center p-0"><mat-icon>info</mat-icon>Please provide all the above/previous details to upload education details!</p>
-            </div>
-        </ng-template>
-
-        
+            </form>        
     </mat-step>
 
    
