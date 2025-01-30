@@ -10,6 +10,7 @@ import { DmtService } from './dmt-service.service';
 import { DmtTransactionComponent } from './dmt-transaction/dmt-transaction.component';
 import { SendMoneyComponent } from './send-money/send-money.component';
 import { DmtTransactionDetailsComponent } from './dmt-transaction-details/dmt-transaction-details.component';
+import { TestThumbReaderComponent } from './test-thumb-reader/test-thumb-reader.component';
 
 
 
@@ -20,7 +21,8 @@ import { DmtTransactionDetailsComponent } from './dmt-transaction-details/dmt-tr
 		SendMoneyComponent,
 		DmtHomeComponent,
 		DmtTransactionComponent,
-		DmtTransactionDetailsComponent
+		DmtTransactionDetailsComponent,
+  		TestThumbReaderComponent
 	],
 	imports: [
 		CommonModule,
@@ -36,11 +38,12 @@ import { DmtTransactionDetailsComponent } from './dmt-transaction-details/dmt-tr
 					{ path: 'send', component: SendMoneyComponent, },
 					{ path: 'addrecipient', component: AddRecipientComponent, },
 					{ path: 'addsender', component: AddSenderComponent, },
+					// { path: 'test', component: TestThumbReaderComponent, },
 					// { path: '', pathMatch: 'full', redirectTo: 'dmttransactions' },
 				],
 				canActivate: []
 			},
-			// { path: 'dmttransactions/:transid', component: DmtTransactionDetailsComponent, }
+			{ path: 'test', component: TestThumbReaderComponent, }
 		]),
 	],
 	providers: [DmtService]

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DmtService } from '../dmt-service.service';
 import { PopupService } from 'src/app/popups/popup.service';
 import { LoaderService } from 'src/app/services/loader.service';
-import { finalize, first, tap } from 'rxjs';
+import { finalize, first, Subject, takeUntil, tap } from 'rxjs';
 import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -13,20 +13,27 @@ import { Router } from '@angular/router';
   templateUrl: './add-sender.component.html',
   styleUrls: ['./add-sender.component.scss']
 })
-export class AddSenderComponent implements OnInit {
+export class AddSenderComponent implements OnInit, OnDestroy {
 
   constructor(private _dmtService: DmtService, 
     private _popupService: PopupService,
     private _loaderService: LoaderService, 
     private _modal: MatDialog,
     private _router: Router) { }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true)
+  }
   currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
   addSenderForm: FormGroup = new FormGroup({
     senderName: new FormControl('', Validators.required),
     // senderMobile: new FormControl('', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]),
     transactionType: new FormControl(null, Validators.required),
+    aadharNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{12}$')]),
+    bio: new FormControl('', [Validators.required])
   })
 
+  destroy$: Subject<boolean> = new Subject<boolean>()
 
   get f(): { [key: string]: AbstractControl } {
     return this.addSenderForm.controls;
@@ -42,7 +49,12 @@ export class AddSenderComponent implements OnInit {
       "senderMobileNumber": this.currentUser.user.mobile_Number,
       "txnType": this.addSenderForm.value.transactionType,
       "senderName": this.addSenderForm.value.senderName,
-      "senderPin": this.currentUser.personalDetail.user_Pin
+      "senderPin": this.currentUser.personalDetail.user_Pin,
+      "bankId": "ARTL",
+      "skipVerification": "N",
+      "aadharNumber": this.addSenderForm.value.aadharNumber,
+      "bioPid": this.addSenderForm.value.bio,
+      "bioType": "FIR"
     }
     this._loaderService.showLoader();
     this._dmtService.registerSenderInfo(payload)
@@ -127,5 +139,62 @@ export class AddSenderComponent implements OnInit {
           })
         }
       })
+  }
+
+  openCaptureConfirm() {
+    this._popupService.openConfirm({
+      header: 'Alert',
+      message: 'Please confirm that your biometric device is connected and ready to use.',
+      okButtonLabel: 'Confirm',
+      cancelButtonLabel: 'Cancel',
+      showCancelButton: true
+    })
+    .afterClosed()
+    .pipe(takeUntil( this.destroy$))
+    .subscribe((t: boolean) => {
+      if(t) {
+        this.getFingerprint();
+      } else {
+
+      }
+    })
+  }
+
+  getFingerprint() {
+  
+    this._loaderService.showLoader();
+    this._dmtService.Capture()
+    .then((resp:string) => {
+      // console.log(resp); 
+      const start = resp.search('<Data type="X">');
+      const end =  resp.search('</Data>');
+
+      if(start === -1 || end === -1) {
+        this._popupService.openAlert({
+          header:'Alert',
+          message:'Invalid index.'
+        });
+      }
+      const data = resp.slice(start + 15,end);
+      // console.log(data)
+      this._popupService.openAlert({
+        header:'Success',
+        message:'Captured successfully.'
+      });
+      this.addSenderForm.patchValue({
+        bio: data
+      });
+
+    })
+    .catch((err) => {
+      this._popupService.openAlert({
+        header:'Fail',
+        message:'Capture failed.'
+      });
+      console.log(err)
+    })
+    .finally(() => {
+      this._loaderService.hideLoader();
+    })
   }
 }

@@ -1,9 +1,9 @@
 <nav>
     <ul>
         <li><a title="Go Back" routerLink="../dashboard"><mat-icon class="arrow_back">arrow_back</mat-icon></a></li>
-        <li><a routerLink="dmttransactions" routerLinkActive="active">My Transactions</a></li>
-        <li><a routerLink="send" routerLinkActive="active">Send Money</a></li>
-        <li><a routerLink="addrecipient" routerLinkActive="active">Add Recipient</a></li>
+        <li *ngIf="!showAddSenderTab"><a routerLink="dmttransactions" routerLinkActive="active">My Transactions</a></li>
+        <li *ngIf="!showAddSenderTab"><a routerLink="send" routerLinkActive="active">Send Money</a></li>
+        <li *ngIf="!showAddSenderTab"><a routerLink="addrecipient" routerLinkActive="active">Add Recipient</a></li>
         <li *ngIf="showAddSenderTab"><a routerLink="addsender" routerLinkActive="active">Add Sender</a></li>
     </ul>
     <div class="image_container">

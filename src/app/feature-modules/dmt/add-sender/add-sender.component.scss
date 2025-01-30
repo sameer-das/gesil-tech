@@ -26,6 +26,7 @@
 
             &.cta__container {
                 margin-top: 1rem;
+                gap: 1rem;
             }
         }
 
@@ -52,8 +53,8 @@
 p.message {
     margin-bottom: 0;
     font-style: italic;
-    opacity: 0.8;
     color: #1589FF;
+    font-size: 0.8rem;
 }
 
 h4 {

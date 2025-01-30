@@ -2,13 +2,20 @@
 <h4 >Please enter below details to register!</h4>
 <p class="message">Please register yourself as a sender with your registered mobile number. This is one time only.</p>
 <p class="message">An OTP will be sent to provided mobile number and will be required to validate.</p>
-<div class="root__container">
+<div class="root__container mt-4">
     <form [formGroup]="addSenderForm" autocomplete="off" (submit)="onFormSubmit()">
         <div class="form__row">
             <mat-form-field class="form__field" appearance="standard">
                 <mat-label>Enter your full name</mat-label>
                 <input matInput type="text" formControlName="senderName">
                 <mat-error *ngIf="f['senderName'].errors">Please provide your full name</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form__row">
+            <mat-form-field class="form__field" appearance="standard">
+                <mat-label>Enter your aadhar number</mat-label>
+                <input matInput type="text" formControlName="aadharNumber">
+                <mat-error *ngIf="f['aadharNumber'].errors">Please provide a valid aadhar number.</mat-error>
             </mat-form-field>
         </div>
         <!-- <div class="form__row">
@@ -28,7 +35,10 @@
                 <mat-error *ngIf="f['transactionType'].errors">Please choose transaction type</mat-error>
               </mat-form-field>
         </div>
-        <div class="form__row cta__container">
+        <div class="d-flex flex-column gap-2">
+            <button type="button" class="btn primary d-flex justify-content-center gap-2" (click)="openCaptureConfirm()">Capture Biometric 
+                <mat-icon>fingerprint</mat-icon>
+            </button>
             <button type="submit" [disabled]="addSenderForm.invalid" class="btn primary">Submit</button>
         </div>
     </form>
