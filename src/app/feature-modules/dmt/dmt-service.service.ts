@@ -113,8 +113,9 @@ export class DmtService {
         
         const url = "http://127.0.0.1:11100/capture";
 
-        const PIDOPTS = '<PidOptions ver=\"1.0\">' + '<Opts fCount=\"1\" fType=\"0\" iCount=\"\" iType=\"\" pCount=\"\" pType=\"\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" otp=\"\" wadh=\"\" posh=\"\"/>' + '</PidOptions>';
-
+        // const PIDOPTS = '<PidOptions ver=\"1.0\">' + '<Opts fCount=\"1\" fType=\"0\" iCount=\"\" iType=\"\" pCount=\"\" pType=\"\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" otp=\"\" wadh=\"\" posh=\"\"/>' + '</PidOptions>';
+        const PIDOPTS = '<!--?xml version="1.0"?-->' + '<PidOptions ver="1.0">' + '<Opts fCount="1" fType="2" iCount="0" pCount="0" format="0" pidVer="2.0" timeout="10000" wadh="18f4CEiXeXcfGXvgWA/blxD+w2pw7hfQPY45JMytkPw=" posh="UNKNOWN" env="P"> </Opts> </PidOptions>';
+        // console.log(PIDOPTS);
         return new Promise<string>((resolve, reject) => {
             const xhr = new XMLHttpRequest();
 

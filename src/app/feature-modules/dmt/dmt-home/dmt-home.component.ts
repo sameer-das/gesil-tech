@@ -44,7 +44,8 @@ export class DmtHomeComponent implements OnInit  {
     const payload = {
       "requestType": "SenderDetails",
       "senderMobileNumber": this.currentUser.user.mobile_Number,
-      "txnType": "IMPS"
+      "txnType": "IMPS",
+      "bankId": "FINO"
     }
     
     this._loaderService.showLoader()

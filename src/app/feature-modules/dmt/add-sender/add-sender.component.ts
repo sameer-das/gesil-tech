@@ -50,12 +50,25 @@ export class AddSenderComponent implements OnInit, OnDestroy {
       "txnType": this.addSenderForm.value.transactionType,
       "senderName": this.addSenderForm.value.senderName,
       "senderPin": this.currentUser.personalDetail.user_Pin,
-      "bankId": "ARTL",
+      "bankId": "FINO",
       "skipVerification": "N",
       "aadharNumber": this.addSenderForm.value.aadharNumber,
       "bioPid": this.addSenderForm.value.bio,
       "bioType": "FIR"
     }
+    // const payload = {
+    //   "requestType": "SenderRegister",
+    //   "senderMobileNumber": '9658646979',
+    //   // "senderMobileNumber": '8144252726',
+    //   "txnType": this.addSenderForm.value.transactionType,
+    //   "senderName": 'Sameer Kumar Das',
+    //   "senderPin": '752020',
+    //   "bankId": "FINO",
+    //   "skipVerification": "N",
+    //   "aadharNumber": '398617504691',
+    //   "bioPid": this.addSenderForm.value.bio,
+    //   "bioType": "FIR"
+    // }
     this._loaderService.showLoader();
     this._dmtService.registerSenderInfo(payload)
       .pipe(first(),
@@ -74,17 +87,22 @@ export class AddSenderComponent implements OnInit, OnDestroy {
                 if (isOk) {
                   this._modal.open(OtpPopupComponent, {
                     disableClose: true,
-                    data: { title: 'Please enter the OTP received on your mobile!' }
+                    data: { title: 'Please enter the OTP received on your mobile!', otpLength: 4 }
                   }).afterClosed().subscribe((otpData: any) => {
                     console.log(otpData);
 
                     if (otpData.otpAvailable) {
                       // call Verify sender API
+
                       const verifySenderPayload = {
                         "requestType": "VerifySender",
                         "senderMobileNumber": this.currentUser.user.mobile_Number,
                         "txnType": this.addSenderForm.value.transactionType,
                         "otp": String(otpData.value),
+                        "bankId": "FINO",
+                        "aadharNumber": this.addSenderForm.value.aadharNumber,
+                        "bioPid": this.addSenderForm.value.bio,
+                        "bioType": "FIR",
                         "additionalRegData": String(resp.resultDt.additionalRegData)
                       }
                       this._loaderService.showLoader()
@@ -165,24 +183,14 @@ export class AddSenderComponent implements OnInit, OnDestroy {
     this._loaderService.showLoader();
     this._dmtService.Capture()
     .then((resp:string) => {
-      // console.log(resp); 
-      const start = resp.search('<Data type="X">');
-      const end =  resp.search('</Data>');
-
-      if(start === -1 || end === -1) {
-        this._popupService.openAlert({
-          header:'Alert',
-          message:'Invalid index.'
-        });
-      }
-      const data = resp.slice(start + 15,end);
-      // console.log(data)
+      console.log("----- response from reader -----")
+      console.log(resp); 
       this._popupService.openAlert({
         header:'Success',
         message:'Captured successfully.'
       });
       this.addSenderForm.patchValue({
-        bio: data
+        bio: btoa(resp)
       });
 
     })
