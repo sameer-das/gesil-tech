@@ -1,1 +1,46 @@
-<p>dmt-transaction-details works!</p>
+<div class="header">
+    <div *ngIf="data.responseReason === 'Successful'; else fail" class="d-flex">
+        <h4 mat-dialog-title class="success">Transaction {{data.responseReason | titlecase }}</h4>
+        <!-- <mat-icon class="success-icon">check_circle</mat-icon> -->
+    </div>
+
+    <ng-template #fail>
+        <div class="d-flex">
+            <h4 mat-dialog-title class="fail">Transaction {{data.responseReason | titlecase }}</h4>
+            <!-- <mat-icon class="fail-icon">cancel</mat-icon> -->
+        </div>
+    </ng-template>
+
+</div>
+<div *ngIf="data?.respDesc && !data?.errorInfo" mat-dialog-content>
+    <p class="h6">{{data?.respDesc}}</p>
+    <table class="txn-success">
+        <tbody>
+            <tr *ngIf="data?.fundTransferDetails?.fundDetail?.impsName">
+                <td>Recipient Name</td>
+                <td>{{data?.fundTransferDetails?.fundDetail?.impsName}}</td>
+            </tr>
+            <tr *ngIf="data?.fundTransferDetails?.fundDetail?.txnAmount">
+                <td>Transaction Amount</td>
+                <td>{{data?.fundTransferDetails?.fundDetail?.txnAmount}}</td>
+            </tr>
+
+            <tr *ngIf="data?.fundTransferDetails?.fundDetail?.custConvFee">
+                <td>Conveyance Fee</td>
+                <td>{{data?.fundTransferDetails?.fundDetail?.custConvFee | torupees}}</td>
+            </tr>
+            <tr *ngIf="data?.fundTransferDetails?.fundDetail?.uniqueRefId">
+                <td>Unique Reference Id</td>
+                <td>{{data?.fundTransferDetails?.fundDetail?.uniqueRefId}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="!data?.respDesc && data?.errorInfo" mat-dialog-content>
+    <p class="h6">{{data?.errorInfo?.error?.errorMessage}}</p>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="close()">OK</button>
+    <!-- <button class="btn primary" (click)="close()">OK</button> -->
+</div>

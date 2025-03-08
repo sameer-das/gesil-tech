@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dmt-transaction-details',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DmtTransactionDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private mdDialogRef: MatDialogRef<DmtTransactionDetailsComponent>) {
+    // console.log(data)
+   }
 
   ngOnInit(): void {
+  }
+
+
+  close() {
+    this.mdDialogRef.close()
+  }
+}
+
+
+
+@Pipe({
+  name: 'torupees',
+  pure: true
+})
+export class PaisaToRupeesPipe implements PipeTransform {
+
+  transform(value: any, ...args: any[]) {
+    return (value / 100).toFixed(2)
   }
 
 }

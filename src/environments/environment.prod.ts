@@ -55,5 +55,8 @@ export const environment = {
   ],
   NOT_IMPLEMENTED_MENU : ['/DCA', '/PGDCA', '/pan', '/Print-PVC', '/New-Adhar'],
   // Dont change the User Type Order, the index is being used
-  USER_TYPE: ['', 'Users', 'Retailers', 'Distributor', 'Master Distributor', 'Admin']
+  USER_TYPE: ['', 'Users', 'Retailers', 'Distributor', 'Master Distributor', 'Admin'],
+  // BBPS DMT Fingerprint PID Option
+  PIDOPTION_FOR_BBPS_DMT: '<!--?xml version="1.0"?-->' + '<PidOptions ver="1.0">' + '<Opts fCount="1" fType="2" iCount="0" pCount="0" format="0" pidVer="2.0" timeout="10000" wadh="18f4CEiXeXcfGXvgWA/blxD+w2pw7hfQPY45JMytkPw=" posh="UNKNOWN" env="P"> </Opts> </PidOptions>'
+
 };

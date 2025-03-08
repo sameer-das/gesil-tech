@@ -3,24 +3,22 @@
     <form (submit)="onSubmit()">
         <div class="inputfield" #inputContainer>
             <input *ngFor="let a of arr" [type]="inputType" maxlength="1" class="input" disabled #input/>
-            <!-- <input type="password" maxlength="1" class="input" disabled #input/>
-            <input type="password" maxlength="1" class="input" disabled #input/>
-            <input type="password" maxlength="1" class="input" disabled #input/>
-            <input type="password" maxlength="1" class="input" disabled #input/>
-            <input type="password" maxlength="1" class="input" disabled #input/> -->
         </div>
         <mat-dialog-actions>
             <div class="buttons-container">
                 <div>
-                    <!-- <span class="resendOtpTextDisabled" *ngIf="resendTime !== 0">Resend Otp in {{resendTime}} sec</span>
-                    <button mat-raised-button color="primary" *ngIf="resendTime === 0" type="button" (click)="onOtpResend()">Resend OTP</button> -->
+                    <ng-container *ngIf="data?.showResendButton && resendOtpCount < 3">
+                        <span *ngIf="resendTime !== 0; else resendOtpButton">Resend OTP after {{resendTime}} Sec</span>
+                        <ng-template #resendOtpButton>
+                            <button mat-raised-button color="primary" type="button" (click)="onOtpResend()">Resend Otp</button>
+                        </ng-template>
+
+                    </ng-container>
                 </div>
                 <div>
-                    <button mat-raised-button color="primary" #submitButton [disabled]="isButtonDisabled" type="submit">Submit</button>
-                    <button mat-raised-button color="accent" (click)="onClose()">Cancel</button>
-
+                    <button mat-raised-button color="primary" [disabled]="isButtonDisabled" type="submit">Submit</button>
+                    <button mat-raised-button color="accent" type="button" (click)="onClose()">Cancel</button>
                 </div>
-
             </div>
         </mat-dialog-actions>
     </form>

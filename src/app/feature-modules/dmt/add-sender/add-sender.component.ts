@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DmtService } from '../dmt-service.service';
-import { PopupService } from 'src/app/popups/popup.service';
-import { LoaderService } from 'src/app/services/loader.service';
-import { finalize, first, Subject, takeUntil, tap } from 'rxjs';
-import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { filter, finalize, first, Subject, takeUntil, tap } from 'rxjs';
+import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
+import { OtpService } from 'src/app/popups/otp-popup/otp-service/otp-service.service';
+import { PopupService } from 'src/app/popups/popup.service';
+import { LoaderService } from 'src/app/services/loader.service';
+import { DmtService } from '../dmt-service.service';
 
 @Component({
   selector: 'app-add-sender',
@@ -19,7 +20,8 @@ export class AddSenderComponent implements OnInit, OnDestroy {
     private _popupService: PopupService,
     private _loaderService: LoaderService, 
     private _modal: MatDialog,
-    private _router: Router) { }
+    private _router: Router,
+    private _otpService: OtpService) { }
 
   ngOnDestroy(): void {
     this.destroy$.next(true)
@@ -40,6 +42,12 @@ export class AddSenderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this._otpService.onSendOtp()
+    .pipe(takeUntil(this.destroy$), 
+      filter(ok => ok), 
+      tap(() => this.resendOtpForSenderRegistration()))
+    .subscribe()
   }
 
   onFormSubmit() {
@@ -56,19 +64,7 @@ export class AddSenderComponent implements OnInit, OnDestroy {
       "bioPid": this.addSenderForm.value.bio,
       "bioType": "FIR"
     }
-    // const payload = {
-    //   "requestType": "SenderRegister",
-    //   "senderMobileNumber": '9658646979',
-    //   // "senderMobileNumber": '8144252726',
-    //   "txnType": this.addSenderForm.value.transactionType,
-    //   "senderName": 'Sameer Kumar Das',
-    //   "senderPin": '752020',
-    //   "bankId": "FINO",
-    //   "skipVerification": "N",
-    //   "aadharNumber": '398617504691',
-    //   "bioPid": this.addSenderForm.value.bio,
-    //   "bioType": "FIR"
-    // }
+
     this._loaderService.showLoader();
     this._dmtService.registerSenderInfo(payload)
       .pipe(first(),
@@ -171,7 +167,8 @@ export class AddSenderComponent implements OnInit, OnDestroy {
     .pipe(takeUntil( this.destroy$))
     .subscribe((t: boolean) => {
       if(t) {
-        this.getFingerprint();
+        // this.getFingerprint();
+        // search for all the devices connected
       } else {
 
       }
@@ -205,4 +202,38 @@ export class AddSenderComponent implements OnInit, OnDestroy {
       this._loaderService.hideLoader();
     })
   }
+
+
+  resendOtpForSenderRegistration() {
+
+    const payload = {
+      "requestType": "ResendSenderOtp",
+       "senderMobileNumber": this.currentUser.user.mobile_Number,
+       "txnType": "IMPS",
+       "bankId": "FINO"
+    }
+
+    this._loaderService.showLoader();
+    this._dmtService.resendOtpForSenderRegistration(payload)
+    .pipe(takeUntil(this.destroy$), finalize(() => this._loaderService.hideLoader()))
+    .subscribe({
+      next: (resp:any) => {
+        console.log(resp)
+        if(resp.code === 200 && resp.status === 'Success') {
+          this._popupService.openAlert({
+            header: 'success',
+            message:resp?.resultDt?.respDesc
+          })
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this._popupService.openAlert({
+          header: 'fail',
+          message:err.message
+        })
+      }
+    })
+  }
+
 }

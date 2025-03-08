@@ -375,7 +375,7 @@ export class UpdateKycComponent implements OnInit {
             case 'adhar': {
                 console.log(this.adharNo.value);
                 console.log(this.base64_file_data);
-                if (!/^[0-9]*$/.test(this.adharNo.value) || this.adharNo.value.length != 12) {
+                if (this.adharNo.value.length != 12) {
                     this._popupService.openAlert({
                         header: 'Alert',
                         message: 'Invalid adhar number! Please enter valid adhar number'

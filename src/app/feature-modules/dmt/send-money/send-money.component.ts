@@ -8,6 +8,7 @@ import { WalletService } from '../../wallet/wallet.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpPopupComponent, OtpPopupData } from 'src/app/popups/otp-popup/otp-popup.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { DmtTransactionDetailsComponent } from '../dmt-transaction-details/dmt-transaction-details.component';
 
 @Component({
   selector: 'app-send-money',
@@ -42,16 +43,17 @@ export class SendMoneyComponent implements OnInit {
   sendMoneyPayload: any = {};
 
   onSubmit() {
-    console.log(this.sendMoneyForm)
+    // console.log(this.sendMoneyForm)
     this.sendMoneyPayload = {
-      "requestType": "FundTransfer",
-      "senderMobileNo": String(this.currentUser.user.mobile_Number),
+      "requestType": "TXNSENDOTP",
       "agentId": "",
       "initChannel": "AGT",
+      "senderMobileNo": String(this.currentUser.user.mobile_Number),
       "recipientId": this.sendMoneyForm.value.recipient.recipientId,
       "txnAmount": String(this._dmtService.convertToPaisa(this.sendMoneyForm.value.amount) as number),
       "convFee": "0",
-      "txnType": this.sendMoneyForm.value.transactionType
+      "txnType": this.sendMoneyForm.value.transactionType,
+      "bankId": "FINO"
     }
 
     const convPayload = {
@@ -99,6 +101,11 @@ export class SendMoneyComponent implements OnInit {
                 message: 'Error while processing request. Please try after sometime.'
               })
             }
+          } else {
+            this._popupService.openAlert({
+              header: 'Fail',
+              message: 'Error while processing request. Please try after sometime.'
+            })
           }
         }, error: (err: any) => {
           this._laoderService.hideLoader()
@@ -129,7 +136,7 @@ export class SendMoneyComponent implements OnInit {
             } else {
               this.recipients = [];
             }
-            console.log(this.recipients)
+            // console.log(this.recipients)
           }
         }, error: (err: any) => {
           console.log(err);
@@ -142,51 +149,57 @@ export class SendMoneyComponent implements OnInit {
     const current_service_details = JSON.parse(sessionStorage.getItem('current_service') || '{}');
     const serviceCatId = current_service_details.services_Cat_ID;
     const serviceId = current_service_details.services_ID;
-    console.log(serviceId, serviceCatId, userId);
+    // console.log(serviceId, serviceCatId, userId);
 
     this._laoderService.showLoader();
-    this._dmtService.dmtFundTransfer(paylaod, serviceId, serviceCatId, userId)
+    this._dmtService.dmtFundTransfer(paylaod)
       .pipe(first(), finalize(() => this._laoderService.hideLoader()), tap(resp => console.log(resp)))
       .subscribe({
         next: (resp: any) => {
-          if (resp.code === 200 && resp.status === 'Success') {
-            if (resp.resultDt && resp.resultDt?.responseCode == 0) {
-
-              this._popupService.openConfirm({
-                header: 'Success',
-                message: 'Your transaction details are detailed below.',
-                tableType: 'fundTransferSuccess',
-                tableData: {
-                  ...resp.resultDt.fundTransferDetails.fundDetail,
-                  respDesc: resp.resultDt.respDesc,
-                  senderMobileNo: resp.resultDt.senderMobileNo,
-                  txnStatus: this._dmtService.DMT_FUND_TRANSACTION_STATUS[resp.resultDt.fundTransferDetails.fundDetail.txnStatus]
-                },
-                showCancelButton: false,
-                modalMinWidth: 550
-              }).afterClosed().subscribe((isOk: boolean) => {
-                if (isOk) {
-                  this.sendMoneyForm.reset({
-                    recipient: '',
-                    transactionType: '',
-                    amount: ''
-                  });
-
-                  Object.keys(this.sendMoneyForm.controls).forEach(key => {
-                    (this.sendMoneyForm.get(key) as FormControl).setErrors(null);
-                  });
-
+          // console.log(resp)
+          if (resp.code === 200 && resp.status === 'Successful' && resp.resultDt?.responseCode === '000') {
+            // Open the OTP Popup
+              this._dialog.open(OtpPopupComponent, {
+                disableClose: true,
+                data: { 
+                  title: 'Please enter the OTP received on your mobile!', otpLength: 4 }
+              }).afterClosed().subscribe((otpData: any) => {
+                console.log(otpData); 
+                if(otpData.otpAvailable) {
+                  const verifyOtpPayload = {...this.sendMoneyPayload, "otp": otpData.value, "requestType": "TXNVERIFYOTP"}
+                  this._laoderService.showLoader();
+                  this._dmtService.dmtFundTransferVerifyOtp(verifyOtpPayload, serviceId, serviceCatId, userId)
+                  .pipe(first(), finalize(() => this._laoderService.hideLoader()))
+                  .subscribe({
+                    next: (resp:any) => {
+                      // console.log(resp);
+                      this._dialog.open(DmtTransactionDetailsComponent, {
+                        data: resp.resultDt
+                      })
+                      this.convFee = 0;
+                    },
+                    error: (err) => {
+                      console.log(err)
+                      this._popupService.openAlert({
+                        header:'Fail',
+                        message: 'Server error occured, Please try after sometime.'
+                      })
+                    }
+                  })
+                } else {
+                  this._popupService.openAlert({
+                    header:'Fail',
+                    message: 'Otp not found or user cancelled the transaction!'
+                  })
                 }
-              })
-              this.convFee = 0;
-            } else {
+              });                  
+            
+          } else {
               this._popupService.openAlert({
                 header: 'Fail',
                 message: 'Error while initiating transaction. Please try after sometime.'
               });
             }
-            console.log(this.recipients)
-          }
         }, error: (err: any) => {
           console.log(err);
           this._popupService.openAlert({
@@ -214,7 +227,7 @@ export class SendMoneyComponent implements OnInit {
           if (resp.status === 'Success' && resp.code === 200 && resp.data) {
             console.log(resp.data)
             const [walletBal, commissionBal] = resp.data.split(',');
-            if (+walletBal < +totalInPaisa / 100) {
+            if ((+walletBal < +totalInPaisa / 100)) {
               // if (false) {
               // show less wallet popup
               this._popupService.openAlert({
@@ -280,7 +293,7 @@ export class SendMoneyComponent implements OnInit {
     this._authService.validateTPin(this.currentUser.user.user_ID, String(pin.trim()))
     .subscribe({
       next: (resp: any) => {
-        console.log(resp);
+        // console.log(resp);
         this._laoderService.hideLoader();
         if (resp.status === 'Success' && resp.code === 200 && resp.data) {
           console.log('Pin validation success!')
@@ -306,23 +319,6 @@ export class SendMoneyComponent implements OnInit {
   }
 
 
-
-  getForm() {
-    console.log(this.sendMoneyForm);
-    const otpPopupData: OtpPopupData = {
-      title: 'Please enter your PIN!',
-      inputType: 'password',
-      otpLength: 4
-    }
-    this._dialog.open(OtpPopupComponent, 
-      {disableClose: true, data: otpPopupData})
-      .afterClosed().subscribe(({otpAvailable, value}) => {
-        console.log(otpAvailable, value);
-      })
-  }
-
-
-  
 
 
 }

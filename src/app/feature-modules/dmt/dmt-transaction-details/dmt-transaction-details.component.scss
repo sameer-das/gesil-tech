@@ -1,0 +1,29 @@
+@import '../../../styles/constants.scss';
+
+
+table.txn-success {
+    border-collapse: collapse;
+
+    td,
+    th {
+        border: 1px solid $grey;
+        padding: 8px;
+    }
+
+    td.success {
+        font-size: 1.5rem;
+    }
+
+    td p {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+
+.fail {
+    color: orangered;
+}
+.success {
+    color: green;
+}

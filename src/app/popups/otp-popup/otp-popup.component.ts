@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { OtpService } from './otp-service/otp-service.service';
 
 @Component({
   selector: 'app-otp-popup',
@@ -8,12 +9,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  constructor(private _dialogRef: MatDialogRef<OtpPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private _dialogRef: MatDialogRef<OtpPopupComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data: OtpPopupData,
+    private _otpService: OtpService) { }
   inputArray: ElementRef[] = [];
   inputCount = 0;
   finalInput = "";
   isButtonDisabled: boolean = true;
-  resendTime: number = 10;
+  resendTime: number = this.data?.activateResendButtonAfter || 0;
+  resendOtpCount: number = 0;
 
   otpLength!: number;
   arr: number[] = [];
@@ -39,7 +43,7 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('on init');
+
 
     this.otpLength = this.data.otpLength || 6;
     this.arr = Array.from({length: this.otpLength}, (_, i) => i + 1);
@@ -59,11 +63,9 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
 
-    this.interval = setInterval(() => {
-      this.resendTime = this.resendTime - 1;
-      if (this.resendTime === 0)
-        clearInterval(this.interval)
-    }, 1000)
+    if(this.data.showResendButton) {
+      this.countDownForOtpResend();
+    }
 
   }
 
@@ -90,19 +92,28 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit() {
-    console.log('submitted', this.finalInput)
+    console.log('OTP entered', this.finalInput)
     this._dialogRef.close({ otpAvailable: true, value: this.finalInput })
   }
 
   onOtpResend() {
-    console.log(`otp sent`)
-    this.resendTime = 10;
+    this._otpService.sendOtp();
+    this.resendOtpCount += 1;
 
-    this.interval = setInterval(() => {
-      this.resendTime -= 1;
-      if (this.resendTime === 0)
-        clearInterval(this.interval)
-    }, 1000)
+    this.resendTime = this.data?.activateResendButtonAfter || 0;
+    if(this.data.showResendButton && this.resendOtpCount < 3) {
+      this.countDownForOtpResend();
+    }
+  }
+
+  countDownForOtpResend() {
+    if(this.resendTime > 0) {
+      this.interval = setInterval(() => {
+        this.resendTime -= 1;
+        if (this.resendTime === 0)
+          clearInterval(this.interval)
+      }, 1000)
+    }
   }
 
   addEventForInputs() {
@@ -146,7 +157,9 @@ export class OtpPopupComponent implements OnInit, OnDestroy, AfterViewInit {
 }
 
 export interface OtpPopupData {
-  title: string,
-  otpLength?: number,
-  inputType?: string
+  title: string;
+  otpLength?: number;
+  inputType?: string;
+  showResendButton?: boolean;
+  activateResendButtonAfter?: number;
 }

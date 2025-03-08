@@ -38,14 +38,17 @@ export class DmtService {
     registerSenderInfo(payload: any) {
         return this._httpClient.post('https://api.esebakendra.com/api/DMT/eSenderRegistration', payload)
     }
+    verifySender(payload: any) {
+        return this._httpClient.post('https://api.esebakendra.com/api/DMT/eVerifySender', payload)
+    }
+    resendOtpForSenderRegistration(payload: any) {
+        return this._httpClient.post('https://api.esebakendra.com/api/DMT/eResendOTPForVerifySender', payload)
+    }
 
     registerRecipient(payload: any) {
         return this._httpClient.post('https://api.esebakendra.com/api/DMT/eRegisterRecipient', payload)
     }
 
-    verifySender(payload: any) {
-        return this._httpClient.post('https://api.esebakendra.com/api/DMT/eVerifySender', payload)
-    }
 
     getAllBank() {
         return this._httpClient.get('https://api.esebakendra.com/api/DMT/eGetAllDMTBanks')
@@ -57,8 +60,11 @@ export class DmtService {
     getConveyanceFee(payload: any) {
         return this._httpClient.post('https://api.esebakendra.com/api/DMT/eCustomerConv', payload);
     }
-    dmtFundTransfer(payload: any, serviceId: string, categoryId: string, userId: string) {
-        return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eFundTransfer?serviceId=${serviceId}&categoryId=${categoryId}&userId=${userId}`, payload);
+    dmtFundTransfer(payload: any) {
+        return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eTransactionWithOTP`, payload);
+    }
+    dmtFundTransferVerifyOtp(payload: any, serviceId: string, categoryId: string, userId: string) {
+        return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eTransactionVarifyOTP?serviceId=${serviceId}&categoryId=${categoryId}&userId=${userId}`, payload);
     }
 
     private readonly URL_GET_WALLET_TRANSACTION_HISTORY = `${environment.service_base_url}/api/GSKRecharge/GetTransactions`;
@@ -68,16 +74,9 @@ export class DmtService {
 
 
     initiateTransactionRefund(payload: any, serviceId: string, categoryId: string, userId: string) {
-        return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eReFundTransactionserviceId=${serviceId}&categoryId=${categoryId}&userId=${userId}`, payload)
+        return this._httpClient.post(`https://api.esebakendra.com/api/DMT/eReFundTransaction&serviceId=${serviceId}&categoryId=${categoryId}&userId=${userId}`, payload)
     }
 
-
-    getFingerPrint() {
-        const header = new HttpHeaders({ 'Access-Control-Allow-Origin': 'null' });
-        return this._httpClient.post('http://127.0.0.1:11100/capture', null, { responseType: 'text' })
-
-
-    }
 
 
     DeviceInfo() {
@@ -105,16 +104,35 @@ export class DmtService {
     }
 
 
+    DeviceInfoMantra() {
+        const url = "https://127.0.0.1:11100/rd/info";
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('DEVICEINFO', url, true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.log(xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+
     Capture() {
-        console.log('CApturing')
+        console.log('Capturing')
         function getPosition(string: string, subString: string, index: number) {
             return string.split(subString, index).join(subString).length;
         }
-        
+
         const url = "http://127.0.0.1:11100/capture";
 
         // const PIDOPTS = '<PidOptions ver=\"1.0\">' + '<Opts fCount=\"1\" fType=\"0\" iCount=\"\" iType=\"\" pCount=\"\" pType=\"\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" otp=\"\" wadh=\"\" posh=\"\"/>' + '</PidOptions>';
-        const PIDOPTS = '<!--?xml version="1.0"?-->' + '<PidOptions ver="1.0">' + '<Opts fCount="1" fType="2" iCount="0" pCount="0" format="0" pidVer="2.0" timeout="10000" wadh="18f4CEiXeXcfGXvgWA/blxD+w2pw7hfQPY45JMytkPw=" posh="UNKNOWN" env="P"> </Opts> </PidOptions>';
+        const PIDOPTS = environment.PIDOPTION_FOR_BBPS_DMT;
         // console.log(PIDOPTS);
         return new Promise<string>((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -122,7 +140,7 @@ export class DmtService {
             xhr.open('CAPTURE', url, true);
             xhr.setRequestHeader("Content-Type", "text/xml");
             xhr.setRequestHeader("Accept", "text/xml");
-    
+
             xhr.onreadystatechange = function () {
                 //if(xhr.readyState == 1 && count == 0){
                 //	fakeCall();
@@ -151,6 +169,60 @@ export class DmtService {
             };
             xhr.send(PIDOPTS);
         })
-        
+
     }
+
+
+    CaptureMantra(success: Function, error: Function) {
+        console.log('Capturing for Mantra Device');
+
+        const url = "https://127.0.0.1:11100/rd/capture";
+
+        const PIDOPTS = environment.PIDOPTION_FOR_BBPS_DMT;;
+        // console.log(PIDOPTS);
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('CAPTURE', url, true);
+        xhr.setRequestHeader("Content-Type", "text/xml");
+        xhr.setRequestHeader("Accept", "text/xml");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                // console.log(xhr.responseText);
+                if (xhr.status === 200) {
+                    success(xhr.responseText);
+                }
+                else {
+                    error(xhr.statusText)
+                }
+            }
+        };
+
+        xhr.send(PIDOPTS);
+    }
+
+
+    DiscoverRdService (){
+        const url = 'http://127.0.0.1:11100/';
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('RDSERVICE', url, true);
+        xhr.setRequestHeader("Content-Type", "text/xml");
+        xhr.setRequestHeader("Accept", "text/xml");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                }
+                else {
+                    console.log(xhr.statusText)
+                }
+            }
+        };
+
+        xhr.send();
+    }
+
 }

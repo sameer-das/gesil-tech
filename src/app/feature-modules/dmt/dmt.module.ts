@@ -9,7 +9,7 @@ import { DmtHomeComponent } from './dmt-home/dmt-home.component';
 import { DmtService } from './dmt-service.service';
 import { DmtTransactionComponent } from './dmt-transaction/dmt-transaction.component';
 import { SendMoneyComponent } from './send-money/send-money.component';
-import { DmtTransactionDetailsComponent } from './dmt-transaction-details/dmt-transaction-details.component';
+import { DmtTransactionDetailsComponent, PaisaToRupeesPipe } from './dmt-transaction-details/dmt-transaction-details.component';
 import { TestThumbReaderComponent } from './test-thumb-reader/test-thumb-reader.component';
 
 
@@ -22,7 +22,8 @@ import { TestThumbReaderComponent } from './test-thumb-reader/test-thumb-reader.
 		DmtHomeComponent,
 		DmtTransactionComponent,
 		DmtTransactionDetailsComponent,
-  		TestThumbReaderComponent
+  		TestThumbReaderComponent,
+		PaisaToRupeesPipe
 	],
 	imports: [
 		CommonModule,
