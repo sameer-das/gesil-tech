@@ -34,7 +34,7 @@ export class MobileNumberSearchComponent implements OnInit, OnDestroy {
     inputInvalidMessage: string = `Don't add +91 or 0 before your mobile number!`;
     currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
     $destory: Subject<boolean> = new Subject();
-    commission: boolean = true;
+    commission: boolean = false;
     commissionTooltipMessage = "Disabling commission will not credit any commission to wallet."
 
     ngOnInit(): void {

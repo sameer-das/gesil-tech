@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { filter, finalize, first, Subject, takeUntil, tap } from 'rxjs';
-import { OtpPopupComponent } from 'src/app/popups/otp-popup/otp-popup.component';
+import { OtpPopupComponent, OtpPopupData } from 'src/app/popups/otp-popup/otp-popup.component';
 import { OtpService } from 'src/app/popups/otp-popup/otp-service/otp-service.service';
 import { PopupService } from 'src/app/popups/popup.service';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -81,9 +81,12 @@ export class AddSenderComponent implements OnInit, OnDestroy {
                 showCancelButton: true
               }).afterClosed().subscribe((isOk: boolean) => {
                 if (isOk) {
+                  const otpPopupComponentData: OtpPopupData = {
+                    title: 'Please enter the OTP received on your mobile!', otpLength: 4, showResendButton: true, activateResendButtonAfter: 20
+                  }
                   this._modal.open(OtpPopupComponent, {
                     disableClose: true,
-                    data: { title: 'Please enter the OTP received on your mobile!', otpLength: 4 }
+                    data: otpPopupComponentData
                   }).afterClosed().subscribe((otpData: any) => {
                     console.log(otpData);
 
@@ -167,7 +170,7 @@ export class AddSenderComponent implements OnInit, OnDestroy {
     .pipe(takeUntil( this.destroy$))
     .subscribe((t: boolean) => {
       if(t) {
-        // this.getFingerprint();
+        this.getFingerprint();
         // search for all the devices connected
       } else {
 

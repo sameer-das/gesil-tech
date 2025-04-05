@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public ngOnInit(): void { 
     this._authService.getEsebaNews().pipe(takeUntil(this.$destroy)).subscribe({
       next: (resp:any) => {
-        if(resp.status = "Success" && resp.code === 200) {
+        if(resp.status === "Success" && resp.code === 200) {
           this.esebaNews = resp.data;
           console.log(this.esebaNews)
         }
@@ -63,9 +63,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   openAddPopup () {
-    this.dialog.open(AdvertisePopupComponentComponent, {
-      panelClass: 'ad-comp'
-    });
+    // this.dialog.open(AdvertisePopupComponentComponent, {
+    //   panelClass: 'ad-comp'
+    // });
   }
 
   onMouseOver () {

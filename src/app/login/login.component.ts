@@ -91,9 +91,9 @@ export class LoginComponent implements OnInit {
                 this._router.navigate(['my-view']);
 
                 // To show the advertise popup
-                this.dialog.open(AdvertisePopupComponentComponent, {
-                  panelClass: 'ad-comp'
-                });
+                // this.dialog.open(AdvertisePopupComponentComponent, {
+                //   panelClass: 'ad-comp'
+                // });
 
               } else {
                 this._popupService.openAlert({
