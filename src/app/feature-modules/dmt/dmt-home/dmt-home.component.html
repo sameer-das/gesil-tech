@@ -1,15 +1,21 @@
-<nav>
-    <ul>
-        <li><a title="Go Back" routerLink="../dashboard"><mat-icon class="arrow_back">arrow_back</mat-icon></a></li>
-        <li *ngIf="!showAddSenderTab"><a routerLink="dmttransactions" routerLinkActive="active">My Transactions</a></li>
-        <li *ngIf="!showAddSenderTab"><a routerLink="send" routerLinkActive="active">Send Money</a></li>
-        <li *ngIf="!showAddSenderTab"><a routerLink="addrecipient" routerLinkActive="active">Add Recipient</a></li>
-        <li *ngIf="showAddSenderTab"><a routerLink="addsender" routerLinkActive="active">Add Sender</a></li>
-    </ul>
-    <div class="image_container">
-        <img src="assets/logo/Bharat Connect Primary Logo_PNG.png" alt="BBPS Logo" />
-    </div>
+<ng-container *ngIf="!isFetchingSender; else elseTemp">
+    <nav>
+        <ul>
+            <li><a title="Go Back" routerLink="../dashboard"><mat-icon class="arrow_back">arrow_back</mat-icon></a></li>
+            <li *ngIf="!showAddSenderTab"><a routerLink="dmttransactions" routerLinkActive="active">My Transactions</a></li>
+            <li *ngIf="!showAddSenderTab"><a routerLink="send" routerLinkActive="active">Send Money</a></li>
+            <li *ngIf="!showAddSenderTab"><a routerLink="addrecipient" routerLinkActive="active">Add Recipient</a></li>
+            <li *ngIf="showAddSenderTab"><a routerLink="addsender" routerLinkActive="active">Add Sender</a></li>
+        </ul>
+        <div class="image_container">
+            <img src="assets/logo/Bharat Connect Primary Logo_PNG.png" alt="BBPS Logo" />
+        </div>
+    
+    </nav>
+    
+    <router-outlet></router-outlet>
+</ng-container>
 
-</nav>
-
-<router-outlet></router-outlet>
+<ng-template #elseTemp>
+    <p class="text-center">Fetching Sender Details</p>
+</ng-template>

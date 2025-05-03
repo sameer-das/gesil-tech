@@ -16,6 +16,7 @@ export class AadharService {
   private readonly URL_REGISTER_AADHAR_INFO_EDUCATION_DETAILS: string = `${environment.service_base_url}/api/Master/RegisterAadharInfoEducationDetails`;
   private readonly URL_REGISTER_AADHAR_INFO_PHOTO_DETAILS: string = `${environment.service_base_url}/api/Master/RegisterAadharInfoPhotoDetails`;
   private readonly URL_UPLOAD_AADHAR_DOCS: string = `${environment.service_base_url}/api/Master/RegisterAadharInfoUploadDocuments`;
+  private readonly URL_DELETE_AADHAR_ENROLLMENT: string = `${environment.service_base_url}/api/User/DeleteAadharaDetail?userId=`;
 
   getAadharInfo(userid: number) {
     return this._http.get(`${this.URL_GET_AADHAR_INFO}?userId=${userid}`);
@@ -43,4 +44,7 @@ export class AadharService {
     return this._http.post(`${this.URL_UPLOAD_AADHAR_DOCS}`, payload);
   }
 
+  deleteAadharEnrollment(userId: number) {
+    return this._http.post(`${this.URL_DELETE_AADHAR_ENROLLMENT}${userId}`, {});
+  }
 }

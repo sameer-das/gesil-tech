@@ -192,4 +192,32 @@ export class AadharCheckComponent implements OnInit, OnDestroy {
         })
     }
 
+
+    onDeleteEnrollment() {
+       const sure = window.confirm("Are you sure to delete the enrollment?");
+    
+       if(sure) {
+            // Delete
+            console.log('Delete');
+            this._loaderService.showLoader()
+            this._aadharService.deleteAadharEnrollment(this.currentUser.user.user_ID)
+            .pipe(
+                finalize(() => this._loaderService.hideLoader()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe({
+                next: (resp:any) => {
+                    this._popupService.openAlert({
+                        header:'Success',
+                        message: JSON.stringify(resp.data)
+                    })
+                    this.getAadharDetails()
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+       }
+    }
+
 }

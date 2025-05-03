@@ -37,28 +37,31 @@ export class DmtHomeComponent implements OnInit  {
   }
   activeIndex: number = 0;
   showAddSenderTab:boolean = false;
+  isFetchingSender: boolean = true;
 
 
 
   getSenderinfo(){
     const payload = {
       "requestType": "SenderDetails",
-      "senderMobileNumber": this.currentUser.user.mobile_Number,
+      "senderMobileNumber": this.currentUser.user.mobile_Number, 
       "txnType": "IMPS",
       "bankId": "FINO"
     }
     
-    this._loaderService.showLoader()
+    this._loaderService.showLoader();
+    this.isFetchingSender = true;
     this._dmtService.getSenderInfo(payload)
     .pipe(first(), finalize(() => this._loaderService.hideLoader()))
     .subscribe({
       next: (resp:any) =>{
+        this.isFetchingSender = false;
         console.log(resp)
         if(resp.code===200 && resp.status === 'Success' && (resp.resultDt.senderMobileNumber === 0 || !resp.resultDt.senderName)){
-          this.router.navigate(['dmtransfer/addsender']);
           this.showAddSenderTab = true;
+          this.router.navigate(['dmtransfer/addsender']);
         } else {
-          console.log(this._route)
+          this.showAddSenderTab = false;
           this.router.navigate(['dmtransfer/dmttransactions']);
         }
       }

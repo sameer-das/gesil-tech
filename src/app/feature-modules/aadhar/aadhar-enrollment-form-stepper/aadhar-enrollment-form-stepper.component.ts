@@ -170,6 +170,15 @@ export class AadharEnrollmentFormStepperComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
 
         console.log(this.details);
+
+        if(this.details.aadhar_center_address_state !== 'Odisha') {
+            // console.log('Aadhar center address is not in Odisha')
+            this.educationFormGroup.addControl('police_verification_certificate_name', new FormControl('', [Validators.required]))
+        } else {
+            this.educationFormGroup.removeControl('police_verification_certificate_name');
+            // console.log('Aadhar center address is in Odisha')
+        }
+
         this.populateState();
 
         this.patchNseitForm();
@@ -178,13 +187,6 @@ export class AadharEnrollmentFormStepperComponent implements OnInit, OnChanges {
         this.patchPanForm();
         this.patchEducationForm();
         this.patchPhotoForm();
-
-        if(this.details.aadhar_center_address_state !== 'Odisha') {
-            this.educationFormGroup.addControl('police_verification_certificate_name', new FormControl('', [Validators.required]))
-        } else {
-            this.educationFormGroup.removeControl('police_verification_certificate_name');
-
-        }
     }
 
 
@@ -404,7 +406,7 @@ export class AadharEnrollmentFormStepperComponent implements OnInit, OnChanges {
         })
     }
 
-    patchEducationForm() {
+    patchEducationForm() {        
         this.educationFormGroup.patchValue({
             tenth_certificate_name: this.details.tenth_certificate_name,
             tenth_marksheet_name: this.details.tenth_marksheet_name,
