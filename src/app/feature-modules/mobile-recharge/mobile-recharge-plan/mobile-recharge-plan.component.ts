@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, finalize, map, startWith, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BbpsService } from '../../bbps-services/bbps.service';
+import { WalletService } from '../../wallet/wallet.service';
 @Component({
     selector: 'app-mobile-recharge-plan',
     templateUrl: './mobile-recharge-plan.component.html',
@@ -18,7 +19,8 @@ import { BbpsService } from '../../bbps-services/bbps.service';
 export class MobileRechargePlanComponent implements OnInit {
     constructor(private _route: ActivatedRoute, private _router: Router, private _matDialog: MatDialog,
         private _mobileRechargeService: MobileRechargeService, private _popupService: PopupService,
-        private _loaderService: LoaderService, private _bbpsService: BbpsService) { }
+        private _loaderService: LoaderService, private _bbpsService: BbpsService,
+        private _walletService: WalletService,) { }
     rechargePlans: any[] = [];
     rawRechargePlans: any[] = []
     currentUser: any = JSON.parse(localStorage.getItem('auth') || '{}');
@@ -27,7 +29,7 @@ export class MobileRechargePlanComponent implements OnInit {
     searchString: FormControl = new FormControl('');
     filteredPlan: any[] = [];
 
-    ngOnInit (): void {
+    ngOnInit(): void {
         this._route.data.subscribe({
             next: (resp: any) => {
                 console.log(resp);
@@ -70,7 +72,7 @@ export class MobileRechargePlanComponent implements OnInit {
             })
     }
 
-    sortPlans (rechargePlans: any[]) {
+    sortPlans(rechargePlans: any[]) {
         if (rechargePlans.length === 0) return [];
 
         const result: any[] = [];
@@ -129,29 +131,50 @@ export class MobileRechargePlanComponent implements OnInit {
         }
     ]
 
-    openPinDialog (amount: string) {
-        // this.onPlanSelect(amount);
-        // return;
+    openPinDialog(amount: string) {
         const dialogRef = this._matDialog.open(PinPopupComponent, { disableClose: true });
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Pin Dialog closed ${result}`);
-            if (result) {
-                const mobile_search: any = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
-                if(mobile_search?.commission) {
-                    this.onPlanSelect(amount);
-                } else {
-                    this.onPlanSelectHighCommission(amount)
-                }
+        dialogRef.afterClosed().subscribe(resultPin => {
+            console.log(`Pin Dialog closed ${resultPin}`);
+            if (resultPin) {
+                // Check for Wallet
+
+                this._walletService.getWalletBalance(this.currentUser.user.user_EmailID).subscribe({
+                    next: (resp: any) => {
+                        if (resp.status === 'Success' && resp.code === 200 && resp.data) {
+                            console.log(resp.data)
+                            const [walletBal, commissionBal] = resp.data.split(',');
+
+                            if (+walletBal > +amount) {
+                                const mobile_search: any = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
+                                if (false) {
+                                    this.onPlanSelect(amount);
+                                } else {
+                                    this.onPlanSelectHighCommission(amount, resultPin)
+                                }
+                            } else {
+                                this._popupService.openAlert({
+                                    header: 'Alert',
+                                    message: 'You do not have sufficient balance in your wallet! Please recharge to proceed.'
+                                });
+                            }
+
+                        } else {
+                            this._popupService.openAlert({
+                                header: 'Fail',
+                                message: 'Error while reading your wallet.'
+                            });
+                            return;
+                        }
+                    }
+                })
+
             }
-
-
         });
-
     }
 
 
-    onPlanSelect (amount: string) {
+    onPlanSelect(amount: string) {
         console.log('Calling with Commission')
         const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
         console.log(amount);
@@ -202,12 +225,12 @@ export class MobileRechargePlanComponent implements OnInit {
         })
     }
 
-    goBackMobileSearchScreen () {
+    goBackMobileSearchScreen() {
         this._router.navigate(['/mobile-recharge'])
     }
 
 
-    onPlanSelectHighCommission (amount: string) {
+    onPlanSelectHighCommission(amount: string, pin:string) {
         console.log('Calling without Commission')
         const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
         console.log(amount);
@@ -266,7 +289,8 @@ export class MobileRechargePlanComponent implements OnInit {
                                         "infoValue": this.currentUser.user.mobile_Number
                                     }
                                 ]
-                            }
+                            },
+                            "tPin": pin
                         }
 
 
@@ -275,12 +299,12 @@ export class MobileRechargePlanComponent implements OnInit {
 
                         this._loaderService.showLoader()
                         this._bbpsService.payBill('', paymentPayload, '1', '1', this.currentUser.user.user_EmailID)
-                        .pipe(finalize(() => this._loaderService.hideLoader()))    
-                        .subscribe({
+                            .pipe(finalize(() => this._loaderService.hideLoader()))
+                            .subscribe({
                                 next: (resp: any) => {
                                     // this._loaderService.hideLoader();
                                     console.log(resp);
-                                    if(resp.status === 'Success') {
+                                    if (resp.status === 'Success') {
                                         this._popupService.openAlert({
                                             header: 'success',
                                             message: resp.message

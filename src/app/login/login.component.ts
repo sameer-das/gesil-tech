@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit {
           }
           // set the token in localstorage
           localStorage.setItem('jwt', result.data.tokens?.token);
+          localStorage.setItem('refreshToken', result.data.tokens?.refreshToken);
 
           this._authService.getUserInfos(result?.data?.userDetais?.user_ID).subscribe({
             next: (resp: any) => {

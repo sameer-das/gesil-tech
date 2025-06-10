@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { PinPopupComponent } from 'src/app/popups/pin-popup/pin-popup.component';
 import { PopupService } from 'src/app/popups/popup.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { WalletService } from '../wallet.service';
 
 @Component({

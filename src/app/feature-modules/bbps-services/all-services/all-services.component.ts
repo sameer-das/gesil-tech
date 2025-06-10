@@ -469,6 +469,7 @@ export class AllServicesComponent implements OnInit, OnDestroy {
                             console.log(`Pin Dialog closed ${result}`);
                             this._loaderService.showLoader();
                             if (result) {
+                                payBill["tPin"] = result;
                                 this._bbpsService.payBill(this.requestID, payBill, this.serviceCatId, this.serviceId, this.currentUser.user.user_EmailID)
                                     .subscribe((resp: any) => {
                                         this._loaderService.hideLoader();

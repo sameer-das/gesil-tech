@@ -34,7 +34,7 @@ export class PinPopupComponent implements OnInit {
         next: (resp: any) => {
           console.log(resp)
           if (resp.status === 'Success' && resp.code === 200 && resp.data) {
-            this.dialogRef.close(true);
+            this.dialogRef.close(this.pin);
             this.pin = '';
           } else if (resp.status === 'Success' && resp.code === 200 && !resp.data) {
             // show invalid Pin message
@@ -55,7 +55,7 @@ export class PinPopupComponent implements OnInit {
         }
 
       })
-      
+
     }
   }
 
