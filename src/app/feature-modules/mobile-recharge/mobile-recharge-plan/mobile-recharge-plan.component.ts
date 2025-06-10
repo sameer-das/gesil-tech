@@ -147,7 +147,7 @@ export class MobileRechargePlanComponent implements OnInit {
 
                             if (+walletBal > +amount) {
                                 const mobile_search: any = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
-                                if (false) {
+                                if (mobile_search?.commission) {
                                     this.onPlanSelect(amount);
                                 } else {
                                     this.onPlanSelectHighCommission(amount, resultPin)
@@ -168,6 +168,8 @@ export class MobileRechargePlanComponent implements OnInit {
                         }
                     }
                 })
+
+                // =================================
 
             }
         });
@@ -230,7 +232,7 @@ export class MobileRechargePlanComponent implements OnInit {
     }
 
 
-    onPlanSelectHighCommission(amount: string, pin:string) {
+    onPlanSelectHighCommission(amount: string, pin: string) {
         console.log('Calling without Commission')
         const mobile_search = JSON.parse(sessionStorage.getItem('mobile_search') || '{}');
         console.log(amount);
